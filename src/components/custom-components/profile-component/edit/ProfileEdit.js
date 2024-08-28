@@ -15,10 +15,13 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "@/app/firebase/config";
 import { toast, ToastContainer } from "react-toastify";
+import Link from "next/link";
 
 const ProfileEdit = () => {
   const [name, setName] = useState("");
@@ -202,6 +205,15 @@ const ProfileEdit = () => {
     <Container>
       <ToastContainer />
       <section>
+        <div className="py-4">
+          <Link
+            href="/profile"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <FaArrowLeftLong style={{ marginRight: 10 }} />
+            Back
+          </Link>
+        </div>
         <h1 style={{ fontWeight: "bold" }}>Profile</h1>
         <div style={{ position: "relative" }}>
           <Image
@@ -211,6 +223,7 @@ const ProfileEdit = () => {
             priority
             width={200}
             height={200}
+            style={{ borderRadius: 10 }}
           />
           <label
             htmlFor="fileInput"

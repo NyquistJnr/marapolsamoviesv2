@@ -133,6 +133,7 @@ const MainProfile = () => {
               // priority
               width={200}
               height={200}
+              style={{ borderRadius: 10 }}
             />
             <div style={{ marginTop: 20, fontWeight: "bold", fontSize: 20 }}>
               {userData.displayName}

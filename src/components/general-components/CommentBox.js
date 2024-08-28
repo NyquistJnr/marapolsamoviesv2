@@ -49,6 +49,8 @@ const CommentBox = (props) => {
         userComments: arrayUnion({
           timestamp: new Date(),
           postId: props.id,
+          postType: "reviews",
+          text: comment,
         }),
       });
 

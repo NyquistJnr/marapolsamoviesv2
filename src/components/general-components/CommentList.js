@@ -16,6 +16,12 @@ const CommentList = (props) => {
                   roundedCircle
                   className={styles.avatar}
                   alt="dp profile"
+                  style={{
+                    width: 45,
+                    height: 45,
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
                 />
                 <div className="ml-2">
                   <span className={styles.username}>@{comment.username}</span> |{" "}

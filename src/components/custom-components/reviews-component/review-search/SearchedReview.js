@@ -40,7 +40,7 @@ const SearchedReviewComponent = (props) => {
   }, [props.reviewId]);
 
   if (loading) {
-    return <div>Loading oh...</div>;
+    return <div>Loading ...</div>;
   }
 
   if (error) {
