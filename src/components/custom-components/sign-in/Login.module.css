@@ -1,0 +1,82 @@
+.email-parent {
+  position: relative;
+}
+
+.email-icon {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: 20px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputSpace {
+  padding-left: 50px;
+  background-color: transparent;
+  border: 1px solid #888;
+}
+
+.pass-icon {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  width: 20px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inputSpace1 {
+  padding-right: 40px;
+  background-color: transparent;
+}
+
+.inputSpace:focus,
+.inputSpace:active {
+  background-color: transparent !important;
+  box-shadow: none;
+  border-color: #e86c44;
+}
+
+.backGroundImage {
+  background-image: url("../../../../public//images/login-image.jpg");
+  height: 95vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@media (max-width: 500px) {
+  .loginWidth {
+    width: 100%;
+  }
+}
+
+@media (min-width: 501px) {
+  .loginWidth {
+    width: 70%;
+  }
+}
+
+@media (min-width: 768px) {
+  .loginWidth {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .loginWidth {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1900px) {
+  .loginWidth {
+    width: 50%;
+  }
+}

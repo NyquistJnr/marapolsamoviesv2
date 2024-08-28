@@ -1,0 +1,8 @@
+.timeFrameControl,
+.timeFrameControl:focus {
+  background-color: transparent;
+  padding: 20px auto;
+  border-radius: 10px;
+  border: 1px solid #d0cfce;
+  box-shadow: none;
+}
