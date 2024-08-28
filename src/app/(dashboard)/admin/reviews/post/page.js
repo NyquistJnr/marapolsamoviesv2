@@ -20,7 +20,7 @@ const AdminReviewUpdatePage = () => {
   const id = searchParams.get("id"); // Get the "id" query parameter
 
   if (!id) {
-    return <div>Review ID not found.</div>;
+    return <div>Review ID not found. Hello</div>;
   }
 
   return <ReviewNew reviewId={id} />;
