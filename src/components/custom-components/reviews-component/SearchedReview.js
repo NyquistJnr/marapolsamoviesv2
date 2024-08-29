@@ -3,7 +3,7 @@
 import { Button, Container } from "react-bootstrap";
 import classes from "./SearchedReview.module.css";
 
-import { MdArrowBack } from "react-icons/md";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import SingleReviewComponent from "./SingleReview";
 
 import img1 from "../../../../public/images/templates-imgs/showReview1.png";
@@ -60,70 +60,88 @@ const SearchedReview = (props) => {
     props.handleGoBack("");
   };
 
+  console.log(props.data);
+
   let title = props.title;
 
   if (title == "movies") {
-    title = "Movies Reviews";
-  } else if (title == "tv-show") {
-    title = "TV Show Reviews";
+    title = "Movies";
+  } else if (title == "TV Shows") {
+    title = "TV Shows";
   } else if (title == "action") {
-    title = "Action Genre Reviews";
+    title = "Action Genre";
   } else if (title == "adventure") {
-    title = "Adventure Genre Reviews";
+    title = "Adventure Genre";
   } else if (title == "comedy") {
-    title = "Comedy Genre Reviews";
+    title = "Comedy Genre";
   } else if (title == "sci-fi") {
-    title = "Sci-fi Genre Reviews";
+    title = "Sci-fi Genre";
   } else if (title == "horror") {
-    title = "Horror Genre Reviews";
+    title = "Horror Genre";
   } else if (title == "drama") {
-    title = "Drama Genre Reviews";
+    title = "Drama Genre";
   } else if (title == "thriller") {
-    title = "Thriller Genre Reviews";
+    title = "Thriller Genre";
   } else if (title == "fantasy") {
-    title = "Fantasy Genre Reviews";
+    title = "Fantasy Genre";
   } else if (title == "romance") {
-    title = "Romance Genre Reviews";
+    title = "Romance Genre";
   } else if (title == "crime") {
-    title = "Crime Genre Reviews";
+    title = "Crime Genre";
   } else if (title == "nollywood") {
-    title = "Nollywood Reviews";
+    title = "Nollywood";
   } else if (title == "hollywood") {
-    title = "Hollywood Reviews";
+    title = "Hollywood";
   } else if (title == "bollywood") {
-    title = "Bollywood Reviews";
-  } else if (title == "k-drama") {
-    title = "K-Drama Reviews";
+    title = "Bollywood";
+  } else if (title == "KDrama") {
+    title = "KDrama";
   } else if (title == "netflix") {
-    title = "Netflix Reviews";
+    title = "Netflix";
   } else if (title == "prime-video") {
-    title = "Prime-Video Reviews";
+    title = "Prime-Video";
   } else if (title == "disney+") {
-    title = "Disney+ Reviews";
+    title = "Disney+";
   } else if (title == "showmax") {
-    title = "Showmax Reviews";
+    title = "Showmax";
   } else if (title == "youtube") {
-    title = "Youtube Reviews";
+    title = "Youtube";
   } else {
     title = `Search Results for "${props.title}"`;
   }
 
   return (
     <Container>
-      <Button onClick={handleSearchFilter} className={classes.goBackBtn}>
-        <MdArrowBack size={30} />
+      <Button
+        onClick={handleSearchFilter}
+        className={classes.goBackBtn}
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <FaArrowLeftLong size={25} style={{ marginRight: 10 }} /> Back
       </Button>
       <h2 style={{ marginTop: 30, fontWeight: "bold", fontSize: 30 }}>
-        {title}
+        {title} Reviews
       </h2>
       <hr style={{ border: "1.4px solid #000" }} />
-      <section style={{ marginTop: 30 }}>
-        {data.map((item) => (
-          <main key={Math.random()} style={{ marginBottom: 20 }}>
-            <SingleReviewComponent {...item} />
-          </main>
-        ))}
-      </section>
+      {props.isLoading ? (
+        <div className="text-center py-5">Loading...</div>
+      ) : (
+        <section style={{ marginTop: 30 }}>
+          {props.data.length > 0 ? (
+            <>
+              {props.data.map((item) => (
+                <main key={Math.random()} style={{ marginBottom: 20 }}>
+                  <SingleReviewComponent {...item} />
+                </main>
+              ))}
+            </>
+          ) : (
+            <div className="text-center py-5">
+              No review with the searched word
+            </div>
+          )}
+        </section>
+      )}
     </Container>
   );
 };

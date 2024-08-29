@@ -1,11 +1,18 @@
+import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { Container } from "react-bootstrap";
 import classes from "./SingleReview.module.css";
 
 const SingleReviewComponent = (props) => {
   const router = useRouter();
+  if (props.error) {
+    return (
+      <div className="text-center py-5">
+        An Error Occured: {props.error.message}
+      </div>
+    );
+  }
   return (
     <>
       <div className="row">
@@ -19,9 +26,11 @@ const SingleReviewComponent = (props) => {
         >
           <Image
             className={classes.img}
-            src={props.src}
+            src={props.image}
             alt={props.title}
             priority
+            width={100}
+            height={100}
           />
         </div>
         <div
@@ -33,20 +42,19 @@ const SingleReviewComponent = (props) => {
           }}
         >
           <div>
-            <h1
-              className={classes.heading1}
-              onClick={() => router.push("reviews/search")}
-            >
-              {props.title}
-            </h1>
-            <p className={classes.description}>{props.description}</p>
+            <Link href={`/reviews/detail?id=${props.id}`}>
+              <h1 className={classes.heading1}>{props.title}</h1>
+            </Link>
+            <p className={classes.description}>{props.verdict}</p>
           </div>
           <div className={classes.subHeading}>
             by
             <span style={{ fontWeight: "bold", marginLeft: 4 }}>
               {props.author}
             </span>
-            <span style={{ marginLeft: 30 }}>{props.date}</span>
+            <span style={{ marginLeft: 30 }}>
+              {props.timestamp.toDate().toLocaleString()}
+            </span>
           </div>
           <div>
             <div className={classes.subHeading}>

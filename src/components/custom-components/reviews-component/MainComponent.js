@@ -13,6 +13,7 @@ import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
 import useTrendingPost from "@/hooks/useTrendingPost";
 import useMostLikedPost from "@/hooks/useMostLikedPost";
 import useFetchCategoryData from "@/hooks/useGetShowAdmin";
+import useSearchTextPost from "@/hooks/useSearchedText";
 
 const ReviewComponent = () => {
   const [sumbitSearch, setSumbitSearch] = useState("");
@@ -41,10 +42,20 @@ const ReviewComponent = () => {
     tvShowsError,
   } = useFetchCategoryData("TV Shows");
 
+  const {
+    searchResults,
+    isLoading: searchedLoading,
+    error: searchedError,
+    searchReviews,
+  } = useSearchTextPost();
+
   const handleSearchFilter = (e) => {
     // console.log(e);
     setSumbitSearch(e);
+    searchReviews(e);
   };
+
+  // console.log("Jjj", searchResults);
 
   return (
     <>
@@ -100,6 +111,9 @@ const ReviewComponent = () => {
           <SearchedReview
             title={sumbitSearch}
             handleGoBack={(e) => handleSearchFilter(e)}
+            data={searchResults}
+            isLoading={searchedLoading}
+            error={searchedError}
           />
         </>
       )}

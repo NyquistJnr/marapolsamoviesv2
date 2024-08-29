@@ -104,7 +104,7 @@ const CompleteSearchFilterBar = (props) => {
                   <Button
                     variant="outline-secondary"
                     className="m-2"
-                    onClick={() => handleSearchedSection("tv-show")}
+                    onClick={() => handleSearchedSection("TV Shows")}
                   >
                     TV Shows
                   </Button>
@@ -187,7 +187,7 @@ const CompleteSearchFilterBar = (props) => {
                         Bollywood
                       </Dropdown.Item>
                       <Dropdown.Item
-                        onClick={() => handleSearchedSection("k-drama")}
+                        onClick={() => handleSearchedSection("KDrama")}
                       >
                         K-Drama
                       </Dropdown.Item>
@@ -205,7 +205,7 @@ const CompleteSearchFilterBar = (props) => {
                         Netflix
                       </Dropdown.Item>
                       <Dropdown.Item
-                        onClick={() => handleSearchedSection("prime-video")}
+                        onClick={() => handleSearchedSection("PrimeVideo")}
                       >
                         Prime Video
                       </Dropdown.Item>

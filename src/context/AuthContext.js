@@ -29,7 +29,7 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [loading, user]);
 
-  console.log(user);
+  // console.log(user);
 
   const login = () => {
     setIsAuthenticated(true);
