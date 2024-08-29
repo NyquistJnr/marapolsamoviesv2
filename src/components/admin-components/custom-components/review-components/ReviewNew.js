@@ -20,8 +20,10 @@ import { useAuth } from "@/context/AuthContext";
 
 import { BsTrash } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const ReviewNew = ({ reviewId }) => {
+  const router = useRouter();
   const { username } = useAuth();
   const [formData, setFormData] = useState({
     movieDirector: "",
@@ -150,17 +152,19 @@ const ReviewNew = ({ reviewId }) => {
         >
           <div>
             <div>
-              <Link
+              <Button
                 style={{
                   display: "flex",
                   alignItems: "center",
                   color: "#575655",
+                  backgroundColor: "transparent",
+                  borderColor: "transparent",
                 }}
-                href="/admin/reviews"
+                onClick={() => router.back()}
               >
                 <FaArrowLeftLong style={{ marginRight: 10 }} />
                 Back
-              </Link>
+              </Button>
             </div>
           </div>
           <div>

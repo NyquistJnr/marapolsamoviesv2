@@ -10,8 +10,11 @@ import SingleReview from "../../general-components/SingleReview";
 import { GrAdd } from "react-icons/gr";
 import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
 import useFetchCategoryData from "@/hooks/useGetShowAdmin";
+import { Button } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 
 const ReviewListAdmin = () => {
+  const router = useRouter();
   const {
     recentData,
     isLoading: mainLoading,
@@ -38,17 +41,19 @@ const ReviewListAdmin = () => {
       >
         <div>
           <div>
-            <Link
+            <Button
               style={{
                 display: "flex",
                 alignItems: "center",
                 color: "#575655",
+                backgroundColor: "transparent",
+                borderColor: "transparent",
               }}
-              href="/admin/reviews"
+              onClick={() => router.back()}
             >
               <FaArrowLeftLong style={{ marginRight: 10 }} />
               Back
-            </Link>
+            </Button>
           </div>
         </div>
         <div>

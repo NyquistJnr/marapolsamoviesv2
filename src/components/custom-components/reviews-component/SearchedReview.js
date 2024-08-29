@@ -5,62 +5,21 @@ import classes from "./SearchedReview.module.css";
 
 import { FaArrowLeftLong } from "react-icons/fa6";
 import SingleReviewComponent from "./SingleReview";
-
-import img1 from "../../../../public/images/templates-imgs/showReview1.png";
-
-const data = [
-  {
-    title: "Different Strokes: Same old story saved by good casting",
-    src: img1,
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-    author: "Chigoxx",
-    date: "May 11, 2024",
-    genre: "Drama",
-    industry: "Nollywood",
-    streamingPlatform: "Prime Video",
-  },
-  {
-    title: "Different Strokes: Same old story saved by good casting",
-    src: img1,
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-    author: "Chigoxx",
-    date: "May 11, 2024",
-    genre: "Drama",
-    industry: "Nollywood",
-    streamingPlatform: "Prime Video",
-  },
-  {
-    title: "Different Strokes: Same old story saved by good casting",
-    src: img1,
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-    author: "Chigoxx",
-    date: "May 11, 2024",
-    genre: "Drama",
-    industry: "Nollywood",
-    streamingPlatform: "Prime Video",
-  },
-  {
-    title: "Different Strokes: Same old story saved by good casting",
-    src: img1,
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-    author: "Chigoxx",
-    date: "May 11, 2024",
-    genre: "Drama",
-    industry: "Nollywood",
-    streamingPlatform: "Prime Video",
-  },
-];
+import SearchAndMoreSkeleton from "./SearchAndMoreSkeleton";
 
 const SearchedReview = (props) => {
+  if (props.error) {
+    return (
+      <div className="text-center py-5">
+        An Error Occured: {props.error.message}
+      </div>
+    );
+  }
   const handleSearchFilter = () => {
     props.handleGoBack("");
   };
 
-  console.log(props.data);
+  // console.log(props.data);
 
   let title = props.title;
 
@@ -117,14 +76,16 @@ const SearchedReview = (props) => {
         className={classes.goBackBtn}
         style={{ display: "flex", alignItems: "center" }}
       >
-        <FaArrowLeftLong size={25} style={{ marginRight: 10 }} /> Back
+        <FaArrowLeftLong size={20} style={{ marginRight: 10 }} /> Back
       </Button>
       <h2 style={{ marginTop: 30, fontWeight: "bold", fontSize: 30 }}>
         {title} Reviews
       </h2>
       <hr style={{ border: "1.4px solid #000" }} />
       {props.isLoading ? (
-        <div className="text-center py-5">Loading...</div>
+        <div className="text-center py-5">
+          <SearchAndMoreSkeleton />
+        </div>
       ) : (
         <section style={{ marginTop: 30 }}>
           {props.data.length > 0 ? (

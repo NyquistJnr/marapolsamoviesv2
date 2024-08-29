@@ -1,7 +1,10 @@
 import Image from "next/image";
 import classes from "./Lastest.module.css";
+import { shortenText } from "@/utils/text-shortener";
+import Link from "next/link";
 
 const Lastest = (props) => {
+  const shortenedText = shortenText(props.plot, 20);
   return (
     <>
       <section style={{ display: "flex" }}>
@@ -14,9 +17,11 @@ const Lastest = (props) => {
           }}
         >
           <Image
-            src={props.src}
+            src={props.image}
             alt={props.title}
             className={classes.size}
+            width={100}
+            height={100}
             priority
           />
         </div>
@@ -30,8 +35,12 @@ const Lastest = (props) => {
           }}
         >
           <div>
-            <h4 className={classes.h1}>{props.title}</h4>
-            <p className={classes.h2}>{props.description}</p>
+            <Link href={`/reviews/detail?id=${props.id}`}>
+              <h4 style={{ fontWeight: "bold" }} className={classes.h1}>
+                {props.title}
+              </h4>
+            </Link>
+            <p className={classes.h2}>{shortenedText}</p>
           </div>
           <div>
             <p className={classes.p}>
@@ -39,7 +48,7 @@ const Lastest = (props) => {
                 <b>by {props.author}</b>
               </span>
               <span>
-                <b>{props.time}</b>
+                <b>{props.timestamp.toDate().toLocaleString()}</b>
               </span>
             </p>
             <p className={classes.p} style={{ marginTop: -6 }}>
@@ -48,7 +57,7 @@ const Lastest = (props) => {
             </p>
             <p className={classes.p} style={{ marginTop: -15 }}>
               <b>Streaming Platform: </b>
-              {props.platform}
+              {props.streamingPlatform}
             </p>
           </div>
         </div>

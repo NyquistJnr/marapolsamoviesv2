@@ -5,6 +5,7 @@ import Link from "next/link";
 import classes from "./HorRecommendation.module.css";
 import SkeletonHorizontalScroll from "../basic-ui/horizontal-scroll/SkeletonHorizontal";
 import { Skeleton } from "@chakra-ui/react";
+import { convertStringToKebabCase } from "@/utils/url-encoding";
 
 const HorRecommendation = (props) => {
   if (props.error) {
@@ -33,7 +34,13 @@ const HorRecommendation = (props) => {
             <>
               {!props.isLoading && (
                 <p className={`${classes.seeMoreLink} py-2`}>
-                  <Link href={props.to ? props.to : "#"}>See more</Link>
+                  <Link
+                    href={`reviews/list/${convertStringToKebabCase(
+                      props.title
+                    )}`}
+                  >
+                    See more
+                  </Link>
                 </p>
               )}
             </>

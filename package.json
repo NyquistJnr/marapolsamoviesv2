@@ -16,6 +16,7 @@
     "@smastrom/react-rating": "^1.5.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
+    "clipboard-copy": "^4.0.1",
     "firebase": "^10.13.0",
     "framer-motion": "^11.3.8",
     "next": "14.2.4",

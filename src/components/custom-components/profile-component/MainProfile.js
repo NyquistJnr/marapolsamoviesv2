@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 import classes from "./MainProfile.module.css";
 
-import img1 from "../../../../public/images/templates-imgs/dp.png";
 import ProfileTabs from "./ProfileTabs";
 import { useAuth } from "@/context/AuthContext";
 import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
@@ -17,6 +16,7 @@ import { db } from "@/app/firebase/config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import userDP from "../../../../public/images/userDP.jpg";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const MainProfile = () => {
   const router = useRouter();
@@ -109,6 +109,19 @@ const MainProfile = () => {
 
   return (
     <Container>
+      <Button
+        onClick={() => router.back()}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "transparent",
+          borderColor: "transparent",
+          color: "#000",
+        }}
+      >
+        <FaArrowLeftLong style={{ marginRight: 10 }} />
+        Back
+      </Button>
       <section
         style={{
           display: "flex",

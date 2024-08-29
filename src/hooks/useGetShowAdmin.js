@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  limit as limitDocs,
+} from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useFetchCategoryData = (category) => {
+const useFetchCategoryData = (category, limit = 10) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +23,8 @@ const useFetchCategoryData = (category) => {
         const q = query(
           collection(db, "reviews"),
           where("category", "==", category),
-          orderBy("timestamp", "desc")
+          orderBy("timestamp", "desc"),
+          limitDocs(limit) // Use the limitDocs function to limit the number of documents returned
         );
         const querySnapshot = await getDocs(q);
         const categoryData = querySnapshot.docs.map((doc) => ({
@@ -33,7 +41,7 @@ const useFetchCategoryData = (category) => {
     };
 
     fetchCategoryData();
-  }, [category]);
+  }, [category, limit]);
 
   return { data, isLoading, error };
 };

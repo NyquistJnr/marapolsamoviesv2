@@ -1,29 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import classes from "./SearchedReview.module.css";
-
-import ReviewPack from "../ReviewPack";
 
 import CommentShare from "@/components/general-components/CommentShare";
 import RatingComponent from "@/components/general-components/RatingComponent";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/app/firebase/config";
-import Link from "next/link";
+
 import { FaArrowLeftLong } from "react-icons/fa6";
 import usePostDetails from "@/hooks/usePostDetail";
+import SearchedViewSkeleton from "./SearchedViewSkeleton";
+import HorRecommendation from "@/components/general-components/HorRecommendation";
+import useSimilarPost from "@/hooks/useSimilarPost";
 
 const SearchedReviewComponent = (props) => {
+  const router = useRouter();
   const { data, loading, error, formattedDate } = usePostDetails(
     "reviews",
     props.reviewId
   );
 
+  const {
+    filteredReviews,
+    isLoading,
+    error: similarError,
+  } = useSimilarPost(
+    props.reviewId,
+    {
+      genre: props.genre,
+      industry: props.industry,
+      streamingPlatform: props.streamingPlatform,
+    },
+    5
+  );
+
   if (loading) {
-    return <div className="text-center py-5">Loading...</div>;
+    return (
+      <div className="text-center py-5">
+        <SearchedViewSkeleton />
+      </div>
+    );
   }
 
   if (error) {
@@ -39,13 +57,19 @@ const SearchedReviewComponent = (props) => {
     <main style={{ marginBottom: 50 }}>
       <Container>
         <div className="py-4">
-          <Link
-            href="/reviews"
-            style={{ display: "flex", alignItems: "center" }}
+          <Button
+            onClick={() => router.back()}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              color: "#000",
+            }}
           >
             <FaArrowLeftLong style={{ marginRight: 10 }} />
             Back
-          </Link>
+          </Button>
         </div>
         <div className="row">
           <div className="col-12 col-sm-12 col-md-5 col-lg-3 py-2">
@@ -89,7 +113,7 @@ const SearchedReviewComponent = (props) => {
           <div>
             <b>By:</b> {data.author}
           </div>
-          <div>
+          <div style={{ marginTop: 10 }}>
             <b>Published:</b> {formattedDate}
           </div>
         </div>
@@ -125,7 +149,13 @@ const SearchedReviewComponent = (props) => {
           optional={data}
         />
         <div style={{ marginTop: 50 }}>
-          <ReviewPack title="Similar Reviews" />
+          <HorRecommendation
+            title="Similar Reviews"
+            data={filteredReviews}
+            isLoading={isLoading}
+            error={similarError}
+            seeMore={true}
+          />
         </div>
       </Container>
     </main>

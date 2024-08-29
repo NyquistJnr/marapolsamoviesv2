@@ -21,7 +21,6 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "@/app/firebase/config";
 import { toast, ToastContainer } from "react-toastify";
-import Link from "next/link";
 
 const ProfileEdit = () => {
   const [name, setName] = useState("");
@@ -208,13 +207,19 @@ const ProfileEdit = () => {
       <ToastContainer />
       <section>
         <div className="py-4">
-          <Link
-            href="/profile"
-            style={{ display: "flex", alignItems: "center" }}
+          <Button
+            onClick={() => router.back()}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              color: "#000",
+            }}
           >
             <FaArrowLeftLong style={{ marginRight: 10 }} />
             Back
-          </Link>
+          </Button>
         </div>
         <h1 style={{ fontWeight: "bold" }}>Profile</h1>
         <div style={{ position: "relative" }}>

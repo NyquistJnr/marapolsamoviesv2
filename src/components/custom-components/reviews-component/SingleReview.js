@@ -1,18 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import classes from "./SingleReview.module.css";
+import { shortenText } from "@/utils/text-shortener";
 
 const SingleReviewComponent = (props) => {
-  const router = useRouter();
-  if (props.error) {
-    return (
-      <div className="text-center py-5">
-        An Error Occured: {props.error.message}
-      </div>
-    );
-  }
+  const shortenVerdict = shortenText(props.verdict, 20);
+
   return (
     <>
       <div className="row">
@@ -42,10 +36,10 @@ const SingleReviewComponent = (props) => {
           }}
         >
           <div>
-            <Link href={`/reviews/detail?id=${props.id}`}>
+            <Link href={`/reviews/${props.id}`}>
               <h1 className={classes.heading1}>{props.title}</h1>
             </Link>
-            <p className={classes.description}>{props.verdict}</p>
+            <p className={classes.description}>{shortenVerdict}</p>
           </div>
           <div className={classes.subHeading}>
             by

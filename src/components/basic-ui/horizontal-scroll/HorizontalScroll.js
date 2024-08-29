@@ -43,7 +43,7 @@ const HorizontalScroll = (props) => {
                       width: "85%",
                     }}
                   >
-                    <Link href={`/reviews/detail?id=${item.id}`}>
+                    <Link href={`/reviews/${item.id}`}>
                       <h4
                         style={{
                           fontSize: 18,

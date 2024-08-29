@@ -104,8 +104,7 @@ const Header = () => {
                   as={Link}
                   href="/reviews"
                   className={
-                    currentPath === "/reviews" ||
-                    currentPath === "/reviews/detail"
+                    /^\/reviews(\/list\/[^/]+|\/[^/]+)?$/.test(currentPath)
                       ? `${classes.activeLink} ${classes.links}`
                       : `${classes.notActiveLink} ${classes.links}`
                   }

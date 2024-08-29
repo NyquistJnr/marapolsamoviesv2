@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useGetUserLikesAndSaves = (userId, field) => {
+const useGetUserLikesAndSaves = (userId, field, limit = 10) => {
   const [sortedData, setSortedData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,9 +23,9 @@ const useGetUserLikesAndSaves = (userId, field) => {
           const dataArray = userData[field] || [];
 
           // Sort the array by Firestore timestamp
-          const sortedArray = dataArray.sort(
-            (a, b) => b.timestamp.toMillis() - a.timestamp.toMillis()
-          );
+          const sortedArray = dataArray
+            .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis())
+            .slice(0, limit); // Limit the number of items returned
 
           setSortedData(sortedArray);
         } else {
@@ -40,7 +40,7 @@ const useGetUserLikesAndSaves = (userId, field) => {
     };
 
     fetchAndSortData();
-  }, [userId, field]);
+  }, [userId, field, limit]);
 
   return { sortedData, isLoading, error };
 };

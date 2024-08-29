@@ -55,7 +55,7 @@ const ReviewComponent = () => {
     searchReviews(e);
   };
 
-  // console.log("Jjj", searchResults);
+  // console.log("searchResults", searchResults);
 
   return (
     <>
