@@ -201,7 +201,7 @@ const ProfileEdit = () => {
     }
   };
 
-  if (!userData) return <div>Loading...</div>;
+  if (!userData) return <div className="text-center py-5">Loading...</div>;
 
   return (
     <Container>
@@ -219,7 +219,7 @@ const ProfileEdit = () => {
         <h1 style={{ fontWeight: "bold" }}>Profile</h1>
         <div style={{ position: "relative" }}>
           <Image
-            src={preview || userData?.profilePicture} // Show preview if a file is selected, otherwise show the existing image
+            src={preview || userData?.profilePicture || "/dpUser.jpg"} // Show preview if a file is selected, otherwise show the existing image
             alt={`${name} Image`}
             className={classes.imgStyle}
             priority

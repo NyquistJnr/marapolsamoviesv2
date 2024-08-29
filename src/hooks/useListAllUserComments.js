@@ -48,6 +48,8 @@ const useListAllUserComments = (user) => {
                 author,
                 timestamp,
                 image,
+                likes,
+                saves,
               } = itemData;
               const totalComments = comments.length;
 
@@ -66,6 +68,8 @@ const useListAllUserComments = (user) => {
                 author,
                 date: timestamp,
                 imageSrc: image,
+                totalLikes: likes ? likes?.length : "0",
+                totalSaves: saves ? saves?.length : "0",
               };
             }
             return null;

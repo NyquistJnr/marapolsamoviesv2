@@ -1,19 +1,16 @@
-"use client";
-// components/CommentBox.js
 import { useState } from "react";
 import Image from "next/image";
 import { Form, Button, InputGroup } from "react-bootstrap";
-import { auth, db } from "@/app/firebase/config"; // Ensure you have the correct path to your Firebase config
+import { auth, db } from "@/app/firebase/config";
 import { doc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 import styles from "./CommentBox.module.css";
-
-import dpImage from "../../../public/images/icons/dp.svg";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaRegUserCircle } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 
 const CommentBox = (props) => {
   const [comment, setComment] = useState("");
-
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for loading
   const [user, loading] = useAuthState(auth);
 
   const handleChange = (e) => {
@@ -23,19 +20,21 @@ const CommentBox = (props) => {
   };
 
   const handleSubmit = async () => {
-    if (comment.length === 0) return;
+    if (comment.length === 0 || isSubmitting) return;
 
     if (!user) {
-      alert("You need to be logged in to submit a comment.");
+      toast.error("You need to be logged in to submit a comment.");
       return;
     }
+
+    setIsSubmitting(true); // Set loading state
 
     try {
       const commentData = {
         text: comment.trim(),
         timestamp: Timestamp.fromDate(new Date()),
         uid: user.uid,
-        profile_pic: user.photoURL,
+        profile_pic: user.photoURL ? user.photoURL : "/dpUser.jpg",
         username: user.displayName,
       };
 
@@ -55,16 +54,19 @@ const CommentBox = (props) => {
       });
 
       props.onSaveComment(commentData);
-      alert("Comment submitted successfully!");
+      toast.success("Comment submitted successfully!");
       setComment("");
     } catch (error) {
       console.error("Error submitting comment:", error);
-      alert("There was an error submitting your comment.");
+      toast.error("There was an error submitting your comment.");
+    } finally {
+      setIsSubmitting(false); // Reset loading state
     }
   };
 
   return (
     <div className={`p-3 ${styles.commentBox}`}>
+      <ToastContainer />
       <InputGroup className="mb-3">
         <InputGroup>
           {user?.photoURL ? (
@@ -100,11 +102,11 @@ const CommentBox = (props) => {
         <span className={styles.charCount}>{comment.length}/1000</span>
         <Button
           variant="outline-secondary"
-          disabled={comment.length === 0}
+          disabled={comment.length === 0 || isSubmitting} // Disable during submission
           className={styles.commentButton}
-          onClick={handleSubmit} // Attach the submit handler
+          onClick={handleSubmit}
         >
-          Comment
+          {isSubmitting ? "Submitting..." : "Comment"} {/* Show loading text */}
         </Button>
       </div>
     </div>

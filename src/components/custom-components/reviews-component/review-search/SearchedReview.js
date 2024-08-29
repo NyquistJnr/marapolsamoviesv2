@@ -14,44 +14,24 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import usePostDetails from "@/hooks/usePostDetail";
 
 const SearchedReviewComponent = (props) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const docRef = doc(db, "reviews", props.reviewId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setData(docSnap.data());
-        } else {
-          console.log("No such document!");
-        }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [props.reviewId]);
+  const { data, loading, error, formattedDate } = usePostDetails(
+    "reviews",
+    props.reviewId
+  );
 
   if (loading) {
-    return <div>Loading ...</div>;
+    return <div className="text-center py-5">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error fetching data: {error.message}</div>;
-  }
-  let formattedDate = "";
-  if (data.timestamp) {
-    const date = data.timestamp.toDate();
-    formattedDate = date.toLocaleString();
+    return (
+      <div className="text-center py-5">
+        Error fetching data: {error.message}
+      </div>
+    );
   }
 
   // console.log(data);

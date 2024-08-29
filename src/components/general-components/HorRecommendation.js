@@ -7,6 +7,9 @@ import SkeletonHorizontalScroll from "../basic-ui/horizontal-scroll/SkeletonHori
 import { Skeleton } from "@chakra-ui/react";
 
 const HorRecommendation = (props) => {
+  if (props.error) {
+    return <div className="text-center py-5">An Error Occured.</div>;
+  }
   return (
     <section>
       <Container>

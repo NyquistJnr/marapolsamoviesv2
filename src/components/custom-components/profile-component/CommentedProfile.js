@@ -18,6 +18,8 @@ const CommentedProfile = ({
   userComments,
   totalComments,
   postId,
+  totalLikes,
+  totalSaves,
 }) => {
   return (
     <>
@@ -63,7 +65,7 @@ const CommentedProfile = ({
                 }}
               >
                 <Image src={likeIcon} alt="LikeIcon" priority />
-                <span style={{ marginLeft: 7 }}>34</span>
+                <span style={{ marginLeft: 7 }}>{totalLikes}</span>
               </div>
               <div
                 style={{
@@ -75,12 +77,16 @@ const CommentedProfile = ({
                 <Image src={commentIcon} alt="CommentIcon" priority />{" "}
                 <span style={{ marginLeft: 7 }}>{totalComments}</span>
               </div>
-              <Image
-                src={saveIcon}
-                alt="SaveIcon"
-                priority
-                style={{ marginRight: 15 }}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: 15,
+                }}
+              >
+                <Image src={saveIcon} alt="SaveIcon" priority />
+                <span style={{ marginLeft: 7 }}>{totalSaves}</span>
+              </div>
             </div>
           </div>
         </div>

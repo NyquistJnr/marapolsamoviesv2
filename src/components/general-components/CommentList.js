@@ -21,6 +21,7 @@ const CommentList = (props) => {
                     height: 45,
                     objectFit: "cover",
                     objectPosition: "center",
+                    borderRadius: "50%",
                   }}
                 />
                 <div className="ml-2">

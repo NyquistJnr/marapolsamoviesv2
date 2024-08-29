@@ -10,11 +10,36 @@ import classes from "./MainComponent.module.css";
 import CompleteSearchFilterBar from "@/components/general-components/CompleteSearchFilter";
 
 import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
+import useTrendingPost from "@/hooks/useTrendingPost";
+import useMostLikedPost from "@/hooks/useMostLikedPost";
+import useFetchCategoryData from "@/hooks/useGetShowAdmin";
 
 const ReviewComponent = () => {
   const [sumbitSearch, setSumbitSearch] = useState("");
 
   const { recentData, isLoading, error } = useFetchRecentReviews();
+  const {
+    sortedReviews: trendingData,
+    isLoading: isLoadingTrending,
+    error: errorTrending,
+  } = useTrendingPost();
+
+  const {
+    sortedReviews: mostLikedData,
+    isLoading: mostLikedLoading,
+    error: mostLikedError,
+  } = useMostLikedPost();
+
+  const {
+    data: moviesData,
+    isLoading: moviesLoading,
+    moviesError,
+  } = useFetchCategoryData("Movies");
+  const {
+    data: tvShowsData,
+    isLoading: tvShowsLoading,
+    tvShowsError,
+  } = useFetchCategoryData("TV Shows");
 
   const handleSearchFilter = (e) => {
     // console.log(e);
@@ -29,8 +54,9 @@ const ReviewComponent = () => {
           <div style={{ marginBottom: 50 }}>
             <HorRecommendation
               title="Trending Reviews"
-              data={recentData}
-              isLoading={isLoading}
+              data={trendingData}
+              isLoading={isLoadingTrending}
+              error={errorTrending}
             />
           </div>
           <div style={{ marginBottom: 50 }}>
@@ -38,27 +64,31 @@ const ReviewComponent = () => {
               title="Latest Reviews"
               data={recentData}
               isLoading={isLoading}
+              error={error}
             />
           </div>
           <div style={{ marginBottom: 50 }}>
             <HorRecommendation
               title="Most Liked Reviews"
-              data={recentData}
-              isLoading={isLoading}
+              data={mostLikedData}
+              isLoading={mostLikedLoading}
+              error={mostLikedError}
             />
           </div>
           <div style={{ marginBottom: 50 }}>
             <HorRecommendation
               title="Movies Reviews"
-              data={recentData}
-              isLoading={isLoading}
+              data={moviesData}
+              isLoading={moviesLoading}
+              error={moviesError}
             />
           </div>
           <div style={{ marginBottom: 50 }}>
             <HorRecommendation
               title="TV Shows Reviews"
-              data={recentData}
-              isLoading={isLoading}
+              data={tvShowsData}
+              isLoading={tvShowsLoading}
+              error={tvShowsError}
             />
           </div>
           <div className="text-center" style={{ marginBottom: 40 }}>
