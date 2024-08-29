@@ -15,7 +15,11 @@ const AnalyticsBox = (props) => {
         }}
       >
         <div style={{ fontWeight: "bold" }}>
-          {props.value ? props.value : "Loading..."}
+          {props.isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <>{props.value ? props.value : "0"}</>
+          )}
         </div>
         <div>
           {props.percentage}

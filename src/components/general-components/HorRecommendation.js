@@ -3,6 +3,8 @@ import HorizontalScroll from "@/components/basic-ui/horizontal-scroll/Horizontal
 import Link from "next/link";
 
 import classes from "./HorRecommendation.module.css";
+import SkeletonHorizontalScroll from "../basic-ui/horizontal-scroll/SkeletonHorizontal";
+import { Skeleton } from "@chakra-ui/react";
 
 const HorRecommendation = (props) => {
   return (
@@ -18,14 +20,29 @@ const HorRecommendation = (props) => {
           }}
         >
           <h4 className="py-2" style={{ fontWeight: "bold" }}>
-            {props.title}
+            {!props.isLoading ? (
+              <span>{props.title}</span>
+            ) : (
+              <Skeleton>Helloooooooooooooo</Skeleton>
+            )}
           </h4>
-          <p className={`${classes.seeMoreLink} py-2`}>
-            <Link href={props.to ? props.to : "#"}>See more</Link>
-          </p>
+          {!props.seeMore && (
+            <>
+              {!props.isLoading && (
+                <p className={`${classes.seeMoreLink} py-2`}>
+                  <Link href={props.to ? props.to : "#"}>See more</Link>
+                </p>
+              )}
+            </>
+          )}
         </div>
         <hr style={{ marginBottom: 20, marginTop: -15 }} />
-        <HorizontalScroll data={props.data} />
+
+        {!props.isLoading ? (
+          <HorizontalScroll data={props.data} />
+        ) : (
+          <SkeletonHorizontalScroll />
+        )}
       </Container>
     </section>
   );

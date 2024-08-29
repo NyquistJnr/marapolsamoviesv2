@@ -45,6 +45,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
+import useReviewActions from "@/hooks/useLikeAndSave";
 
 const BackdropExample1 = (props) => {
   const OverlayOne = () => (
@@ -78,6 +79,9 @@ const CommentShare = (props) => {
   const [user] = useAuthState(auth);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { likedPost, bookmarkPost, handleLike, handleBookmark } =
+    useReviewActions(props.id, user, props.optional);
+
   const [newCommentData, setNewCommentData] = useState(
     props.value ? props.value : []
   );
@@ -85,86 +89,8 @@ const CommentShare = (props) => {
   // Comment Box
   const [showCommentBox, setShowCommentBox] = useState(false);
 
-  // Like Post
-  const [likedPost, setLikedPost] = useState(false);
-
-  // Bookmark Post
-  const [bookmarkPost, setBookmarkPost] = useState(false);
-
   const handleNewDataIn = (newData) => {
     setNewCommentData([newData, ...newCommentData]);
-  };
-
-  useEffect(() => {
-    const fetchReviewData = async () => {
-      const docRef = doc(db, "reviews", props.id);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const reviewData = docSnap.data();
-        // setLikeCount(reviewData.likes.length);
-        setLikedPost(reviewData.likes?.some((like) => like.uid === user?.uid));
-      }
-    };
-
-    fetchReviewData();
-  }, [props.id, user?.uid]);
-
-  const handleLike = async () => {
-    const docRef = doc(db, "reviews", props.id);
-
-    if (likedPost) {
-      // Unlike the review
-      await updateDoc(docRef, {
-        likes: arrayRemove({ uid: user?.uid }),
-      });
-      // setLikeCount(likeCount - 1);
-      setLikedPost(false);
-    } else {
-      // Like the review
-      await updateDoc(docRef, {
-        likes: arrayUnion({ uid: user?.uid }),
-      });
-      // setLikeCount(likeCount + 1);
-      setLikedPost(true);
-    }
-  };
-
-  useEffect(() => {
-    const fetchReviewDataForBookMark = async () => {
-      const docRef = doc(db, "reviews", props.id);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const reviewData = docSnap.data();
-        // setLikeCount(reviewData.likes.length);
-        setBookmarkPost(
-          reviewData.saves?.some((bookmark) => bookmark.uid === user?.uid)
-        );
-      }
-    };
-
-    fetchReviewDataForBookMark();
-  }, [props.id, user?.uid]);
-
-  const handleBookmark = async () => {
-    const docRef = doc(db, "reviews", props.id);
-
-    if (bookmarkPost) {
-      // Unlike the review
-      await updateDoc(docRef, {
-        saves: arrayRemove({ uid: user?.uid }),
-      });
-      // setLikeCount(likeCount - 1);
-      setBookmarkPost(false);
-    } else {
-      // Like the review
-      await updateDoc(docRef, {
-        saves: arrayUnion({ uid: user?.uid }),
-      });
-      // setLikeCount(likeCount + 1);
-      setBookmarkPost(true);
-    }
   };
 
   return (

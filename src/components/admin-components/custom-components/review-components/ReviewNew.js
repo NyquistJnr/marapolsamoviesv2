@@ -19,6 +19,7 @@ import { db, storage } from "@/app/firebase/config";
 import { useAuth } from "@/context/AuthContext";
 
 import { BsTrash } from "react-icons/bs";
+import { toast, ToastContainer } from "react-toastify";
 
 const ReviewNew = ({ reviewId }) => {
   const { username } = useAuth();
@@ -114,7 +115,7 @@ const ReviewNew = ({ reviewId }) => {
           industry,
           streamingPlatform,
         });
-        alert("Review updated successfully!");
+        toast.success("Review updated successfully!");
       } else {
         // Create a new review
         await addDoc(collection(db, "reviews"), {
@@ -128,16 +129,17 @@ const ReviewNew = ({ reviewId }) => {
           industry,
           streamingPlatform,
         });
-        alert("Review submitted successfully!");
+        toast.success("Review submitted successfully!");
       }
     } catch (error) {
       console.error("Error saving document: ", error);
-      alert("Failed to save review.");
+      toast.error("Failed to save review.");
     }
   };
 
   return (
     <Container fluid>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <section
           style={{

@@ -136,7 +136,7 @@ const MainProfile = () => {
               style={{ borderRadius: 10 }}
             />
             <div style={{ marginTop: 20, fontWeight: "bold", fontSize: 20 }}>
-              {userData.displayName}
+              Welcome {userData.displayName}!
             </div>
             <div style={{ marginBottom: 10, fontSize: 13 }}>{email}</div>
             <Link href="/profile/edit" className={`${classes.editBtn} btn`}>

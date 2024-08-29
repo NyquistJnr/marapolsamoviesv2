@@ -7,6 +7,7 @@ import commentIcon from "../../../../public/images/icons/comment.svg";
 import saveIcon from "../../../../public/images/icons/save.svg";
 import likedSaveIcon from "../../../../public/images/icons/likedSave.svg";
 import likedHeartIcon from "../../../../public/images/icons/likedHeart.svg";
+import Link from "next/link";
 
 const CommentedProfile = ({
   title,
@@ -36,7 +37,7 @@ const CommentedProfile = ({
         <div className={styles.postContent}>
           <div>
             <h3 style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
-              {title}
+              <Link href={`/reviews/detail?id=${postId}`}>{title}</Link>
             </h3>
             <p style={{ fontSize: 15 }}>{content}</p>
           </div>
@@ -85,7 +86,7 @@ const CommentedProfile = ({
         </div>
       </div>
       {userComments?.map((data) => (
-        <>
+        <section key={Math.random()}>
           <div
             style={{
               height: 40,
@@ -132,7 +133,7 @@ const CommentedProfile = ({
               </div>
             </div>
           </div>
-        </>
+        </section>
       ))}
     </>
   );

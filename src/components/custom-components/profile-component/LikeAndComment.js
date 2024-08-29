@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import classes from "./LikeAndComment.module.css";
+import Link from "next/link";
 
 const LikeAndComment = (props) => {
   return (
@@ -12,12 +13,25 @@ const LikeAndComment = (props) => {
         justifyContent: "space-evenly",
       }}
     >
-      <Image src={props.src} alt={props.title} className={classes.imgStyle} />
+      <Image
+        src={props.image}
+        alt={props.title}
+        className={classes.imgStyle}
+        width={100}
+        height={100}
+        style={{
+          width: "100%",
+          height: 150,
+          objectFit: "cover",
+          objectPosition: "50% 30%",
+          borderRadius: 10,
+        }}
+      />
       <h3 style={{ marginTop: 10, fontSize: 16, fontWeight: "bold" }}>
-        {props.title}
+        <Link href={`/reviews/detail?id=${props.postID}`}>{props.title}</Link>
       </h3>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>{props.date}</div>
+        <div>{props.timestamp?.toDate()?.toLocaleString()}</div>
         <div
           style={{
             background: "transparent",
@@ -27,7 +41,7 @@ const LikeAndComment = (props) => {
             padding: "0 2%",
           }}
         >
-          {props.badge}
+          {props.postType}
         </div>
       </div>
     </section>

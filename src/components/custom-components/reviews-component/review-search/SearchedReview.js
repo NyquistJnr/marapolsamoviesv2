@@ -12,6 +12,8 @@ import CommentShare from "@/components/general-components/CommentShare";
 import RatingComponent from "@/components/general-components/RatingComponent";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
+import Link from "next/link";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const SearchedReviewComponent = (props) => {
   const [data, setData] = useState(null);
@@ -52,10 +54,19 @@ const SearchedReviewComponent = (props) => {
     formattedDate = date.toLocaleString();
   }
 
-  console.log("data");
+  // console.log(data);
   return (
     <main style={{ marginBottom: 50 }}>
       <Container>
+        <div className="py-4">
+          <Link
+            href="/reviews"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <FaArrowLeftLong style={{ marginRight: 10 }} />
+            Back
+          </Link>
+        </div>
         <div className="row">
           <div className="col-12 col-sm-12 col-md-5 col-lg-3 py-2">
             <Image
@@ -128,7 +139,11 @@ const SearchedReviewComponent = (props) => {
           <p>{data.verdict}</p>
         </div>
         <RatingComponent value={data.rating} />
-        <CommentShare value={data?.comments} id={props.reviewId} />
+        <CommentShare
+          value={data?.comments}
+          id={props.reviewId}
+          optional={data}
+        />
         <div style={{ marginTop: 50 }}>
           <ReviewPack title="Similar Reviews" />
         </div>

@@ -195,7 +195,9 @@ const ProfileEdit = () => {
         setUploading(false);
       }
     } else {
-      alert("User is not logged in.");
+      toast.error("User is not logged in.", {
+        position: "top-center",
+      });
     }
   };
 

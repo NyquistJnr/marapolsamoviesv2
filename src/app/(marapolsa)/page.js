@@ -1,17 +1,15 @@
-import Image from "next/image";
+"use client";
+
+import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
 import styles from "./page.module.css";
 import { Container } from "react-bootstrap";
 import HorizontalScroll from "@/components/basic-ui/horizontal-scroll/HorizontalScroll";
 import LastestList from "@/components/custom-components/home-component/LastestList";
 import PopularList from "@/components/custom-components/home-component/PopularList";
 
-const isLoggedIn = true;
-
 // Images Needed
 import img from "../../../public/images/templates-imgs/treandingimage1.png";
-import img2 from "../../../public/images/templates-imgs/treandingimage2.png";
-import img3 from "../../../public/images/templates-imgs/treandingimage3.png";
-import img4 from "../../../public/images/templates-imgs/treandingimage4.png";
+
 import lastestImg1 from "../../../public/images/templates-imgs/lastest-img1.png";
 import lastestImg2 from "../../../public/images/templates-imgs/lastest-img2.png";
 import lastestImg3 from "../../../public/images/templates-imgs/lastest-img3.png";
@@ -25,6 +23,9 @@ import NewsList from "@/components/custom-components/home-component/news-compone
 import MovieTvShowList from "@/components/custom-components/home-component/movie-tvshows-components/MovieTvShowList";
 import JoinConversation from "@/components/custom-components/join-conversation/JoinConversation";
 import Unwrapped from "@/components/custom-components/unwrapped-component/Unwrapped";
+import HorRecommendation from "@/components/general-components/HorRecommendation";
+import { useAuth } from "@/context/AuthContext";
+import useTrendingPost from "@/hooks/useTrendingPost";
 
 const data1 = [
   {
@@ -170,12 +171,20 @@ export const data4 = [
 ];
 
 export default function Home() {
+  const { isAuthenticated } = useAuth();
+  const { recentData, error } = useFetchRecentReviews();
+  const { sortedReviews: trendingPost, isLoading } = useTrendingPost();
+  // console.log(trendingPost);
+
   return (
     <>
       <Container>
-        <h1 style={{ fontWeight: "bold", marginTop: 20 }}>Trending Reviews</h1>
-        <hr style={{ border: "1px solid #000", marginBottom: 20 }} />
-        <HorizontalScroll />
+        <HorRecommendation
+          title="Trending"
+          data={trendingPost}
+          isLoading={isLoading}
+          seeMore={true}
+        />
         <div style={{ marginTop: 50 }}>
           <div className="row">
             <div className="col-12 col-sm-12 col-md-7 col-lg-8 py-3">
@@ -192,7 +201,7 @@ export default function Home() {
         <MovieTvShowList data={data4} name="Movies & TV Shows" />
       </Container>
       {/* Start of New Section */}
-      {isLoggedIn ? (
+      {isAuthenticated ? (
         <Container>
           <div
             style={{

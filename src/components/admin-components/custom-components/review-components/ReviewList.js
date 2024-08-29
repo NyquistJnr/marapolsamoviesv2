@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import classes from "./ReviewList.module.css";
 
@@ -8,79 +7,26 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import SingleReview from "../../general-components/SingleReview";
 
-import img1 from "../../../../../public/images/templates-imgs/movie-detail.png";
-import { Button } from "react-bootstrap";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { db } from "@/app/firebase/config";
 import { GrAdd } from "react-icons/gr";
+import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
+import useFetchCategoryData from "@/hooks/useGetShowAdmin";
 
 const ReviewListAdmin = () => {
-  const [recentData, setRecentData] = useState([]);
-  const [moviesData, setMoviesData] = useState([]);
-  const [tvShowsData, setTvShowsData] = useState([]);
+  const {
+    recentData,
+    isLoading: mainLoading,
+    error: mainError,
+  } = useFetchRecentReviews();
+  const { data: moviesData, isLoading, error } = useFetchCategoryData("Movies");
+  const {
+    data: tvShowsData,
+    isLoading: tvshowLoading,
+    error: tvshowError,
+  } = useFetchCategoryData("TV Shows");
 
-  /* First Function */
-  const fetchReviews = async () => {
-    try {
-      const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
-      const querySnapshot = await getDocs(q);
-      const reviews = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setRecentData(reviews);
-    } catch (error) {
-      console.error("Error fetching reviews: ", error);
-    }
-  };
-
-  /* Second Function */
-  const fetchMovies = async () => {
-    try {
-      const q = query(
-        collection(db, "reviews"),
-        where("category", "==", "Movies"),
-        orderBy("timestamp", "desc")
-      );
-      const querySnapshot = await getDocs(q);
-      const moviesData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setMoviesData(moviesData);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  };
-
-  /* Third Function */
-  const fetchTvShows = async () => {
-    try {
-      const q = query(
-        collection(db, "reviews"),
-        where("category", "==", "TV Shows"),
-        orderBy("timestamp", "desc")
-      );
-      const querySnapshot = await getDocs(q);
-      const tvShowsData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setTvShowsData(tvShowsData);
-    } catch (error) {
-      console.error("Error fetching tvshows:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchReviews();
-    fetchMovies();
-    fetchTvShows();
-  }, []);
-
-  console.log(moviesData);
+  // console.log(moviesData);
   // console.log(recentData);
-  console.log(tvShowsData);
+  // console.log(tvShowsData);
   return (
     <div>
       <section
@@ -153,42 +99,81 @@ const ReviewListAdmin = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              {recentData.length > 0 ? (
-                <section>
-                  {recentData.map((data) => (
-                    <div key={data.id}>
-                      <SingleReview {...data} />
-                    </div>
-                  ))}
-                </section>
-              ) : (
+              {mainLoading ? (
                 <div className="text-center">Loading...</div>
+              ) : (
+                <>
+                  {recentData.length > 0 ? (
+                    <section>
+                      {recentData.map((data) => (
+                        <div key={data.id}>
+                          <SingleReview {...data} />
+                        </div>
+                      ))}
+                    </section>
+                  ) : (
+                    <div className="text-center">No Review yet</div>
+                  )}
+                </>
+              )}
+              {mainError && (
+                <div className="text-center">
+                  An Error Occured
+                  <hr />
+                  Reload your browser.
+                </div>
               )}
             </TabPanel>
             <TabPanel>
-              {moviesData.length > 0 ? (
-                <section>
-                  {moviesData.map((data) => (
-                    <div key={data.id}>
-                      <SingleReview {...data} />
-                    </div>
-                  ))}
-                </section>
-              ) : (
+              {isLoading ? (
                 <div className="text-center">Loading...</div>
+              ) : (
+                <>
+                  {moviesData.length > 0 ? (
+                    <section>
+                      {moviesData.map((data) => (
+                        <div key={data.id}>
+                          <SingleReview {...data} />
+                        </div>
+                      ))}
+                    </section>
+                  ) : (
+                    <div className="text-center">No Movie Reviews yet!</div>
+                  )}
+                </>
+              )}
+              {error && (
+                <div className="text-center">
+                  An Error Occured
+                  <hr />
+                  Reload your browser.
+                </div>
               )}
             </TabPanel>
             <TabPanel>
-              {tvShowsData.length > 0 ? (
-                <section>
-                  {tvShowsData.map((data) => (
-                    <div key={data.id}>
-                      <SingleReview {...data} />
-                    </div>
-                  ))}
-                </section>
-              ) : (
+              {tvshowLoading ? (
                 <div className="text-center">Loading...</div>
+              ) : (
+                <>
+                  {tvShowsData.length > 0 ? (
+                    <section>
+                      {tvShowsData.map((data) => (
+                        <div key={data.id}>
+                          <SingleReview {...data} />
+                        </div>
+                      ))}
+                    </section>
+                  ) : (
+                    <div className="text-center">No TV Shows Reviews yet!</div>
+                  )}
+                </>
+              )}
+              {tvshowError && (
+                <div className="text-center">
+                  An Error Occured
+                  <hr />
+                  Reload your browser.
+                </div>
               )}
             </TabPanel>
           </TabPanels>
