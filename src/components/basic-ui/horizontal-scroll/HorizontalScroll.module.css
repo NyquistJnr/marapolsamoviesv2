@@ -1,10 +1,27 @@
+/* HorizontalScroll.module.css */
+
 .bodyContainer {
-  width: 100%;
   display: flex;
   overflow-x: auto;
-  scrollbar-color: transparent transparent;
-  user-select: none;
-  background-color: transparent;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+  gap: 20px; /* Space between items */
+  scrollbar-width: none;
+}
+
+.cardContainer {
+  flex: 0 0 auto;
+  width: 300px; /* Adjust width as needed */
+  border: 1px solid #a19f9d;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 100%;
 }
 
 .imgStyle {
@@ -15,44 +32,36 @@
   transform: scale(1.1);
 }
 
+.textContent {
+  text-align: left;
+  margin-top: 25px;
+}
+
+.textContent h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.textContent p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
 @media (max-width: 399px) {
-  .cardConatiner {
-    border: 2px solid #a19f9d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0 0 0;
-    height: 335px;
-    border-radius: 10px;
-    width: 90%;
+  .cardContainer {
+    width: 80%;
   }
 }
 
 @media (min-width: 400px) and (max-width: 767px) {
-  .cardConatiner {
-    border: 2px solid #a19f9d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0 0 0;
-    height: 395px;
-    border-radius: 10px;
-    width: 90%;
+  .cardContainer {
+    width: 85%;
   }
 }
 
 @media (min-width: 768px) {
-  .cardConatiner {
-    border: 2px solid #a19f9d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0 0 0;
-    height: 335px;
-    border-radius: 10px;
-    width: 90%;
+  .cardContainer {
+    width: 300px; /* Standard width for larger screens */
   }
 }
