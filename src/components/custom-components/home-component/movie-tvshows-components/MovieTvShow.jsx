@@ -1,6 +1,7 @@
 import Image from "next/image";
 import classes from "./MovieTvShow.module.css";
 import Link from "next/link";
+import { shortenText } from "@/utils/text-shortener";
 
 const MovieTvShow = (props) => {
   return (
@@ -12,7 +13,7 @@ const MovieTvShow = (props) => {
       }}
     >
       <section style={{ display: "flex" /* justifyContent: "space-evenly" */ }}>
-        <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <Image
             src={props.image}
             alt={props.title}
@@ -38,10 +39,10 @@ const MovieTvShow = (props) => {
           <div>
             <Link href={`/movies/${props.id}`}>
               <h3 className={classes.h1} style={{ fontWeight: "bold" }}>
-                {props.title}
+                {shortenText(props.title, 7)}
               </h3>
             </Link>
-            <p className={classes.h2}>{props.movieStory}</p>
+            <p className={classes.h2}>{shortenText(props.movieStory, 20)}</p>
           </div>
           <div>
             <p className={classes.p}>

@@ -1,13 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-
-import classes from "./SingleLastestNews.module.css";
 import Link from "next/link";
+import classes from "./SingleLastestNews.module.css";
+import { shortenText } from "@/utils/text-shortener";
 
 const NewsItem = (props) => {
-  const router = useRouter();
   return (
     <>
       <div className="row">
@@ -21,9 +19,13 @@ const NewsItem = (props) => {
         >
           <div>
             <Link href={`/news/${props.id}`}>
-              <h1 className={classes.heading1}>{props.title}</h1>
+              <h1 className={classes.heading1}>
+                {shortenText(props.title, 15)}
+              </h1>
             </Link>
-            <p className={classes.description}>{props.description}</p>
+            <p className={classes.description}>
+              {shortenText(props.description, 70)}
+            </p>
           </div>
           <div className={classes.subHeading}>
             by
@@ -46,8 +48,9 @@ const NewsItem = (props) => {
             src={props.src}
             alt={props.title}
             priority
-            width={100}
-            height={100}
+            layout="responsive"
+            width={400}
+            height={225}
           />
         </div>
       </div>

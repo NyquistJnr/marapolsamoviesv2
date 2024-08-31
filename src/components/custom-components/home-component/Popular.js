@@ -1,3 +1,4 @@
+import Link from "next/link";
 import classes from "./Popular.module.css";
 import Image from "next/image";
 
@@ -22,7 +23,9 @@ const Popular = (props) => {
         </div>
         <div style={{ marginTop: 20, width: "90%" }}>
           <h3 className={classes.h1} style={{ fontWeight: "bold" }}>
-            {props.title}
+            <Link href={`/${props.collectionName}/${props.id}`}>
+              {props.title}
+            </Link>
           </h3>
           <div
             style={{

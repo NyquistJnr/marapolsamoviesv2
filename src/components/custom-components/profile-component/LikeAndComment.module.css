@@ -1,0 +1,18 @@
+.imgWrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.imgStyle {
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.imgStyle:hover {
+  transform: scale(1.1);
+}

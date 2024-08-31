@@ -83,7 +83,7 @@ const NewsComponent = () => {
         ) : (
           <>
             <TrendingNews />
-            <h1 style={{ marginTop: 10 }} className={styles.heading1}>
+            <h1 style={{ marginTop: 50 }} className={styles.heading1}>
               Latest News
             </h1>
             <hr style={{ marginTop: 20, border: "0.5px solid #000" }} />

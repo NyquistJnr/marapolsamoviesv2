@@ -1,3 +1,38 @@
+/* TrendingNews.module.css */
+
+.title {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container {
+  margin-bottom: 0px;
+}
+
+.separator {
+  margin-top: 4px;
+  border: 1px solid #000;
+}
+
+.imgWrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.imgStyle {
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.imgStyle:hover {
+  transform: scale(1.1);
+}
+
 .heading1 {
   font-size: 20px;
   font-weight: bold;
@@ -12,12 +47,4 @@
 
 .description {
   font-size: 14px;
-}
-
-.imgStyle {
-  transition: transform 0.3s ease-in-out;
-}
-
-.imgStyle:hover {
-  transform: scale(1.1);
 }

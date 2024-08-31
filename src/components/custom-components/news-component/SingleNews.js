@@ -3,10 +3,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Button, Container } from "react-bootstrap";
-
 import classes from "./SingleNews.module.css";
-
-import TrendingNews, { trendingNewsData } from "./TrendingNews";
+import TrendingNews from "./TrendingNews";
 import CommentShare from "@/components/general-components/CommentShare";
 import MainSearchFilterBar from "@/components/general-components/MainSearchFilter";
 import usePostDetails from "@/hooks/usePostDetail";
@@ -23,7 +21,6 @@ const SingleNews = (props) => {
   const [searchedNews, setSearchedNews] = useState("");
 
   const { data, loading, error, formattedDate } = usePostDetails("news", id);
-
   const {
     searchResults,
     isLoading,
@@ -58,7 +55,7 @@ const SingleNews = (props) => {
           </Button>
         </div>
         <div className="text-center py-5">
-          An Error Occured, {error.message}
+          An Error Occurred: {error.message}
         </div>
       </div>
     );
@@ -76,7 +73,7 @@ const SingleNews = (props) => {
         <div style={{ marginBottom: 50 }}>
           {serachedError && (
             <div className="py-4 text-center">
-              An Error Occured, {serachedError.message}
+              An Error Occurred: {serachedError.message}
             </div>
           )}
           <div className="py-4">
@@ -135,21 +132,16 @@ const SingleNews = (props) => {
             </Button>
           </div>
           <h2 style={{ fontWeight: "bold", marginBottom: 20 }}>{data.title}</h2>
-          <Image
-            src={data.image}
-            className={classes.imgStyle}
-            alt="Single News Image"
-            /* priority */
-            width={100}
-            height={100}
-            style={{
-              width: "100%",
-              height: 200,
-              objectFit: "cover",
-              objectPosition: "center",
-              borderRadius: 10,
-            }}
-          />
+          <div className={classes.imageContainer}>
+            <Image
+              src={data.image}
+              alt="Single News Image"
+              layout="responsive"
+              width={1200}
+              height={675}
+              className={classes.imgStyle}
+            />
+          </div>
           <div
             style={{ display: "flex", justifyContent: "space-between" }}
             className="py-3"

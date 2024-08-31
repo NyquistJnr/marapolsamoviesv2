@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "react-bootstrap";
 import classes from "./HorizontalScroll.module.css";
+import { shortenText } from "@/utils/text-shortener";
 
 const HorizontalScroll = (props) => {
   return (
@@ -29,7 +30,7 @@ const HorizontalScroll = (props) => {
                 />
                 <div className={classes.textContent}>
                   <Link href={`/reviews/${item.id}`}>
-                    <h4>{item.title}</h4>
+                    <h4>{shortenText(item.title, 7)}</h4>
                   </Link>
                   <p>
                     <strong>Genre: </strong>
