@@ -1,4 +1,3 @@
-// pages/index.js
 "use client";
 
 import { Button, Container } from "react-bootstrap";
@@ -8,70 +7,108 @@ import NewsItem from "./SingleLastestNews";
 import MainSearchFilterBar from "@/components/general-components/MainSearchFilter";
 import styles from "./NewsComponent.module.css";
 
-// Template Image
-import img1 from "../../../../public/images/templates-imgs/showReview1.png";
+import useRecentNews from "@/hooks/useRecentNews";
+import { useState } from "react";
+import useSearchTextPost from "@/hooks/useSearchedText";
+import NewsSkeletonList from "./NewsSkeletonList";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const NewsComponent = () => {
-  const newsData = [
-    {
-      title: "Different Strokes: Same old story saved by good casting",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-      time: "3 hours",
-      author: "Chigox",
-      src: img1,
-    },
-    {
-      title: "Different Strokes: Same old story saved by good casting",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-      time: "3 hours",
-      author: "Chigox",
-      src: img1,
-    },
-    {
-      title: "Different Strokes: Same old story saved by good casting",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-      time: "3 hours",
-      author: "Chigox",
-      src: img1,
-    },
-    {
-      title: "Different Strokes: Same old story saved by good casting",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit elementum tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui magna morbi. Suspendisse consectetur a proin fermentum tincidunt molestie tortor. Auctor duis lorem ultrices malesuada scelerisque...",
-      time: "3 hours",
-      author: "Chigox",
-      src: img1,
-    },
-    // Repeat for the other news items
-  ];
+  const { recentNews, isLoading, error } = useRecentNews();
 
-  const handleSearchFilter = (e) => {
+  const [searchedNews, setSearchedNews] = useState("");
+
+  const {
+    searchResults,
+    isLoading: loading,
+    error: serachedError,
+    searchReviews,
+  } = useSearchTextPost();
+
+  const handleSearchFilter = (item) => {
+    setSearchedNews(item);
+    searchReviews(item, "news");
     // console.log(e);
   };
 
   return (
     <>
-      <MainSearchFilterBar searchedSection={(e) => handleSearchFilter(e)} />
+      <MainSearchFilterBar searchedSection={handleSearchFilter} />
       <Container>
-        <TrendingNews />
-        <h1 className={styles.heading1}>Latest News</h1>
-        <hr style={{ marginTop: 20, border: "0.5px solid #000" }} />
-        {newsData.map((news, index) => (
-          <NewsItem
-            key={index}
-            title={news.title}
-            description={news.description}
-            time={news.time}
-            author={news.author}
-            src={news.src}
-          />
-        ))}
-        <div className="text-center" style={{ marginBottom: 40 }}>
-          <Button className={styles.seeMoreBtn}>See more</Button>
-        </div>
+        {!!searchedNews ? (
+          <div style={{ marginBottom: 50 }}>
+            {serachedError && (
+              <div className="py-4 text-center">
+                An Error Occured, {serachedError.message}
+              </div>
+            )}
+            <div className="py-4">
+              <Button
+                onClick={() => setSearchedNews("")}
+                style={{
+                  backgroundColor: "transparent",
+                  borderColor: "transparent",
+                  color: "#000",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <FaArrowLeftLong style={{ marginRight: 10 }} />
+                Back
+              </Button>
+            </div>
+            {loading ? (
+              <NewsSkeletonList />
+            ) : (
+              <>
+                {searchResults.map((news, index) => (
+                  <NewsItem
+                    key={index}
+                    id={news.id}
+                    title={news.title}
+                    description={news.description}
+                    time={news.timestamp.toDate().toLocaleString()}
+                    author={news.author}
+                    src={news.image}
+                  />
+                ))}
+                {searchResults.length < 1 && (
+                  <div className="py-5 text-center">
+                    No News with the searched words
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        ) : (
+          <>
+            <TrendingNews />
+            <h1 style={{ marginTop: 10 }} className={styles.heading1}>
+              Latest News
+            </h1>
+            <hr style={{ marginTop: 20, border: "0.5px solid #000" }} />
+            {isLoading ? (
+              <NewsSkeletonList />
+            ) : (
+              <>
+                {recentNews.map((news, index) => (
+                  <NewsItem
+                    key={index}
+                    id={news.id}
+                    title={news.title}
+                    description={news.description}
+                    time={news.timestamp.toDate().toLocaleString()}
+                    author={news.author}
+                    src={news.image}
+                  />
+                ))}
+                <div className="text-center" style={{ marginBottom: 40 }}>
+                  <Button className={styles.seeMoreBtn}>See more</Button>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </Container>
     </>
   );

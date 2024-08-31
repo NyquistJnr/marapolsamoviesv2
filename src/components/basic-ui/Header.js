@@ -115,7 +115,7 @@ const Header = () => {
                   as={Link}
                   href="/news"
                   className={
-                    currentPath === "/news" || currentPath === "/news/result"
+                    /^\/news(\/result\/[^/]+|\/[^/]+)?$/.test(currentPath)
                       ? `${classes.activeLink} ${classes.links}`
                       : `${classes.notActiveLink} ${classes.links}`
                   }
@@ -126,9 +126,7 @@ const Header = () => {
                   as={Link}
                   href="/movies"
                   className={
-                    currentPath === "/movies" ||
-                    currentPath === "/movies/list" ||
-                    currentPath === "/movies/result"
+                    /^\/movies(\/list\/[^/]+|\/[^/]+)?$/.test(currentPath)
                       ? `${classes.activeLink} ${classes.links}`
                       : `${classes.notActiveLink} ${classes.links}`
                   }
@@ -194,8 +192,8 @@ const Header = () => {
                               objectFit: "cover",
                               width: 40,
                               height: 40,
-                              objectPosition: "center center",
-                              borderRadius: 50,
+                              objectPosition: "50% 5%",
+                              borderRadius: "100%",
                             }}
                           />
                         ) : (

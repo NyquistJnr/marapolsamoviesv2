@@ -10,7 +10,7 @@ const MainSearchFilterBar = (props) => {
 
   const handleSearchedSection = (item) => {
     props.searchedSection(item);
-    console.log(item);
+    console.log("hmmm", item);
   };
 
   const handleSubmit = (e) => {

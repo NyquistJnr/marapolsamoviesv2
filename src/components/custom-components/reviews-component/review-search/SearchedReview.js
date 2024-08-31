@@ -46,8 +46,25 @@ const SearchedReviewComponent = (props) => {
 
   if (error) {
     return (
-      <div className="text-center py-5">
-        Error fetching data: {error.message}
+      <div className="container" style={{ height: "50vh" }}>
+        <div className="py-4">
+          <Button
+            onClick={() => router.back()}
+            style={{
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              color: "#000",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FaArrowLeftLong style={{ marginRight: 10 }} />
+            Back
+          </Button>
+        </div>
+        <div className="text-center py-5">
+          An Error Occured, {error.message}
+        </div>
       </div>
     );
   }

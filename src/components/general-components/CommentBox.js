@@ -38,7 +38,7 @@ const CommentBox = (props) => {
         username: user.displayName,
       };
 
-      const docRef = doc(db, "reviews", props.id);
+      const docRef = doc(db, !props.type ? "reviews" : props.type, props.id);
       await updateDoc(docRef, {
         comments: arrayUnion(commentData),
       });
@@ -48,7 +48,7 @@ const CommentBox = (props) => {
         userComments: arrayUnion({
           timestamp: new Date(),
           postId: props.id,
-          postType: "reviews",
+          postType: !props.type ? "reviews" : props.type,
           text: comment,
         }),
       });

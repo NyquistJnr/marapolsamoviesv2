@@ -14,7 +14,7 @@ const MovieTvShow = (props) => {
       <section style={{ display: "flex" /* justifyContent: "space-evenly" */ }}>
         <div>
           <Image
-            src={props.src}
+            src={props.image}
             alt={props.title}
             className={classes.size}
             style={{
@@ -22,6 +22,8 @@ const MovieTvShow = (props) => {
               marginLeft: 10 /* objectFit: "cover"  */,
             }}
             priority
+            width={100}
+            height={100}
           />
         </div>
         <div
@@ -34,24 +36,24 @@ const MovieTvShow = (props) => {
           }}
         >
           <div>
-            <Link href="/movies/result">
+            <Link href={`/movies/${props.id}`}>
               <h3 className={classes.h1} style={{ fontWeight: "bold" }}>
                 {props.title}
               </h3>
             </Link>
-            <p className={classes.h2}>{props.description}</p>
+            <p className={classes.h2}>{props.movieStory}</p>
           </div>
           <div>
             <p className={classes.p}>
               <b>Release Date: </b>
-              {props.time}
+              {props.timestamp.toDate().toLocaleString()}
             </p>
             <p style={{ marginTop: -15 }} className={classes.p}>
               {props.genre}
             </p>
             <p style={{ marginTop: -15 }} className={classes.p}>
               <b>Streaming Platform: </b>
-              {props.platform}
+              {props.streamingPlatform}
             </p>
           </div>
         </div>

@@ -1,12 +1,7 @@
-import { Suspense } from "react";
-import MoviesList from "@/components/custom-components/movies-component/MoviesList";
+import MainMovies from "@/components/custom-components/movies-component/MainMovies";
 
 const MovieListPage = () => {
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <MoviesList />
-    </Suspense>
-  );
+  return <MainMovies />;
 };
 
 export default MovieListPage;

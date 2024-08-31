@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useTrendingPost = () => {
+const useTrendingPost = (collectionName = "reviews") => {
   const [sortedReviews, setSortedReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const useTrendingPost = () => {
       setError(null); // Reset error state before fetching
 
       try {
-        const querySnapshot = await getDocs(collection(db, "reviews"));
+        const querySnapshot = await getDocs(collection(db, collectionName));
         const reviews = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           const sumLength =

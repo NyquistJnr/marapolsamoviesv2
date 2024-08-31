@@ -1,0 +1,30 @@
+.formsControls {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.titleControl {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.formStroryControls {
+  box-shadow: none !important;
+}
+
+.deleteBtn {
+  background: transparent !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+.descriptionControl {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  font-size: 16px;
+  font-weight: 500;
+}

@@ -7,7 +7,7 @@ const useSearchTextPost = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const searchReviews = async (searchInput) => {
+  const searchReviews = async (searchInput, collectionName = "reviews") => {
     if (searchInput.trim() === "") {
       setSearchResults([]);
       return;
@@ -17,14 +17,37 @@ const useSearchTextPost = () => {
     setError(null);
 
     try {
-      const collectionRef = collection(db, "reviews");
+      const collectionRef = collection(db, collectionName);
 
-      // Query the reviews collection and order by timestamp
+      // Query the specified collection and order by timestamp
       const q = query(collectionRef, orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
 
       // Convert search input to lowercase for case-insensitive comparison
       const lowerCaseSearchInput = searchInput.toLowerCase();
+
+      // Determine the fields to search based on the collection name
+      let searchFields;
+      if (collectionName === "movies") {
+        searchFields = [
+          "title",
+          "genre",
+          "streamingPlatform",
+          "movieDirector",
+          "author",
+          "industry",
+        ];
+      } else if (collectionName === "news") {
+        searchFields = ["title", "author"];
+      } else {
+        searchFields = [
+          "title",
+          "category",
+          "streamingPlatform",
+          "genre",
+          "industry",
+        ];
+      }
 
       // Filter results based on the search input
       const filteredResults = querySnapshot.docs
@@ -32,20 +55,15 @@ const useSearchTextPost = () => {
           id: doc.id,
           ...doc.data(),
         }))
-        .filter(
-          (doc) =>
-            doc.title?.toLowerCase().includes(lowerCaseSearchInput) ||
-            doc.category?.toLowerCase().includes(lowerCaseSearchInput) ||
-            doc.streamingPlatform
-              ?.toLowerCase()
-              .includes(lowerCaseSearchInput) ||
-            doc.genre?.toLowerCase().includes(lowerCaseSearchInput) ||
-            doc.industry?.toLowerCase().includes(lowerCaseSearchInput)
+        .filter((doc) =>
+          searchFields.some((field) =>
+            doc[field]?.toLowerCase().includes(lowerCaseSearchInput)
+          )
         );
 
       setSearchResults(filteredResults);
     } catch (error) {
-      console.error("Error searching reviews:", error);
+      console.error(`Error searching ${collectionName}:`, error);
       setError(error);
     } finally {
       setIsLoading(false);

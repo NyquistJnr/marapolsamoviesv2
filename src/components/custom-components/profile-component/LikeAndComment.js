@@ -28,7 +28,9 @@ const LikeAndComment = (props) => {
         }}
       />
       <h3 style={{ marginTop: 10, fontSize: 16, fontWeight: "bold" }}>
-        <Link href={`/reviews/detail?id=${props.postID}`}>{props.title}</Link>
+        <Link href={`/${props.postType.toLowerCase()}/${props.postID}`}>
+          {props.title}
+        </Link>
       </h3>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>{props.timestamp?.toDate()?.toLocaleString()}</div>

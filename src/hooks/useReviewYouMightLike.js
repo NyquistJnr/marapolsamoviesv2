@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, query, limit, orderBy } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useReviewYouMightLike = (numberOfDocs = 5) => {
+const useReviewYouMightLike = (
+  numberOfDocs = 5,
+  collectionName = "reviews"
+) => {
   const [randomReviews, setRandomReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,7 +16,7 @@ const useReviewYouMightLike = (numberOfDocs = 5) => {
       setError(null);
 
       try {
-        const reviewsCollection = collection(db, "reviews");
+        const reviewsCollection = collection(db, collectionName);
         // Use a query to fetch a limited number of random documents
         const q = query(
           reviewsCollection,

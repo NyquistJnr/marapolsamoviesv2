@@ -40,7 +40,11 @@ const SingleReview = (props) => {
 
   const handleDelete = async (documentId) => {
     try {
-      const docRef = doc(db, "reviews", documentId);
+      let collectionName = "reviews";
+      if (props.type) {
+        collectionName = props.type;
+      }
+      const docRef = doc(db, collectionName, documentId);
       await deleteDoc(docRef);
       setDeleted(true);
       console.log("Document deleted successfully!");
@@ -180,11 +184,24 @@ const SingleReview = (props) => {
                 }}
               ></Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} href={`/admin/reviews/${props.id}`}>
+                <Dropdown.Item
+                  as={Link}
+                  href={
+                    props.type
+                      ? `/admin/${props.type}/${props.id}`
+                      : `/admin/reviews/${props.id}`
+                  }
+                >
                   Edit
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={() => handleCopyClick(`/admin/reviews/${props.id}`)}
+                  onClick={() => {
+                    if (props.type) {
+                      handleCopyClick(`/admin/${props.type}/${props.id}`);
+                    } else {
+                      handleCopyClick(`/admin/reviews/${props.id}`);
+                    }
+                  }}
                 >
                   Copy link
                 </Dropdown.Item>

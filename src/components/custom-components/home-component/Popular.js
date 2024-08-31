@@ -7,10 +7,17 @@ const Popular = (props) => {
       <section>
         <div style={{ marginTop: 30 }}>
           <Image
-            src={props.src}
+            src={props.image}
             alt={props.title}
-            style={{ width: "100%" }}
+            style={{
+              width: "100%",
+              height: 130,
+              borderRadius: 10,
+              objectFit: "cover",
+            }}
             priority
+            width={100}
+            height={100}
           />
         </div>
         <div style={{ marginTop: 20, width: "90%" }}>
@@ -24,12 +31,14 @@ const Popular = (props) => {
               alignItems: "center",
             }}
           >
-            <p className={classes.p}>{props.time}</p>
+            <p className={classes.p}>
+              {props.timestamp.toDate().toLocaleString()}
+            </p>
             <button
               className="btn"
               style={{ color: "#E86C44", border: "1px solid #E86C44" }}
             >
-              {props.identity}
+              {props.collectionName}
             </button>
           </div>
         </div>

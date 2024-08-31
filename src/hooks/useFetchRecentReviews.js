@@ -10,7 +10,11 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useFetchRecentReviews = (id, limit = null) => {
+const useFetchRecentReviews = (
+  id,
+  limit = null,
+  collectionName = "reviews"
+) => {
   const [recentData, setRecentData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,14 +25,14 @@ const useFetchRecentReviews = (id, limit = null) => {
       setError(null); // Reset error state before fetching
 
       try {
-        // Construct the query with optional limit
+        // Construct the query with optional limit and collection name
         const reviewsQuery = limit
           ? query(
-              collection(db, "reviews"),
+              collection(db, collectionName), // Use the provided or default collection name
               orderBy("timestamp", "desc"),
               firebaseLimit(limit)
             )
-          : query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+          : query(collection(db, collectionName), orderBy("timestamp", "desc"));
 
         const querySnapshot = await getDocs(reviewsQuery);
         const reviews = querySnapshot.docs.map((doc) => ({
@@ -46,7 +50,7 @@ const useFetchRecentReviews = (id, limit = null) => {
     };
 
     fetchReviews();
-  }, [id, limit]);
+  }, [id, limit, collectionName]);
 
   return { recentData, isLoading, error };
 };

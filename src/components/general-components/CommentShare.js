@@ -80,7 +80,7 @@ const CommentShare = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { likedPost, bookmarkPost, handleLike, handleBookmark } =
-    useReviewActions(props.id, user, props.optional);
+    useReviewActions(props.id, user, props.optional, props.collection);
 
   const [newCommentData, setNewCommentData] = useState(
     props.value ? props.value : []
@@ -152,15 +152,19 @@ const CommentShare = (props) => {
           style={{ display: "flex", alignItems: "center", padding: "10px 0" }}
         >
           <span style={{ marginRight: 10 }}>Share:</span>
-          <FaWhatsapp size={30} style={{ marginRight: 10 }} />
-          <FaXTwitter size={30} style={{ marginRight: 10 }} />
-          <FaInstagram size={30} style={{ marginRight: 10 }} />
-          <FiFacebook size={30} />
+          <FaWhatsapp size={25} style={{ marginRight: 10 }} />
+          <FaXTwitter size={25} style={{ marginRight: 10 }} />
+          <FaInstagram size={25} style={{ marginRight: 10 }} />
+          <FiFacebook size={25} />
         </div>
       </section>
       <section style={{ marginTop: 20, marginBottom: 20 }}>
         {showCommentBox && (
-          <CommentBox id={props.id} onSaveComment={handleNewDataIn} />
+          <CommentBox
+            id={props.id}
+            onSaveComment={handleNewDataIn}
+            type={props.collection}
+          />
         )}
       </section>
       <section style={{ marginTop: 20, marginBottom: 20 }}>

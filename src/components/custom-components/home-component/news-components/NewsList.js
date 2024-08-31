@@ -1,3 +1,4 @@
+import Link from "next/link";
 import News from "./News";
 
 const NewsList = (props) => {
@@ -12,7 +13,9 @@ const NewsList = (props) => {
         }}
       >
         <h3>{props.name}</h3>
-        <p>See more</p>
+        <div>
+          <Link href="/news">See more</Link>
+        </div>
       </div>
       <hr />
       <div className="row">

@@ -52,7 +52,7 @@ const AwardsComponents = () => {
           </div>
         </div>
       </section>
-      <CommentShare />
+      {/* <CommentShare /> */}
       <TrendingNews title="Recommended News" />
     </Container>
   );

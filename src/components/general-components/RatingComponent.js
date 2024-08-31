@@ -27,9 +27,16 @@ const RatingComponent = (props) => {
   };
 
   return (
-    <div style={{ fontSize: 22, display: "flex", flexWrap: "wrap" }}>
+    <div
+      style={{
+        fontSize: 20,
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+      }}
+    >
       <b>{props.title ? props.title : "Top"} Rating:</b>
-      {props.value * 2}/10{" "}
+      <span>{props.value * 2}/10 </span>
       <Rating
         style={{ maxWidth: 190, marginLeft: 10 }}
         value={props.title ? rating : props.value}

@@ -1,0 +1,36 @@
+/* ImageScroller.module.css */
+.scrollerContainer {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  padding: 10px 0;
+  scrollbar-width: none; /* For Firefox */
+}
+
+.scrollerContainer::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.scroller {
+  display: flex;
+  gap: 10px;
+}
+
+.imageContainer {
+  flex: 0 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image {
+  width: 180px;
+  height: 250px; /* Adjust height as needed */
+  border-radius: 8px; /* Optional styling */
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effects */
+.imageContainer:hover .image {
+  transform: scale(1.05); /* Scale up the image slightly */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}

@@ -7,10 +7,17 @@ const News = (props) => {
       <section>
         <div>
           <Image
-            src={props.src}
+            src={props.image}
             alt={props.title}
-            style={{ width: "100%" }}
+            style={{
+              width: "100%",
+              height: 200,
+              borderRadius: 10,
+              objectFit: "cover",
+            }}
             priority
+            width={100}
+            height={100}
           />
           <h3
             className={classes.h1}

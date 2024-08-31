@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MovieTvShow from "./MovieTvShow";
 
 const MovieTvShowList = (props) => {
@@ -12,7 +13,9 @@ const MovieTvShowList = (props) => {
         }}
       >
         <h3>{props.name}</h3>
-        <p>See more</p>
+        <div>
+          <Link href="/movies/list">See more</Link>
+        </div>
       </div>
       <hr style={{ border: "1.4px solid" }} />
       <div className="row" style={{ marginBottom: 30 }}>

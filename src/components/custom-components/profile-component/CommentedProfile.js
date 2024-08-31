@@ -20,6 +20,8 @@ const CommentedProfile = ({
   postId,
   totalLikes,
   totalSaves,
+  postType,
+  description,
 }) => {
   return (
     <>
@@ -34,29 +36,34 @@ const CommentedProfile = ({
             objectFit: "cover",
             objectPosition: "center",
             borderRadius: 10,
+            height: 170,
           }}
         />
         <div className={styles.postContent}>
           <div>
             <h3 style={{ marginTop: 10, fontWeight: "bold", fontSize: 20 }}>
-              <Link href={`/reviews/detail?id=${postId}`}>{title}</Link>
+              <Link href={`/${postType}/${postId}`}>{title}</Link>
             </h3>
             <p style={{ fontSize: 15 }}>{content}</p>
+            <div>{description}</div>
           </div>
           <div
-            style={{
-              display: "flex",
+            style={
+              {
+                /* display: "flex",
               justifyContent: "space-between",
               flexWrap: "wrap",
-            }}
+              alignItems: "center", */
+              }
+            }
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <p style={{ marginRight: 20 }}>
                 by <b>{author}</b>
               </p>
               <p>{date.toDate().toLocaleString()}</p>
             </div>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <div
                 style={{
                   display: "flex",

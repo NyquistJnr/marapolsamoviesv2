@@ -13,19 +13,19 @@ const CommentList = (props) => {
               <div className="d-flex align-items-center mb-2">
                 <Image
                   src={comment.profile_pic}
-                  roundedCircle
                   className={styles.avatar}
                   alt="dp profile"
                   style={{
                     width: 45,
                     height: 45,
                     objectFit: "cover",
-                    objectPosition: "center",
-                    borderRadius: "50%",
+                    objectPosition: "25% 5%",
+                    borderRadius: "100%",
                   }}
                 />
                 <div className="ml-2">
-                  <span className={styles.username}>@{comment.username}</span> |{" "}
+                  <span className={styles.username}>@ {comment.username}</span>{" "}
+                  |{" "}
                   <span className={styles.time}>
                     {comment.timestamp?.toDate()?.toLocaleString()}
                   </span>

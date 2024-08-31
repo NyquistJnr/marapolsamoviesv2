@@ -3,10 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import useTrendingPost from "@/hooks/useTrendingPost";
+
 import classes from "./TrendingNews.module.css";
 
 // Template Image
 import img1 from "../../../../public/images/templates-imgs/popular-img3.png";
+import TrendingSkeleton from "./TrendingSkeleton";
 
 export const trendingNewsData = [
   {
@@ -67,37 +70,58 @@ export const trendingNewsData = [
 ];
 
 const TrendingNews = (props) => {
+  const {
+    sortedReviews: trendingNewsData,
+    isLoading,
+    error,
+  } = useTrendingPost("news");
   return (
-    <div style={{ marginBottom: 50 }}>
+    <>
       <h3 style={{ fontWeight: "bold" }}>
         {!!props.title ? props.title : "Trending News"}
       </h3>
-      <hr style={{ marginTop: 4, border: "1px solid #000" }} />
-      <div className="row">
-        {trendingNewsData.map((trendingNews) => (
-          <div
-            className="col-12 col-sm-12 col-md-6 col-lg-4 py-3"
-            key={Math.random()}
-          >
-            <Link href={`/news/result?id=${trendingNews.id}`}>
-              <Image
-                src={trendingNews.src}
-                className={classes.imgStyle}
-                alt={trendingNews.title}
-                priority
-              />
-              <h3 className={classes.heading1}>{trendingNews.title}</h3>
-            </Link>
-            <div className={classes.authorSection}>
-              By <b>{trendingNews.author}</b>
-            </div>
-            <div className={classes.description}>
-              {trendingNews.description}
-            </div>
+      {isLoading ? (
+        <TrendingSkeleton />
+      ) : (
+        <div style={{ marginBottom: 50 }}>
+          <hr style={{ marginTop: 4, border: "1px solid #000" }} />
+          <div className="row">
+            {trendingNewsData.map((trendingNews) => (
+              <div
+                className="col-12 col-sm-12 col-md-6 col-lg-4 py-3"
+                key={Math.random()}
+              >
+                <Link href={`/news/${trendingNews.id}`}>
+                  <Image
+                    src={trendingNews.image}
+                    className={classes.imgStyle}
+                    alt={trendingNews.title}
+                    priority
+                    width={100}
+                    height={100}
+                    style={{
+                      objectFit: "cover",
+                      width: "100%",
+                      height: 160,
+                      borderRadius: 10,
+                      objectPosition: "50% 10%",
+                      transform: "translate3d(0, 0, 100px)",
+                    }}
+                  />
+                  <h3 className={classes.heading1}>{trendingNews.title}</h3>
+                </Link>
+                <div className={classes.authorSection}>
+                  By <b>{trendingNews.author}</b>
+                </div>
+                <div className={classes.description}>
+                  {trendingNews.description}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

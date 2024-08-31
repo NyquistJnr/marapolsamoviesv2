@@ -9,13 +9,18 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useReviewActions = (reviewId, user, optionalData) => {
+const useReviewActions = (
+  reviewId,
+  user,
+  optionalData,
+  collectionName = "reviews"
+) => {
   const [likedPost, setLikedPost] = useState(false);
   const [bookmarkPost, setBookmarkPost] = useState(false);
 
   const fetchReviewData = useCallback(async () => {
     try {
-      const docRef = doc(db, "reviews", reviewId);
+      const docRef = doc(db, collectionName, reviewId); // Use dynamic collection name
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -28,17 +33,17 @@ const useReviewActions = (reviewId, user, optionalData) => {
     } catch (error) {
       console.error("Error fetching review data:", error);
     }
-  }, [reviewId, user?.uid]);
+  }, [reviewId, user?.uid, collectionName]);
 
   const handleLike = useCallback(async () => {
-    const docRef = doc(db, "reviews", reviewId);
+    const docRef = doc(db, collectionName, reviewId); // Use dynamic collection name
     const userRef = doc(db, "users", user?.uid);
 
     const likeData = {
       image: optionalData.image,
       title: optionalData.title,
       timestamp: optionalData.timestamp,
-      postType: "Reviews",
+      postType: collectionName,
       postID: reviewId,
     };
 
@@ -65,17 +70,17 @@ const useReviewActions = (reviewId, user, optionalData) => {
     } catch (error) {
       console.error("Error updating like status:", error);
     }
-  }, [reviewId, user?.uid, likedPost, optionalData]);
+  }, [reviewId, user?.uid, likedPost, optionalData, collectionName]);
 
   const handleBookmark = useCallback(async () => {
-    const docRef = doc(db, "reviews", reviewId);
+    const docRef = doc(db, collectionName, reviewId); // Use dynamic collection name
     const userRef = doc(db, "users", user?.uid);
 
     const bookmarkData = {
       image: optionalData.image,
       title: optionalData.title,
       timestamp: optionalData.timestamp,
-      postType: "Reviews",
+      postType: collectionName,
       postID: reviewId,
     };
 
@@ -102,7 +107,7 @@ const useReviewActions = (reviewId, user, optionalData) => {
     } catch (error) {
       console.error("Error updating bookmark status:", error);
     }
-  }, [reviewId, user?.uid, bookmarkPost, optionalData]);
+  }, [reviewId, user?.uid, bookmarkPost, optionalData, collectionName]);
 
   useEffect(() => {
     if (user) {

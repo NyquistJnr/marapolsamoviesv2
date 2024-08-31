@@ -15,15 +15,15 @@ const useListAllUserComments = (user) => {
 
       try {
         // Step 1: Fetch the user's document
-        const docRef = doc(db, "users", user?.uid);
-        const docSnap = await getDoc(docRef);
+        const userDocRef = doc(db, "users", user?.uid);
+        const userDocSnap = await getDoc(userDocRef);
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const arrayToSort = data.userComments || [];
+        if (userDocSnap.exists()) {
+          const data = userDocSnap.data();
+          const userComments = data.userComments || [];
 
           // Step 1: Filter out duplicates based on postId
-          const uniqueArray = arrayToSort.filter(
+          const uniqueArray = userComments.filter(
             (item, index, self) =>
               index === self.findIndex((t) => t.postId === item.postId)
           );
@@ -34,7 +34,8 @@ const useListAllUserComments = (user) => {
 
           // Step 3: Fetch related documents for each item in the sorted array
           const documentPromises = sorted.map(async (item) => {
-            const itemDocRef = doc(db, "reviews", item.postId);
+            const { postId, postType } = item; // postType is the collection name
+            const itemDocRef = doc(db, postType, postId);
             const itemDocSnap = await getDoc(itemDocRef);
 
             if (itemDocSnap.exists()) {
@@ -50,6 +51,7 @@ const useListAllUserComments = (user) => {
                 image,
                 likes,
                 saves,
+                description,
               } = itemData;
               const totalComments = comments.length;
 
@@ -64,12 +66,14 @@ const useListAllUserComments = (user) => {
                 title,
                 totalComments,
                 userComments,
-                postId: item.postId,
+                postId,
                 author,
                 date: timestamp,
                 imageSrc: image,
                 totalLikes: likes ? likes?.length : "0",
                 totalSaves: saves ? saves?.length : "0",
+                postType,
+                description,
               };
             }
             return null;

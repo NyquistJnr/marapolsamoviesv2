@@ -1,53 +1,61 @@
+"use client";
+
 import Image from "next/image";
 import { Container } from "react-bootstrap";
 
 import MainSearchFilterBar from "@/components/general-components/MainSearchFilter";
 import classes from "./MovieResult.module.css";
 
-import img1 from "../../../../public/images/templates-imgs/moview-result-detail.png";
-import img2 from "../../../../public/images/templates-imgs/movie-detail.png";
-import HorRecommendation from "@/components/general-components/HorRecommendation";
+import { usePathname } from "next/navigation";
+import usePostDetails from "@/hooks/usePostDetail";
 
-const castNames = [
-  "Funke Akindele as Jedidah Judah",
-  "Jide Kene Achufusi as Emeka Judah",
-  "Uzee Usman as Adamu Judah",
-  "Timini Egbuson as Pere Judah",
-  "Tobi Makinde as Shina Judah",
-  "Olumide Oworu as Ejiro Judah",
-  "Genoveva Umeh as Testimony",
-  "Ebele Okaro as Grandma",
-  "Uzor Arukwe as Chairman Chigozie Onouha",
-  "Nse Ikpe Etim as Collette",
-  "Juliana Olayode as Hilda",
-  "Fathia Balogun as Mama Caro",
-  "Paschaline Alex Okoli as Mummy Michael",
-  "Sinmi Hassan as Daddy Michael",
-  "Yvonne Jegede as Modupe",
-  "Boma Akpore as Deji",
-  "Ibrahim Yekini as Itele",
-  "Etinosa Idemudia as Blast",
-  "Nosa Rex as Jerry",
-  "Gregory Ojefua as Pluto",
-];
+import ReactPlayer from "react-player/youtube";
+import ImageScroller from "./MovieScroll";
+import useReviewYouMightLike from "@/hooks/useReviewYouMightLike";
+import ImageScrollSkeleton from "./ImageScrollSkeleton";
+import SingleMovieSkeleton from "./SingleMovieSkeleton";
 
 const MovieResult = () => {
+  const pathname = usePathname();
+  const id = pathname.split("/").pop();
+  const {
+    randomReviews,
+    isLoading,
+    error: movieError,
+  } = useReviewYouMightLike(8, "movies");
+
+  const { data, loading, error, formattedDate } = usePostDetails("movies", id);
+  if (loading) {
+    return (
+      <div>
+        <SingleMovieSkeleton />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>An Error Occured, {error.message}</div>;
+  }
+
   return (
     <Container>
-      <MainSearchFilterBar placeholder="movie detail" />
+      <MainSearchFilterBar
+        placeholder="movie detail"
+        searchedSection={(e) => console.log(e)}
+      />
       <section style={{ marginBottom: 50 }}>
-        <Image
-          src={img1}
-          alt="Movie Result Detail"
-          className={classes.imgStyle}
-          priority
-        />
+        <div className="text-center">
+          <ReactPlayer url={data.movieTrailer} width={"100%"} />
+        </div>
         <div className="d-block d-md-flex" style={{ marginTop: 30 }}>
           <Image
-            src={img2}
-            alt="Movie Result Detail 2"
+            src={data.image}
+            alt={data.title}
             className={classes.imgStyle1}
             priority
+            width={100}
+            height={100}
+            style={{ borderRadius: 10 }}
           />
           <div
             style={{
@@ -57,54 +65,56 @@ const MovieResult = () => {
             }}
           >
             <div style={{ marginTop: 20 }}>
-              <h3 style={{ fontWeight: "bold" }}>A Tribe Called Judah</h3>
-              <p style={{ marginTop: 20 }}>
-                Lorem ipsum dolor sit amet consectetur. Bibendum ornare velit
-                elementum tortor mattis. Lorem ipsum ut vel nunc curabitur
-                tempus dui magna morbi. Suspendisse consectetur a proin
-                fermentum tincidunt molestie tortor. Auctor duis lorem ultrices
-                malesuada scelerisque. Enim porttitor iaculis aliquet posuere
-                in. Gravida tempor tellus sed laoreet commodo eget proin proin.
-                Sagittis at blandit cras cras. Bibendum ornare velit elementum
-                tortor mattis. Lorem ipsum ut vel nunc curabitur tempus dui
-                magna morbi. Suspendisse consectetur a proin fermentum tincidunt
-                molestie tortor.
-              </p>
+              <h3 style={{ fontWeight: "bold" }}>{data.title}</h3>
+              <p style={{ marginTop: 20 }}>{data.movieStory}</p>
             </div>
             <div>
               <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Directed by</b> Jennifer Azubuko
+                  <b>Directed by</b> {data.movieDirector}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Produced by</b> Jennifer Azubuko
+                  <b>Produced by</b> {data.movieProducer}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Release Date:</b> 12 April, 2024
+                  <b>Release Date:</b> {formattedDate}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Genres:</b> Drama, Romance
+                  <b>Genres:</b> {data.genre}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Industry:</b> Hollywood
+                  <b>Industry:</b> {data.industry}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Streaming Platform:</b> Netflix
+                  <b>Streaming Platform:</b> {data.streamingPlatform}
                 </div>
               </div>
             </div>
           </div>
         </div>
         <main style={{ marginTop: 40 }}>
-          <h5>Cast</h5>
+          <h5>
+            <b>Cast</b>
+          </h5>
           <hr />
           <ul>
-            {castNames.map((data) => (
+            {data.topCasts.split(",").map((data) => (
               <li key={data}>{data}</li>
             ))}
           </ul>
         </main>
-        <HorRecommendation title="People Search For" />
+        <div style={{ margin: "70px 0 30px 0" }}>
+          {isLoading ? (
+            <ImageScrollSkeleton />
+          ) : (
+            <ImageScroller
+              filteredMovies={randomReviews}
+              title="People Search For"
+              seeMore={true}
+            />
+          )}
+          {movieError && <div>{movieError.message}</div>}
+        </div>
       </section>
     </Container>
   );

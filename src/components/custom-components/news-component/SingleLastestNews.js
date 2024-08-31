@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import classes from "./SingleLastestNews.module.css";
+import Link from "next/link";
 
 const NewsItem = (props) => {
   const router = useRouter();
@@ -19,7 +20,9 @@ const NewsItem = (props) => {
           }}
         >
           <div>
-            <h1 className={classes.heading1}>{props.title}</h1>
+            <Link href={`/news/${props.id}`}>
+              <h1 className={classes.heading1}>{props.title}</h1>
+            </Link>
             <p className={classes.description}>{props.description}</p>
           </div>
           <div className={classes.subHeading}>
@@ -43,6 +46,8 @@ const NewsItem = (props) => {
             src={props.src}
             alt={props.title}
             priority
+            width={100}
+            height={100}
           />
         </div>
       </div>
