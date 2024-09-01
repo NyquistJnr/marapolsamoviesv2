@@ -12,7 +12,7 @@ const MovieTvShowList = (props) => {
           marginTop: 30,
         }}
       >
-        <h3>{props.name}</h3>
+        <h3 style={{ fontWeight: "bold" }}>{props.name}</h3>
         <div>
           <Link href="/movies/list">See more</Link>
         </div>

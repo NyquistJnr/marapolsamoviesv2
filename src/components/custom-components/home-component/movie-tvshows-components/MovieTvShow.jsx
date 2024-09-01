@@ -10,22 +10,26 @@ const MovieTvShow = (props) => {
         border: "1.2px solid #999",
         padding: "10px 5px",
         borderRadius: 10,
+        minHeight: 250,
       }}
     >
-      <section style={{ display: "flex" /* justifyContent: "space-evenly" */ }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Image
-            src={props.image}
-            alt={props.title}
-            className={classes.size}
-            style={{
-              marginRight: 20,
-              marginLeft: 10 /* objectFit: "cover"  */,
-            }}
-            priority
-            width={100}
-            height={100}
-          />
+      <section style={{ display: "flex" }}>
+        <div style={{ display: "flex", alignItems: "center", marginRight: 10 }}>
+          <div className={classes.imgWrapper}>
+            <Image
+              src={props.image}
+              alt={props.title}
+              className={classes.imgStyle}
+              style={{
+                marginRight: 20,
+                marginLeft: 10 /* objectFit: "cover"  */,
+              }}
+              priority
+              width={100}
+              height={100}
+              layout="responsive"
+            />
+          </div>
         </div>
         <div
           style={{

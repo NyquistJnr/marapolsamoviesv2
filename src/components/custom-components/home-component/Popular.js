@@ -7,19 +7,23 @@ const Popular = (props) => {
     <>
       <section>
         <div style={{ marginTop: 30 }}>
-          <Image
-            src={props.image}
-            alt={props.title}
-            style={{
-              width: "100%",
-              height: 130,
-              borderRadius: 10,
-              objectFit: "cover",
-            }}
-            priority
-            width={100}
-            height={100}
-          />
+          <div className={classes.imgWrapper}>
+            <Image
+              src={props.image}
+              alt={props.title}
+              style={{
+                width: "100%",
+                height: 130,
+                borderRadius: 10,
+                objectFit: "cover",
+              }}
+              priority
+              width={100}
+              height={100}
+              layout="responsive"
+              className={classes.imgStyle}
+            />
+          </div>
         </div>
         <div style={{ marginTop: 20, width: "90%" }}>
           <h3 className={classes.h1} style={{ fontWeight: "bold" }}>

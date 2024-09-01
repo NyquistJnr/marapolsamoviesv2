@@ -73,7 +73,7 @@ const MainProfile = () => {
 
   if (!userData) {
     return (
-      <Container>
+      <Container style={{ height: "55vh" }}>
         <section
           style={{
             display: "flex",

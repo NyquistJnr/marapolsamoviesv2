@@ -1,0 +1,15 @@
+.deleteBtn,
+.deleteBtn:active,
+.deleteBtn:hover {
+  background-color: #e86c44 !important;
+  color: #fff !important;
+  border-color: #e86c44 !important;
+}
+
+.cancelBtn,
+.cancelBtn:hover,
+.cancelBtn:active {
+  background-color: transparent !important;
+  color: #000 !important;
+  border-color: transparent !important;
+}

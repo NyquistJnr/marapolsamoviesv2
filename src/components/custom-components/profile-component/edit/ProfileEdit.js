@@ -200,7 +200,12 @@ const ProfileEdit = () => {
     }
   };
 
-  if (!userData) return <div className="text-center py-5">Loading...</div>;
+  if (!userData)
+    return (
+      <div className="text-center py-5" style={{ height: "55vh" }}>
+        Loading...
+      </div>
+    );
 
   return (
     <Container>

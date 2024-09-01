@@ -1,60 +1,79 @@
+import { useRouter } from "next/navigation";
 import CommentShare from "@/components/general-components/CommentShare";
 import MainSearchFilterBar from "@/components/general-components/MainSearchFilter";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import TrendingNews from "../news-component/TrendingNews";
+import usePostDetails from "@/hooks/usePostDetail";
+import { Skeleton } from "@chakra-ui/react";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
-const AwardsComponents = () => {
+const AwardsComponents = (props) => {
+  const router = useRouter();
+  const { data, loading, error, formattedDate } = usePostDetails(
+    "awards",
+    props.awardId
+  );
   return (
-    <Container>
+    <>
       <MainSearchFilterBar placeholder="awards" />
-      <section>
-        <h2 style={{ fontWeight: "bold", fontSize: 35 }} className="col-md-6">
-          Past Winners of the Marapolsa Awards 2023 Edition
-        </h2>
-        <div style={{ marginTop: 30 }}>
-          <b>Published:</b> 3 hours ago
+      <Container>
+        <div style={{ marginBottom: 40 }}>
+          <Button
+            style={{
+              display: "flex",
+              alignItems: "center",
+              color: "#575655",
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+            }}
+            onClick={() => router.back()}
+          >
+            <FaArrowLeftLong style={{ marginRight: 10 }} />
+            Back
+          </Button>
         </div>
-        <div>
-          The nominees for the awards were carefully selected by the Marapolsa
-          Editorial team from our reviews of movies in 2023. The winners were
-          then determined by a fan vote on our Instagram page, where viewers
-          cast their ballots in the comments section
-        </div>
-        <div style={{ marginTop: 30, marginBottom: 30 }}>
-          <div>
-            <b>Best Producer of the Year:</b> Funke Akindele (She Must Be
-            Obeyed)
+        {loading ? (
+          <div style={{ margin: "10px 0 50px 0" }}>
+            <Skeleton style={{ height: 28, width: "70%" }} />
+            <div className="py-3">
+              <Skeleton style={{ height: 18, width: 150 }} />
+            </div>
+            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
           </div>
-          <div>
-            <b>Villain of the Year:</b> Ogundiji (Jagun Jagun: The Warrior)
+        ) : (
+          <section>
+            <h2
+              style={{ fontWeight: "bold", fontSize: 35 }}
+              className="col-md-6"
+            >
+              {data.title}
+            </h2>
+            <div style={{ marginTop: 30 }}>
+              <b>Published:</b> {formattedDate}
+            </div>
+            <div style={{ marginBottom: 100 }}>
+              <div dangerouslySetInnerHTML={{ __html: data.content }} />
+            </div>
+          </section>
+        )}
+        {error && (
+          <div className="text-center py-5" style={{ height: "40vh" }}>
+            An Error Occured, {error.message}
           </div>
-          <div>
-            <b>Hollywood Movie of the Year:</b> Fair Play
-          </div>
-          <div>
-            <b>Director of the Year:</b> Biodun Stephen (Big Love)
-          </div>
-          <div>
-            <b>Series of the Year:</b> The Men&apos;s Club
-          </div>
-          <div>
-            <b>Nollywood Movie of the Year:</b> A Tribe Called Judah
-          </div>
-          <div>
-            <b>Female Actor of the Year:</b> Kehinde Bankole (Sista)
-          </div>
-          <div>
-            <b>Male Actor of the Year:</b> Stan Nze (Afamefuna)
-          </div>
-          <div>
-            <b>Reality Award of the Year (BBNaija & RHOL):</b> Cynthia “CeeC”
-            Nwadiora (BBNaija)
-          </div>
-        </div>
-      </section>
-      {/* <CommentShare /> */}
-      <TrendingNews title="Recommended News" />
-    </Container>
+        )}
+        <CommentShare
+          collection="awards"
+          value={data?.comments}
+          id={props.awardId}
+          optional={data}
+        />
+        <TrendingNews title="Recommended News" />
+      </Container>
+    </>
   );
 };
 

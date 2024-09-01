@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { GrAdd } from "react-icons/gr";
 import AnalyticsBox from "../../general-components/AnalyticsBox";
-import SingleReview from "../../general-components/SingleReview";
 import useRecentNews from "@/hooks/useRecentNews";
+import SingleAward from "./SingleAward";
 
 const dataList = [
   {
@@ -29,12 +29,12 @@ const dataList = [
   },
 ];
 
-const NewsAdmin = () => {
+const AwardsAdminComponent = () => {
   const {
     recentNews: recentData,
     isLoading: mainLoading,
     error,
-  } = useRecentNews("movies", 4);
+  } = useRecentNews("awards", 4);
 
   return (
     <div>
@@ -46,15 +46,15 @@ const NewsAdmin = () => {
         }}
       >
         <div>
-          <div style={{ fontWeight: "bold", fontSize: 26 }}>Movies</div>
+          <div style={{ fontWeight: "bold", fontSize: 26 }}>Awards</div>
           <div style={{ color: "#575655", fontSize: 13 }}>
-            An overview of all movies
+            An overview of all awards
           </div>
         </div>
         <div>
           <Link
             className="btn"
-            href="/admin/movies/new"
+            href="/admin/awards/new"
             style={{
               background: "#E86C44",
               color: "#fff",
@@ -89,9 +89,9 @@ const NewsAdmin = () => {
           marginTop: 40,
         }}
       >
-        <div style={{ fontWeight: "bold" }}>Recent Movies</div>
+        <div style={{ fontWeight: "bold" }}>Recent Awards</div>
         <div>
-          <Link href="/admin/movies/list">See all</Link>
+          <Link href="/admin/awards/list">See all</Link>
         </div>
       </section>
       {mainLoading ? (
@@ -113,7 +113,7 @@ const NewsAdmin = () => {
             >
               {recentData.map((data) => (
                 <div className="py-1" key={data.id}>
-                  <SingleReview {...data} type="movies" />
+                  <SingleAward {...data} type="awards" />
                   <hr />
                 </div>
               ))}
@@ -127,4 +127,4 @@ const NewsAdmin = () => {
   );
 };
 
-export default NewsAdmin;
+export default AwardsAdminComponent;

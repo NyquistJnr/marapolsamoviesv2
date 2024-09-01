@@ -10,20 +10,23 @@ const Lastest = (props) => {
       <section style={{ display: "flex" }}>
         <div
           style={{
-            marginRight: 20,
+            marginRight: 10,
             justifyContent: "center",
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <Image
-            src={props.image}
-            alt={props.title}
-            className={classes.size}
-            width={100}
-            height={100}
-            priority
-          />
+          <div className={classes.imgWrapper}>
+            <Image
+              src={props.image}
+              alt={props.title}
+              className={classes.imgStyle}
+              width={100}
+              height={100}
+              priority
+              layout="responsive"
+            />
+          </div>
         </div>
         <div
           style={{
@@ -37,7 +40,7 @@ const Lastest = (props) => {
           <div>
             <Link href={`/reviews/detail?id=${props.id}`}>
               <h4 style={{ fontWeight: "bold" }} className={classes.h1}>
-                {props.title}
+                {shortenText(props.title, 7)}
               </h4>
             </Link>
             <p className={classes.h2}>{shortenedText}</p>

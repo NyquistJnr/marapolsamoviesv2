@@ -1,0 +1,7 @@
+.titleControl {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-weight: bold;
+  font-size: 35px;
+}

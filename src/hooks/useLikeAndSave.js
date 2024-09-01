@@ -40,7 +40,7 @@ const useReviewActions = (
     const userRef = doc(db, "users", user?.uid);
 
     const likeData = {
-      image: optionalData.image,
+      image: optionalData.image ? optionalData.image : "/awards.png",
       title: optionalData.title,
       timestamp: optionalData.timestamp,
       postType: collectionName,
@@ -77,7 +77,7 @@ const useReviewActions = (
     const userRef = doc(db, "users", user?.uid);
 
     const bookmarkData = {
-      image: optionalData.image,
+      image: optionalData.image ? optionalData.image : "/awards.png",
       title: optionalData.title,
       timestamp: optionalData.timestamp,
       postType: collectionName,

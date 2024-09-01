@@ -1,7 +1,7 @@
-import AwardsComponents from "@/components/custom-components/award-component/MainAwards";
+import AwardList from "@/components/custom-components/award-component/AwardList";
 
 const Awards = () => {
-  return <AwardsComponents />;
+  return <AwardList />;
 };
 
 export default Awards;

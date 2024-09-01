@@ -48,15 +48,18 @@ const MovieResult = () => {
           <ReactPlayer url={data.movieTrailer} width={"100%"} />
         </div>
         <div className="d-block d-md-flex" style={{ marginTop: 30 }}>
-          <Image
-            src={data.image}
-            alt={data.title}
-            className={classes.imgStyle1}
-            priority
-            width={100}
-            height={100}
-            style={{ borderRadius: 10 }}
-          />
+          <div className={classes.imgWrapper}>
+            <Image
+              src={data.image}
+              alt={data.title}
+              className={classes.imgStyle}
+              priority
+              width={100}
+              height={100}
+              style={{ borderRadius: 10 }}
+              layout="responsive"
+            />
+          </div>
           <div
             style={{
               display: "flex",

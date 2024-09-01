@@ -14,7 +14,7 @@ const MovieListSkeleton = (props) => {
       )}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         {dataList.map((data) => (
-          <main
+          <div
             style={{
               padding: "10px 5px",
               borderRadius: 10,
@@ -29,39 +29,8 @@ const MovieListSkeleton = (props) => {
                   style={{ width: 250, height: 350, borderRadius: 10 }}
                 />
               </div>
-              <div
-                style={{
-                  justifyContent: "space-between",
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50%",
-                  marginTop: 5,
-                }}
-              >
-                <div>
-                  <div className="py-2">
-                    <Skeleton style={{ width: 150, height: 18 }} />
-                  </div>
-                  <div>
-                    <Skeleton style={{ width: 150, height: 100 }} />
-                  </div>
-                </div>
-                <div>
-                  <div className="py-2">
-                    <Skeleton style={{ width: 150, height: 18 }} />
-                  </div>
-
-                  <div className="py-2">
-                    <Skeleton style={{ width: 150, height: 18 }} />
-                  </div>
-
-                  <div className="py-2">
-                    <Skeleton style={{ width: 150, height: 18 }} />
-                  </div>
-                </div>
-              </div>
             </section>
-          </main>
+          </div>
         ))}
       </div>
     </Container>

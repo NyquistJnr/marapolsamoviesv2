@@ -6,7 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineComment } from "react-icons/md";
 import { FaRegBookmark } from "react-icons/fa6";
 
-import classes from "./SingleReview.module.css";
+import classes from "./SingleAward.module.css";
 
 import copy from "clipboard-copy";
 
@@ -18,7 +18,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 import { shortenText } from "@/utils/text-shortener";
 
-const SingleReview = (props) => {
+const SingleAward = (props) => {
   const [show, setShow] = useState(false);
   const [deleted, setDeleted] = useState(false);
 
@@ -90,15 +90,6 @@ const SingleReview = (props) => {
           className="py-2"
           style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
         >
-          <div className="py-2" style={{ marginRight: 10 }}>
-            <Image
-              src={props.image}
-              alt={props.title}
-              width={100}
-              height={100}
-              style={{ borderRadius: 10 }}
-            />
-          </div>
           <div
             style={{
               display: "flex",
@@ -221,4 +212,4 @@ const SingleReview = (props) => {
   );
 };
 
-export default SingleReview;
+export default SingleAward;
