@@ -13,6 +13,23 @@ const AwardsComponents = (props) => {
     "awards",
     props.awardId
   );
+
+  if (loading)
+    return (
+      <Container style={{ height: "55vh" }}>
+        <div style={{ margin: "50px 0 50px 0" }}>
+          <Skeleton style={{ height: 28, width: "70%" }} />
+          <div className="py-3">
+            <Skeleton style={{ height: 18, width: 150 }} />
+          </div>
+          <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+          <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+          <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+          <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+          <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+        </div>
+      </Container>
+    );
   return (
     <>
       <MainSearchFilterBar placeholder="awards" />
@@ -32,34 +49,17 @@ const AwardsComponents = (props) => {
             Back
           </Button>
         </div>
-        {loading ? (
-          <div style={{ margin: "10px 0 50px 0" }}>
-            <Skeleton style={{ height: 28, width: "70%" }} />
-            <div className="py-3">
-              <Skeleton style={{ height: 18, width: 150 }} />
-            </div>
-            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
-            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
-            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
-            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
-            <Skeleton style={{ height: 18, width: 280, marginBottom: 10 }} />
+        <section>
+          <h2 style={{ fontWeight: "bold", fontSize: 35 }} className="col-md-6">
+            {data.title}
+          </h2>
+          <div style={{ marginTop: 30 }}>
+            <b>Published:</b> {formattedDate}
           </div>
-        ) : (
-          <section>
-            <h2
-              style={{ fontWeight: "bold", fontSize: 35 }}
-              className="col-md-6"
-            >
-              {data.title}
-            </h2>
-            <div style={{ marginTop: 30 }}>
-              <b>Published:</b> {formattedDate}
-            </div>
-            <div style={{ marginBottom: 100 }}>
-              <div dangerouslySetInnerHTML={{ __html: data.content }} />
-            </div>
-          </section>
-        )}
+          <div style={{ marginBottom: 100 }}>
+            <div dangerouslySetInnerHTML={{ __html: data.content }} />
+          </div>
+        </section>
         {error && (
           <div className="text-center py-5" style={{ height: "40vh" }}>
             An Error Occured, {error.message}
