@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
-import { Dropdown, Form } from "react-bootstrap";
+import { Alert, Dropdown, Form } from "react-bootstrap";
 
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -17,6 +17,13 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
+import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
+import { MdOutlineRateReview } from "react-icons/md";
+import { IoBookOutline } from "react-icons/io5";
+import { BiMoviePlay } from "react-icons/bi";
+import { FaAward } from "react-icons/fa6";
 
 const feedList = [
   { title: "Visits", counts: 30, attend: "80%" },
@@ -28,8 +35,19 @@ const feedList = [
 ];
 
 const DashboardComponent = () => {
+  const [show, setShow] = useState(true);
+  const [user] = useAuthState(auth);
   return (
     <div>
+      <div className="d-block d-md-none">
+        <Alert variant="warning" onClose={() => setShow(false)} dismissible>
+          <Alert.Heading>Warning, Oh snap!</Alert.Heading>
+          <p>
+            Please use a big screen for the admin and staff function for a
+            better experience!
+          </p>
+        </Alert>
+      </div>
       <section
         style={{
           display: "flex",
@@ -40,7 +58,9 @@ const DashboardComponent = () => {
       >
         <div className="py-1">
           <div style={{ fontSize: 28, fontWeight: "bold" }}>Dashboard</div>
-          <div style={{ color: "#575655" }}>Welcome back, Victoria!</div>
+          <div style={{ color: "#575655" }}>
+            Welcome back, {user ? user?.displayName : "Loading..."}!
+          </div>
         </div>
         <div className="py-1">
           <Dropdown>
@@ -52,10 +72,34 @@ const DashboardComponent = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item>Review</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">News</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Movie</Dropdown.Item>
-              <Dropdown.Item href="#/action-4">Award</Dropdown.Item>
+              <Dropdown.Item
+                style={{ display: "flex", alignItems: "center" }}
+                as={Link}
+                href="/admin/reviews/new"
+              >
+                <MdOutlineRateReview style={{ marginRight: 5 }} /> Review
+              </Dropdown.Item>
+              <Dropdown.Item
+                style={{ display: "flex", alignItems: "center" }}
+                as={Link}
+                href="/admin/news/new"
+              >
+                <IoBookOutline style={{ marginRight: 5 }} /> News
+              </Dropdown.Item>
+              <Dropdown.Item
+                style={{ display: "flex", alignItems: "center" }}
+                as={Link}
+                href="/admin/movies/new"
+              >
+                <BiMoviePlay style={{ marginRight: 5 }} /> Movie
+              </Dropdown.Item>
+              <Dropdown.Item
+                style={{ display: "flex", alignItems: "center" }}
+                as={Link}
+                href="/admin/awards/new"
+              >
+                <FaAward style={{ marginRight: 5 }} /> Awards
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

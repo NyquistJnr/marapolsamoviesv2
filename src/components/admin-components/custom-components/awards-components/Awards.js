@@ -5,29 +5,7 @@ import { GrAdd } from "react-icons/gr";
 import AnalyticsBox from "../../general-components/AnalyticsBox";
 import useRecentNews from "@/hooks/useRecentNews";
 import SingleAward from "./SingleAward";
-
-const dataList = [
-  {
-    title: "Likes",
-    value: "totalLike",
-    percentage: "8%",
-  },
-  {
-    title: "Comments",
-    value: "totalComment",
-    percentage: "8%",
-  },
-  {
-    title: "Saves",
-    value: "totalSave",
-    percentage: "8%",
-  },
-  {
-    title: "Views",
-    value: "Coming Soon...",
-    percentage: "0%",
-  },
-];
+import useCollectionStats from "@/hooks/useCollectionStat";
 
 const AwardsAdminComponent = () => {
   const {
@@ -35,6 +13,37 @@ const AwardsAdminComponent = () => {
     isLoading: mainLoading,
     error,
   } = useRecentNews("awards", 4);
+
+  const {
+    totalLike,
+    totalSave,
+    totalComment,
+    isLoading,
+    error: errorTotalCollection,
+  } = useCollectionStats("awards");
+
+  const dataList = [
+    {
+      title: "Likes",
+      value: totalLike,
+      percentage: "8%",
+    },
+    {
+      title: "Comments",
+      value: totalComment,
+      percentage: "8%",
+    },
+    {
+      title: "Saves",
+      value: totalSave,
+      percentage: "8%",
+    },
+    {
+      title: "Views",
+      value: "Coming Soon...",
+      percentage: "0%",
+    },
+  ];
 
   return (
     <div>
@@ -75,7 +84,8 @@ const AwardsAdminComponent = () => {
                 title={data.title}
                 value={data.value}
                 percentage={data.percentage}
-                /* isLoading={isLoading} */
+                isLoading={isLoading}
+                error={errorTotalCollection}
               />
             </div>
           ))}

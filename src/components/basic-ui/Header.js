@@ -49,7 +49,7 @@ import { auth } from "@/app/firebase/config";
 const expand = "lg";
 const Header = () => {
   const router = useRouter();
-  const { isAuthenticated, logout, username, profilePicture } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const currentPath = usePathname();
   const [user] = useAuthState(auth);
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Form } from "react-bootstrap";
+import { Badge, Form } from "react-bootstrap";
 import { FiSearch } from "react-icons/fi";
 import { GoBell } from "react-icons/go";
 
@@ -54,6 +54,11 @@ const AdminHeader = () => {
         >
           <div style={{ marginRight: 50 }}>
             <GoBell size={25} />
+            <sup>
+              <Badge pill bg="warning" text="dark">
+                Coming Soon
+              </Badge>
+            </sup>
           </div>
           <div
             style={{ display: "flex", alignItems: "center", marginRight: 20 }}
@@ -63,7 +68,7 @@ const AdminHeader = () => {
                 width={45}
                 height={45}
                 alt="DPics"
-                src={user ? user.photoURL : "/user.svg"}
+                src={user?.photoURL ? user.photoURL : "/user.svg"}
                 style={{
                   objectFit: "cover",
                   objectPosition: "center center",
@@ -77,7 +82,7 @@ const AdminHeader = () => {
               <div style={{ fontSize: 12, fontWeight: "bold" }}>
                 {user ? user.displayName : "Anon"}
               </div>
-              <div style={{ fontSize: 10 }}>Admin</div>
+              <div style={{ fontSize: 10 }}>Staff</div>
             </div>
           </div>
         </div>

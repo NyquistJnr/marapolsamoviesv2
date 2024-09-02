@@ -42,11 +42,11 @@ const MainProfile = () => {
         return userDocSnap.data();
       } else {
         // If the document does not exist
-        console.log("No such document!");
+        // console.log("No such document!");
         return null;
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
       throw error;
     }
   };
@@ -59,10 +59,10 @@ const MainProfile = () => {
           const data = await getUserData(user.uid);
           setUserData(data);
         } catch (error) {
-          console.error("Failed to retrieve user data:", error);
+          // console.error("Failed to retrieve user data:", error);
         }
       } else {
-        console.log("User is not logged in");
+        // console.log("User is not logged in");
         setUserData(null);
       }
     });
@@ -155,6 +155,14 @@ const MainProfile = () => {
             <Link href="/profile/edit" className={`${classes.editBtn} btn`}>
               Edit Profile
             </Link>
+            <div style={{ marginTop: 40 }}>
+              {(userData?.statusRole === "admin" ||
+                userData?.statusRole === "staff") && (
+                <Link href="/admin" className={`${classes.editBtn} btn`}>
+                  Go to Admin
+                </Link>
+              )}
+            </div>
           </>
         </div>
       </section>

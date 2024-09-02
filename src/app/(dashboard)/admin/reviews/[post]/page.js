@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import ReviewNew from "@/components/admin-components/custom-components/review-components/ReviewNew";
+import withAuthorization from "@/hoc/withAuthorization";
 
 const AdminReviewUpdatePage = () => {
   const pathname = usePathname();
@@ -15,4 +16,4 @@ const AdminReviewUpdatePage = () => {
   return <ReviewNew reviewId={id} />;
 };
 
-export default AdminReviewUpdatePage;
+export default withAuthorization(AdminReviewUpdatePage);

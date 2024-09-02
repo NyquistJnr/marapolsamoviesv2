@@ -10,7 +10,7 @@ const NewsSearchFilterBar = (props) => {
 
   const handleSearchedSection = (item) => {
     props.searchedSection(item);
-    console.log(item);
+    // console.log(item);
   };
 
   return (

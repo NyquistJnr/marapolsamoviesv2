@@ -79,6 +79,7 @@ const ReviewComponent = () => {
                 value={data.value}
                 percentage={data.percentage}
                 isLoading={isLoading}
+                error={error}
               />
             </div>
           ))}

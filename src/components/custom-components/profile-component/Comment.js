@@ -14,7 +14,7 @@ const ProfileComment = () => {
 
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log("Comment here", relatedDocuments);
+  // console.log("Comment here", relatedDocuments);
 
   return (
     <section>

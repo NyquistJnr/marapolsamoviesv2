@@ -43,11 +43,11 @@ const ProfileEdit = () => {
       if (userDocSnap.exists()) {
         return userDocSnap.data();
       } else {
-        console.log("No such document!");
+        // console.log("No such document!");
         return null;
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
       throw error;
     }
   };
@@ -70,10 +70,10 @@ const ProfileEdit = () => {
             country: data?.country || "",
           });
         } catch (error) {
-          console.error("Failed to retrieve user data:", error);
+          // console.error("Failed to retrieve user data:", error);
         }
       } else {
-        console.log("User is not logged in");
+        // console.log("User is not logged in");
         setUserData(null);
       }
     });
@@ -133,10 +133,10 @@ const ProfileEdit = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          // console.log(`Upload is ${progress}% done`);
         },
         (error) => {
-          console.error("Error uploading image:", error);
+          // console.error("Error uploading image:", error);
           reject(error);
         },
         async () => {
@@ -144,7 +144,7 @@ const ProfileEdit = () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             resolve(downloadURL);
           } catch (error) {
-            console.error("Error getting download URL:", error);
+            // console.error("Error getting download URL:", error);
             reject(error);
           }
         }

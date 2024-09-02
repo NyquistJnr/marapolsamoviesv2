@@ -22,6 +22,8 @@ import PopularSkeleton from "@/components/custom-components/home-component/Popul
 
 import styles from "./page.module.css";
 
+// import useAutoLogout from "@/hooks/useAutoLogout";
+
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const {
@@ -60,6 +62,8 @@ export default function Home() {
     isLoading: newsLoading,
     error: newsError,
   } = useRecentNews("news", 4);
+
+  // useAutoLogout();
 
   return (
     <>

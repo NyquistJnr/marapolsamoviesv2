@@ -17,10 +17,17 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuthState } from "react-firebase-hooks/auth";
+import useAddActivity from "@/hooks/useActivities";
+import { toast, ToastContainer } from "react-toastify";
 
 const MoviesNewAdmin = ({ movieId }) => {
   const router = useRouter();
   const [user] = useAuthState(auth);
+
+  /* Start User Notification */
+  const { addActivity, loading, error } = useAddActivity(user?.uid);
+  /* End User Notification */
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -107,22 +114,34 @@ const MoviesNewAdmin = ({ movieId }) => {
         // Update the existing movie document
         const movieRef = doc(db, "movies", movieId);
         await updateDoc(movieRef, data);
-        console.log("Movie updated successfully:", data);
-        alert("Movie updated successfully!");
+        await addActivity({
+          description: "Updated a movie post",
+          when: new Date(),
+          title: data.title,
+        });
+        // console.log("Movie updated successfully:", data);
+        toast.success("Movie updated successfully!");
       } else {
         // Add a new movie document
         await addDoc(collection(db, "movies"), data);
-        console.log("Data submitted successfully:", data);
-        alert("Movie added successfully!");
+        await addActivity({
+          description: "New movie posted",
+          when: new Date(),
+          title: data.title,
+        });
+        // console.log("Data submitted successfully:", data);
+        toast.success("Movie added successfully!");
       }
     } catch (error) {
-      console.error("Error uploading image or saving data:", error);
-      alert("Failed to upload image or save data. Please try again.");
+      // console.error("Error uploading image or saving data:", error);
+      // alert("Failed to upload image or save data. Please try again.");
+      toast.error("Failed to upload image or save data. Please try again.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         {/* Your form structure remains the same */}
         <div className="row" style={{ marginBottom: 60 }}>

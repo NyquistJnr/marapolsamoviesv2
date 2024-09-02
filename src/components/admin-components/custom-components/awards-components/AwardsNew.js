@@ -11,6 +11,8 @@ import RichTextEditor from "../../general-components/text-editor/TextEditor";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import classes from "./AwardsNew.module.css";
+import { toast, ToastContainer } from "react-toastify";
+import useAddActivity from "@/hooks/useActivities";
 
 const AwardsNewAdmin = (props) => {
   const router = useRouter();
@@ -20,6 +22,14 @@ const AwardsNewAdmin = (props) => {
   const [error, setError] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [user] = useAuthState(auth);
+
+  /* Start User Notification */
+  const {
+    addActivity,
+    loading: activityLoading,
+    error: activityError,
+  } = useAddActivity(user?.uid);
+  /* End User Notification */
 
   useEffect(() => {
     // Load existing document data if `id` is present
@@ -76,14 +86,29 @@ const AwardsNewAdmin = (props) => {
         // Update the existing document
         const docRef = doc(db, "awards", props.id);
         await updateDoc(docRef, formData);
-        console.log("Document updated:", formData);
+        await addActivity({
+          description: "Updated an awards post",
+          when: new Date(),
+          title: formData.title,
+        });
+        toast.success("Awards Updated Successfully!");
+        // console.log("Document updated:", formData);
       } else {
         // Add a new document
         await addDoc(collection(db, "awards"), formData);
-        console.log("New document submitted:", formData);
+        await addActivity({
+          description: "New Post on awards",
+          when: new Date(),
+          title: formData.title,
+        });
+        toast.success("Awards Posted Successfully!");
+        // console.log("New document submitted:", formData);
       }
     } catch (err) {
-      console.error("Error submitting form:", err);
+      // console.error("Error submitting form:", err);
+      toast.error(
+        "An Error Occured while trying to Posted, contact your IT Depart Immediately."
+      );
       setError("Failed to submit the form. Please try again.");
     } finally {
       setLoading(false);
@@ -92,6 +117,7 @@ const AwardsNewAdmin = (props) => {
 
   return (
     <div>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <div
           style={{

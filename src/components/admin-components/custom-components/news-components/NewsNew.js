@@ -18,9 +18,14 @@ import {
 } from "firebase/firestore";
 
 import classes from "./NewsNew.module.css";
+import { toast, ToastContainer } from "react-toastify";
+import useAddActivity from "@/hooks/useActivities";
 
 const NewsNewAdminComponent = ({ docId }) => {
   const [user] = useAuthState(auth);
+  /* Start User Notification */
+  const { addActivity, loading, error } = useAddActivity(user?.uid);
+  /* End User Notification */
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -90,7 +95,13 @@ const NewsNewAdminComponent = ({ docId }) => {
           timestamp: serverTimestamp(),
           author: user?.displayName,
         });
-        alert("News successfully updated!");
+        await addActivity({
+          description: "Updated a News post",
+          when: new Date(),
+          title: title,
+        });
+        // alert("News successfully updated!");
+        toast.success("News successfully updated!");
       } else {
         // Add new document to Firestore
         await addDoc(collection(db, "news"), {
@@ -100,18 +111,26 @@ const NewsNewAdminComponent = ({ docId }) => {
           timestamp: serverTimestamp(),
           author: user?.displayName,
         });
-        alert("News successfully published!");
+        await addActivity({
+          description: "New News posted!",
+          when: new Date(),
+          title: title,
+        });
+        // alert("News successfully published!");
+        toast.success("News successfully published!");
       }
 
       // router.back(); // Navigate back after successful submission
     } catch (error) {
-      console.error("Error saving document: ", error);
-      alert("Failed to save the news.");
+      // console.error("Error saving document: ", error);
+      // alert("Failed to save the news.");
+      toast.error("Failed to post the news, contact IT.");
     }
   };
 
   return (
     <div>
+      <ToastContainer />
       <Form onSubmit={handleSubmit}>
         <section
           style={{

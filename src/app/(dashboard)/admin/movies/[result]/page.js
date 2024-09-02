@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import MoviesNewAdmin from "@/components/admin-components/custom-components/movies-components/MoviesNew";
+import withAuthorization from "@/hoc/withAuthorization";
 
 const AdminResultMoviesPage = () => {
   const pathname = usePathname();
@@ -9,4 +10,4 @@ const AdminResultMoviesPage = () => {
   return <MoviesNewAdmin movieId={id} />;
 };
 
-export default AdminResultMoviesPage;
+export default withAuthorization(AdminResultMoviesPage);

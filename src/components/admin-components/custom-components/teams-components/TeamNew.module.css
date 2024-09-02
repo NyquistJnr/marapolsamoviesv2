@@ -1,0 +1,22 @@
+/* CenteredForm.module.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent !important; /* Optional: background color */
+}
+
+.form {
+  width: 100%;
+  max-width: 400px; /* Adjust as needed */
+  padding: 20px;
+  background-color: transparent !important;
+  border-radius: 8px;
+}
+
+.searchUserControl {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-color: #000 !important;
+}

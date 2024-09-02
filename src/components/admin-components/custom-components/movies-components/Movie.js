@@ -5,29 +5,7 @@ import { GrAdd } from "react-icons/gr";
 import AnalyticsBox from "../../general-components/AnalyticsBox";
 import SingleReview from "../../general-components/SingleReview";
 import useRecentNews from "@/hooks/useRecentNews";
-
-const dataList = [
-  {
-    title: "Likes",
-    value: "totalLike",
-    percentage: "8%",
-  },
-  {
-    title: "Comments",
-    value: "totalComment",
-    percentage: "8%",
-  },
-  {
-    title: "Saves",
-    value: "totalSave",
-    percentage: "8%",
-  },
-  {
-    title: "Views",
-    value: "Coming Soon...",
-    percentage: "0%",
-  },
-];
+import useCollectionStats from "@/hooks/useCollectionStat";
 
 const NewsAdmin = () => {
   const {
@@ -35,6 +13,43 @@ const NewsAdmin = () => {
     isLoading: mainLoading,
     error,
   } = useRecentNews("movies", 4);
+  /* 
+  const {
+    totalLike,
+    totalSave,
+    totalComment,
+    isLoading,
+    error: errorTotalCollection,
+  } = useCollectionStats("movies"); */
+
+  const dataList = [
+    {
+      title: "Likes",
+      value: "totalLike",
+      percentage: "8%",
+    },
+    {
+      title: "Comments",
+      value: "totalComment",
+      percentage: "8%",
+    },
+    {
+      title: "Saves",
+      value: "totalSave",
+      percentage: "8%",
+    },
+    {
+      title: "Views",
+      value: "Coming Soon...",
+      percentage: "0%",
+    },
+  ];
+
+  if (error) {
+    return (
+      <div className="text-center py-5">An Error Ocurred, {error.message}</div>
+    );
+  }
 
   return (
     <div>
@@ -75,7 +90,8 @@ const NewsAdmin = () => {
                 title={data.title}
                 value={data.value}
                 percentage={data.percentage}
-                /* isLoading={isLoading} */
+                /* isLoading={isLoading}
+                error={errorTotalCollection} */
               />
             </div>
           ))}

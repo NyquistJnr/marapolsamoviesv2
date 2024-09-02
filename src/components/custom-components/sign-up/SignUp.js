@@ -18,7 +18,7 @@ import { useAuth } from "@/context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
 import { updateProfile } from "firebase/auth";
 
@@ -101,9 +101,11 @@ const SignUp = () => {
           displayName: usernameRef.current.value,
           email: emailRef.current.value,
           createdAt: new Date(),
+          lastLogin: serverTimestamp(),
+          statusRole: "member",
         });
 
-        console.log({ response });
+        // console.log({ response });
         toast.success("Your account was created successfully!", {
           position: "top-center",
         });
@@ -119,7 +121,7 @@ const SignUp = () => {
         setIsButtonClicked(false);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(`${error}`, {
         position: "top-center",
       });

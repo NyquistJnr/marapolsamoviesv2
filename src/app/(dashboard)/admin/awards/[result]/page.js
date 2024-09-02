@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import AwardsNewAdmin from "@/components/admin-components/custom-components/awards-components/AwardsNew";
+import withAuthorization from "@/hoc/withAuthorization";
 
 const AdminAwardsDetailsPage = () => {
   const pathname = usePathname();
@@ -10,4 +11,4 @@ const AdminAwardsDetailsPage = () => {
   return <AwardsNewAdmin id={id} />;
 };
 
-export default AdminAwardsDetailsPage;
+export default withAuthorization(AdminAwardsDetailsPage);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useCollectionStats = () => {
+const useCollectionStats = (collectionName = "reviews") => {
   const [totalLike, setTotalLike] = useState(0);
   const [totalSave, setTotalSave] = useState(0);
   const [totalComment, setTotalComment] = useState(0);
@@ -19,7 +19,7 @@ const useCollectionStats = () => {
         let likesTotal = 0;
         let savesTotal = 0;
 
-        const collectionRef = collection(db, "reviews");
+        const collectionRef = collection(db, collectionName);
         const querySnapshot = await getDocs(collectionRef);
 
         querySnapshot.forEach((doc) => {

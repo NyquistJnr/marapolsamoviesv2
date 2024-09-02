@@ -19,7 +19,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
+import { auth, db } from "@/app/firebase/config";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 const Login = () => {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -59,8 +60,12 @@ const Login = () => {
         passwordRef.current.value
       );
       if (response) {
-        console.log({ response });
+        // console.log({ response });
         login();
+        const userDocRef = doc(db, "users", response.user.uid);
+        await updateDoc(userDocRef, {
+          lastLogin: serverTimestamp(),
+        });
         toast.success("Log in successfully!", {
           position: "top-center",
         });
@@ -75,7 +80,7 @@ const Login = () => {
         setIsButtonClicked(false);
       }
     } catch (error) {
-      console.error("Login failed:", error);
+      // console.error("Login failed:", error);
       setIsButtonClicked(false);
     }
   };

@@ -15,14 +15,20 @@ import {
   getDoc,
   Timestamp,
 } from "firebase/firestore";
-import { db, storage } from "@/app/firebase/config";
+import { auth, db, storage } from "@/app/firebase/config";
 import { useAuth } from "@/context/AuthContext";
 
 import { BsTrash } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useAddActivity from "@/hooks/useActivities";
 
 const ReviewNew = ({ reviewId }) => {
+  const [user] = useAuthState(auth);
+  /* Start User Notification */
+  const { addActivity, loading, error } = useAddActivity(user?.uid);
+  /* End User Notification */
   const router = useRouter();
   const { username } = useAuth();
   const [formData, setFormData] = useState({
@@ -117,6 +123,11 @@ const ReviewNew = ({ reviewId }) => {
           industry,
           streamingPlatform,
         });
+        await addActivity({
+          description: "Updated a review post",
+          when: new Date(),
+          title: formData.title,
+        });
         toast.success("Review updated successfully!");
       } else {
         // Create a new review
@@ -131,10 +142,15 @@ const ReviewNew = ({ reviewId }) => {
           industry,
           streamingPlatform,
         });
+        await addActivity({
+          description: "New review posted!",
+          when: new Date(),
+          title: formData.title,
+        });
         toast.success("Review submitted successfully!");
       }
     } catch (error) {
-      console.error("Error saving document: ", error);
+      // console.error("Error saving document: ", error);
       toast.error("Failed to save review.");
     }
   };

@@ -43,7 +43,7 @@ const MovieTvShow = (props) => {
           <div>
             <Link href={`/movies/${props.id}`}>
               <h3 className={classes.h1} style={{ fontWeight: "bold" }}>
-                {shortenText(props.title, 7)}
+                {shortenText(props.title, 5)}
               </h3>
             </Link>
             <p className={classes.h2}>{shortenText(props.movieStory, 20)}</p>

@@ -15,7 +15,7 @@ const ProfileSaved = () => {
     error,
   } = useGetUserLikesAndSaves(user?.uid, "userSaves");
 
-  console.log("Hello", sortedUserSaves);
+  // console.log("Hello", sortedUserSaves);
   return (
     <section>
       {isLoading ? (

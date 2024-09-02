@@ -2,6 +2,13 @@ import React from "react";
 import classes from "./AnalyticsBox.module.css";
 
 const AnalyticsBox = (props) => {
+  if (props.error) {
+    return (
+      <div className="text-center py-5">
+        An Error Occured, {props.error.message}
+      </div>
+    );
+  }
   return (
     <div style={{ background: "#fff", borderRadius: 10, padding: "20px 25px" }}>
       <div style={{ color: "#898784", marginBottom: 5 }}>

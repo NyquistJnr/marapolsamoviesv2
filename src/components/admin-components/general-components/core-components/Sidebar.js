@@ -102,7 +102,11 @@ const Sidebar = () => {
                   {position && <div style={{ borderTop: "1px solid #000" }} />}
                   <Link
                     className={`sidebar__link ${
-                      pathname === href ? "sidebar__link--active" : ""
+                      pathname === href ||
+                      pathname === `${href}/new` ||
+                      pathname === `${href}/list`
+                        ? "sidebar__link--active"
+                        : ""
                     }`}
                     href={href}
                     style={{ alignItems: "center" }}
