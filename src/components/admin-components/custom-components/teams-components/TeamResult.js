@@ -40,7 +40,7 @@ const TeamResult = () => {
           {username}'s Activities
         </div>
         <div style={{ color: "#575655" }}>
-          An overview of Ihuoma&apos;s activities
+          An overview of {username}&apos;s activities
         </div>
       </div>
       <div>
