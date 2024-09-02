@@ -38,7 +38,7 @@ const Lastest = (props) => {
           }}
         >
           <div>
-            <Link href={`/reviews/detail?id=${props.id}`}>
+            <Link href={`/reviews/${props.id}`}>
               <h4 style={{ fontWeight: "bold" }} className={classes.h1}>
                 {shortenText(props.title, 7)}
               </h4>
