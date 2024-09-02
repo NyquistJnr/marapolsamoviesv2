@@ -154,36 +154,49 @@ const Footer = () => {
                 }}
                 className={classes.iconWidth}
               >
-                <Image
-                  src={icon1}
-                  priority
-                  style={{ width: 26, height: "auto" }}
-                  alt="X"
-                />
-                <Image
-                  src={icon2}
-                  priority
-                  style={{ width: 30, height: "auto" }}
-                  alt="Instagram"
-                />
-                <Image
-                  src={icon3}
-                  priority
-                  style={{ width: 30, height: "auto" }}
-                  alt="Tiktok"
-                />
-                <Image
-                  src={icon4}
-                  priority
-                  style={{ width: 33, height: "auto" }}
-                  alt="Youtube"
-                />
-                <Image
-                  src={icon5}
-                  priority
-                  style={{ width: 33, height: "auto" }}
-                  alt="Facebook"
-                />
+                <Link href="http://x.com/marapolsa" target="_blank">
+                  <Image
+                    src={icon1}
+                    priority
+                    style={{ width: 26, height: "auto" }}
+                    alt="X"
+                  />
+                </Link>
+                <Link href="http://instagram.com/marapolsa" target="_blank">
+                  <Image
+                    src={icon2}
+                    priority
+                    style={{ width: 30, height: "auto" }}
+                    alt="Instagram"
+                  />
+                </Link>
+                <Link href="http://tikTok.com/marapolsa_movies" target="_blank">
+                  <Image
+                    src={icon3}
+                    priority
+                    style={{ width: 30, height: "auto" }}
+                    alt="Tiktok"
+                  />
+                </Link>
+                <Link
+                  href="http://youtube.com/@marapolsamovies"
+                  target="_blank"
+                >
+                  <Image
+                    src={icon4}
+                    priority
+                    style={{ width: 33, height: "auto" }}
+                    alt="Youtube"
+                  />
+                </Link>
+                <Link href="http://facebook.com/marapolsa" target="_blank">
+                  <Image
+                    src={icon5}
+                    priority
+                    style={{ width: 33, height: "auto" }}
+                    alt="Facebook"
+                  />
+                </Link>
               </div>
             </div>
             <div

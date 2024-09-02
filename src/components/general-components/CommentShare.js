@@ -35,17 +35,17 @@ import {
 
 import CommentBox from "./CommentBox";
 import CommentList from "./CommentList";
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
 import { auth, db } from "@/app/firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import useReviewActions from "@/hooks/useLikeAndSave";
+import {
+  FacebookShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+
+import { PiTelegramLogoBold } from "react-icons/pi";
 
 const BackdropExample1 = (props) => {
   const OverlayOne = () => (
@@ -152,10 +152,41 @@ const CommentShare = (props) => {
           style={{ display: "flex", alignItems: "center", padding: "10px 0" }}
         >
           <span style={{ marginRight: 10 }}>Share:</span>
-          <FaWhatsapp size={25} style={{ marginRight: 10 }} />
-          <FaXTwitter size={25} style={{ marginRight: 10 }} />
-          <FaInstagram size={25} style={{ marginRight: 10 }} />
-          <FiFacebook size={25} />
+          <WhatsappShareButton
+            url={`https://marapolsamoviesv2.vercel.app/${
+              props.collection ? props.collection : "reviews"
+            }/${props.id}`}
+            title="Check out this link!"
+            separator=" - "
+          >
+            <FaWhatsapp size={25} style={{ marginRight: 10 }} />
+          </WhatsappShareButton>
+          <TwitterShareButton
+            url={`https://marapolsamoviesv2.vercel.app/${
+              props.collection ? props.collection : "reviews"
+            }/${props.id}`}
+            title="Check out this link!"
+            via="nwaukwa_nyquist"
+          >
+            <FaXTwitter size={25} style={{ marginRight: 10 }} />
+          </TwitterShareButton>
+          <TelegramShareButton
+            url={`https://marapolsamoviesv2.vercel.app/${
+              props.collection ? props.collection : "reviews"
+            }/${props.id}`}
+            title="Check out this link!"
+          >
+            <PiTelegramLogoBold size={25} style={{ marginRight: 10 }} />
+          </TelegramShareButton>
+          <FacebookShareButton
+            url={`https://marapolsamoviesv2.vercel.app/${
+              props.collection ? props.collection : "reviews"
+            }/${props.id}`}
+            quote="Check out this link!"
+            hashtag="#marapolsamovies"
+          >
+            <FiFacebook size={25} />
+          </FacebookShareButton>
         </div>
       </section>
       <section style={{ marginTop: 20, marginBottom: 20 }}>

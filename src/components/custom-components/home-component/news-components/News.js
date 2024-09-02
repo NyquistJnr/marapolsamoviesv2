@@ -1,8 +1,10 @@
 import Image from "next/image";
 import classes from "./News.module.css";
-import { shortenText } from "@/utils/text-shortener";
+import { shortenText, truncateText } from "@/utils/text-shortener";
+import Link from "next/link";
 
 const News = (props) => {
+  const truncatedDescription = truncateText(props.description, 100);
   return (
     <>
       <section>
@@ -24,18 +26,26 @@ const News = (props) => {
               className={classes.imgStyle}
             />
           </div>
-          <h3
-            className={classes.h1}
-            style={{ fontWeight: "bold", marginTop: 20 }}
-          >
-            {shortenText(props.title, 5)}
-          </h3>
+          <Link href={`/news/${props.id}`}>
+            <h3
+              className={classes.h1}
+              style={{ fontWeight: "bold", marginTop: 20 }}
+            >
+              {shortenText(props.title, 5)}
+            </h3>
+          </Link>
         </div>
         <div style={{ marginTop: 20 }}>
           <p className={classes.p}>
             <b>By {props.author}</b>
           </p>
-          <p className={classes.h2}>{shortenText(props.description, 15)}</p>
+          <div className={classes.h2}>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: truncatedDescription,
+              }}
+            />
+          </div>
         </div>
       </section>
       <hr style={{ marginBottom: 50 }} />

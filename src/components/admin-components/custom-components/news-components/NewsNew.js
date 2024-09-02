@@ -20,6 +20,7 @@ import {
 import classes from "./NewsNew.module.css";
 import { toast, ToastContainer } from "react-toastify";
 import useAddActivity from "@/hooks/useActivities";
+import RichTextEditor from "../../general-components/text-editor/TextEditor";
 
 const NewsNewAdminComponent = ({ docId }) => {
   const [user] = useAuthState(auth);
@@ -31,6 +32,7 @@ const NewsNewAdminComponent = ({ docId }) => {
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     if (docId) {
@@ -46,9 +48,12 @@ const NewsNewAdminComponent = ({ docId }) => {
         } else {
           console.error("Document does not exist!");
         }
+        setIsDataLoaded(true);
       };
 
       fetchDocument();
+    } else {
+      setIsDataLoaded(true); // Mark data as loaded if no docId is provided
     }
   }, [docId]);
 
@@ -66,6 +71,10 @@ const NewsNewAdminComponent = ({ docId }) => {
       reader.readAsDataURL(file);
       setThumbnailFile(file); // Store the file for later upload
     }
+  };
+
+  const handleDescriptionChange = (newDescription) => {
+    setDescription(newDescription);
   };
 
   const handleSubmit = async (event) => {
@@ -100,7 +109,6 @@ const NewsNewAdminComponent = ({ docId }) => {
           when: new Date(),
           title: title,
         });
-        // alert("News successfully updated!");
         toast.success("News successfully updated!");
       } else {
         // Add new document to Firestore
@@ -116,14 +124,11 @@ const NewsNewAdminComponent = ({ docId }) => {
           when: new Date(),
           title: title,
         });
-        // alert("News successfully published!");
         toast.success("News successfully published!");
       }
 
       // router.back(); // Navigate back after successful submission
     } catch (error) {
-      // console.error("Error saving document: ", error);
-      // alert("Failed to save the news.");
       toast.error("Failed to post the news, contact IT.");
     }
   };
@@ -234,30 +239,22 @@ const NewsNewAdminComponent = ({ docId }) => {
               </Button>
             </div>
           </Form.Group>
-          <Form.Group
-            className="mb-3"
-            controlId="descriptionControl"
-            style={{ marginTop: 30 }}
-          >
-            <Form.Control
-              type="text"
-              placeholder="Start writing..."
-              className={classes["descriptionControl"]}
-              name="description"
-              as="textarea"
-              rows={10}
+          {isDataLoaded ? (
+            <RichTextEditor
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={handleDescriptionChange}
             />
-            <div className="py-2" style={{ textAlign: "right" }}>
-              <Button
-                onClick={() => handleDelete(setDescription)}
-                className={classes["deleteBtn"]}
-              >
-                <BsTrash color="#000" />
-              </Button>
-            </div>
-          </Form.Group>
+          ) : (
+            <p>Loading content editor...</p>
+          )}
+          <div className="py-2" style={{ textAlign: "right" }}>
+            <Button
+              onClick={() => handleDelete(setDescription)}
+              className={classes["deleteBtn"]}
+            >
+              <BsTrash color="#000" />
+            </Button>
+          </div>
         </section>
       </Form>
     </div>

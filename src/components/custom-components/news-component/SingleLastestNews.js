@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import classes from "./SingleLastestNews.module.css";
-import { shortenText } from "@/utils/text-shortener";
+import { shortenText, truncateText } from "@/utils/text-shortener";
 
 const NewsItem = (props) => {
+  const truncatedDescription = truncateText(props.description, 100); // Adjust the length as needed
+
   return (
     <>
       <div className="row">
@@ -23,9 +25,13 @@ const NewsItem = (props) => {
                 {shortenText(props.title, 15)}
               </h1>
             </Link>
-            <p className={classes.description}>
-              {shortenText(props.description, 70)}
-            </p>
+            <div className={classes.description}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: truncatedDescription,
+                }}
+              />
+            </div>
           </div>
           <div className={classes.subHeading}>
             by

@@ -11,3 +11,15 @@ export function shortenText(text, howShort) {
   // Return the original text if it's 100 words or less
   return text;
 }
+
+export function truncateText(htmlString, maxLength) {
+  const div = document.createElement("div");
+  div.innerHTML = htmlString;
+  let text = div.textContent || div.innerText || "";
+
+  if (text.length > maxLength) {
+    text = text.substring(0, maxLength) + "...read more";
+  }
+
+  return text;
+}

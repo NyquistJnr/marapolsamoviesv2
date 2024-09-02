@@ -95,6 +95,7 @@ const SearchedReviewComponent = (props) => {
               alt="Searched Review"
               width={200}
               height={200}
+              layout="responsive"
               style={{
                 width: "100%",
                 height: 350,

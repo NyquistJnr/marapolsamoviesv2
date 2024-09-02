@@ -151,7 +151,9 @@ const SingleNews = (props) => {
             </div>
             <div>Published: {formattedDate} ago</div>
           </div>
-          <div>{data.description}</div>
+          <div>
+            <div dangerouslySetInnerHTML={{ __html: data.description }} />
+          </div>
           <CommentShare
             collection="news"
             value={data?.comments}
