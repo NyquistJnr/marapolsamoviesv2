@@ -153,7 +153,7 @@ const CommentShare = (props) => {
         >
           <span style={{ marginRight: 10 }}>Share:</span>
           <WhatsappShareButton
-            url={`https://marapolsamoviesv2.vercel.app/${
+            url={`https://www.marapolsamovies.com/${
               props.collection ? props.collection : "reviews"
             }/${props.id}`}
             title="Check out this link!"
@@ -162,16 +162,16 @@ const CommentShare = (props) => {
             <FaWhatsapp size={25} style={{ marginRight: 10 }} />
           </WhatsappShareButton>
           <TwitterShareButton
-            url={`https://marapolsamoviesv2.vercel.app/${
+            url={`https://www.marapolsamovies.com/${
               props.collection ? props.collection : "reviews"
             }/${props.id}`}
             title="Check out this link!"
-            via="nwaukwa_nyquist"
+            /* via="nwaukwa_nyquist" */
           >
             <FaXTwitter size={25} style={{ marginRight: 10 }} />
           </TwitterShareButton>
           <TelegramShareButton
-            url={`https://marapolsamoviesv2.vercel.app/${
+            url={`https://www.marapolsamovies.com/${
               props.collection ? props.collection : "reviews"
             }/${props.id}`}
             title="Check out this link!"
@@ -179,7 +179,7 @@ const CommentShare = (props) => {
             <PiTelegramLogoBold size={25} style={{ marginRight: 10 }} />
           </TelegramShareButton>
           <FacebookShareButton
-            url={`https://marapolsamoviesv2.vercel.app/${
+            url={`https://www.marapolsamovies.com/${
               props.collection ? props.collection : "reviews"
             }/${props.id}`}
             quote="Check out this link!"

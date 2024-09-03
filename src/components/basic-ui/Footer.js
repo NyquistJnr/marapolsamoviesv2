@@ -170,7 +170,10 @@ const Footer = () => {
                     alt="Instagram"
                   />
                 </Link>
-                <Link href="http://tikTok.com/marapolsa_movies" target="_blank">
+                <Link
+                  href="https://www.tiktok.com/@marapolsa_movies"
+                  target="_blank"
+                >
                   <Image
                     src={icon3}
                     priority
@@ -208,7 +211,7 @@ const Footer = () => {
               }}
             >
               <p className="col-6 col-md-6 col-lg-3 text-center">
-                <Link href="mailto:info@marapolsa.com">Contact Us</Link>
+                <Link href="mailto:info@marapolsamovies.com">Contact Us</Link>
               </p>
               <p className="col-6 col-md-6 col-lg-3 text-center">
                 <Link href="/advertise-with-us"> Advertise with us</Link>

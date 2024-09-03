@@ -1,6 +1,10 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { Button } from "@chakra-ui/react";
 
 const JoinConversation = () => {
+  const router = useRouter();
   return (
     <section
       style={{
@@ -19,7 +23,12 @@ const JoinConversation = () => {
           Write and share your comments on movies and TV shows. Sign up and
           start talking.
         </p>
-        <Button style={{ color: "#E86C44" }}>Sign Up</Button>
+        <Button
+          style={{ color: "#E86C44" }}
+          onClick={() => router.push("/sign-up")}
+        >
+          Sign Up
+        </Button>
       </div>
     </section>
   );

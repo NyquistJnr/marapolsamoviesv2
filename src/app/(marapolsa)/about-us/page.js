@@ -3,6 +3,11 @@ import Unwrapped from "@/components/custom-components/unwrapped-component/Unwrap
 
 import classes from "./page.module.css";
 
+export const metadata = {
+  title: "About Us",
+  description: `At Marapolsa, we're not just about reviewing movies - we're about creating a community of like-minded individuals who share our passion for movies. We believe that every movie has its own unique story to tell, and we're committed to sharing those stories with our audience.`,
+};
+
 const About = () => {
   const isLoggedIn = true;
   return (
