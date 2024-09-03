@@ -32,7 +32,8 @@ export default function Home() {
     error: popularError,
   } = useTopDocuments();
 
-  console.log("Top Document", topDocuments);
+  // console.log("Top Document", topDocuments);
+
   const {
     recentData,
     isLoading: recentLoading,
