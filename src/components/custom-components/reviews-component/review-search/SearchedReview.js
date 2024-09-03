@@ -135,31 +135,31 @@ const SearchedReviewComponent = (props) => {
             <b>Published:</b> {formattedDate}
           </div>
         </div>
-        <div>
+        {data.plot && <div>
           <h4>Plot</h4>
           <hr />
           <p>{data.plot}</p>
-        </div>
-        <div>
+        </div>}
+        {data.acting && <div>
           <h4>Acting</h4>
           <hr />
           <p>{data.acting}</p>
-        </div>
-        <div>
+        </div>}
+        {data.characters && <div>
           <h4>Characters</h4>
           <hr />
           <p>{data.characters}</p>
-        </div>
-        <div>
+        </div>}
+        {data.storytelling && <div>
           <h4>Storytelling</h4>
           <hr />
           <p>{data.storytelling}</p>
-        </div>
-        <div>
+        </div>}
+        {data.verdict && <div>
           <h4>The Verdict</h4>
           <hr />
           <p>{data.verdict}</p>
-        </div>
+        </div>}
         <RatingComponent value={data.rating} />
         <CommentShare
           value={data?.comments}
