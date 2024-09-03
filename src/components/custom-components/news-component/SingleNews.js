@@ -143,13 +143,13 @@ const SingleNews = (props) => {
             />
           </div>
           <div
-            style={{ display: "flex", justifyContent: "space-between" }}
+            style={{ display: "flex", justifyContent: "space-between", flexWrap:"wrap" }}
             className="py-3"
           >
-            <div>
+            <div className="py-2">
               By: <b>{data.author}</b>
             </div>
-            <div>Published: {formattedDate} ago</div>
+            <div className="py-2">Published: {formattedDate} ago</div>
           </div>
           <div>
             <div dangerouslySetInnerHTML={{ __html: data.description }} />
