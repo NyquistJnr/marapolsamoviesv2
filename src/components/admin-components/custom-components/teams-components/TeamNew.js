@@ -137,7 +137,7 @@ const TeamNew = () => {
                     handleRoleChange(data.id, "staff", data.displayName)
                   }
                 >
-                  Make an Staff
+                  Make a Staff
                 </div>
                 <div
                   className="btn btn-danger my-2 mx-2"
