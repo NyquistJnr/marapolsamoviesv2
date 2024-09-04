@@ -73,10 +73,10 @@ const Sidebar = () => {
         <div className="sidebar__top" style={{ width: "100%" }}>
           {isCollapsed ? (
             <Image
-              width={200}
-              height={200}
+              width={250}
+              height={250}
               className="sidebar__logo"
-              src="/logo.png"
+              src="/marapolsalogo.jpg"
               alt="logo"
               priority
             />

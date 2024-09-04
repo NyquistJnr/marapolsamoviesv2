@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Alert, Dropdown, Form } from "react-bootstrap";
 
@@ -24,19 +24,54 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { IoBookOutline } from "react-icons/io5";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaAward } from "react-icons/fa6";
-
-const feedList = [
-  { title: "Visits", counts: 30, attend: "80%" },
-  { title: "Likes", counts: 30, attend: "80%" },
-  { title: "Comments", counts: 30, attend: "80%" },
-  { title: "Saves", counts: 30, attend: "80%" },
-  { title: "Shares", counts: 30, attend: "80%" },
-  { title: "Users", counts: 30, attend: "80%" },
-];
+import useAggregatedData from "@/hooks/dashboard/useTotalLikesSavesCommentUsers";
+import getDateRange from "@/utils/week-month-year";
+import useUserData from "@/hooks/dashboard/useUserStatusActivities";
+import { shortenText } from "@/utils/text-shortener";
 
 const DashboardComponent = () => {
   const [show, setShow] = useState(true);
   const [user] = useAuthState(auth);
+
+  const {
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useUserData(user?.uid);
+
+  const user_activities = [...userData.activities].reverse();
+
+  const { data, loading, error } = useAggregatedData();
+
+  const feedList = [
+    { title: "Visits", counts: "Coming soon", attend: "coming soon" },
+    { title: "Likes", counts: data.totalLikes, attend: "coming soon" },
+    { title: "Comments", counts: data.totalComments, attend: "coming soon" },
+    { title: "Saves", counts: data.totalSaves, attend: "coming soon" },
+    { title: "Shares", counts: "Coming soon", attend: "coming soon" },
+    { title: "Users", counts: data.totalUsers, attend: "coming soon" },
+  ];
+
+  const [timePeriod, setTimePeriod] = useState("year"); // Default to 'year'
+
+  const [timeRange, setTimeRange] = useState("");
+
+  const handleTimePeriodChange = (event) => {
+    setTimePeriod(event.target.value);
+  };
+
+  const dateRanges = getDateRange(new Date());
+
+  useEffect(() => {
+    if (timePeriod === "week") {
+      setTimeRange(`${dateRanges.week.start} - ${dateRanges.week.end}`);
+    } else if (timePeriod === "month") {
+      setTimeRange(`${dateRanges.month.start} - ${dateRanges.month.end}`);
+    } else if (timePeriod === "year") {
+      setTimeRange(`${dateRanges.year.start} - ${dateRanges.year.end}`);
+    }
+  }, [timePeriod]);
+
   return (
     <div>
       <div className="d-block d-md-none">
@@ -123,21 +158,20 @@ const DashboardComponent = () => {
             margin: "10px 0",
           }}
         >
-          <FaCalendarAlt style={{ marginRight: 10 }} />7 Jul - 13 Jul, 2024
+          <FaCalendarAlt style={{ marginRight: 10 }} />
+          {timeRange}
         </div>
         <div style={{ marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
           <Form.Select
             aria-label="Select Time Frame"
             className={classes.timeFrameControl}
+            value={timePeriod}
+            onChange={handleTimePeriodChange}
           >
             <option>Choose...</option>
             <option value="week">This week</option>
             <option value="month">This Month</option>
-            <option value="Last month">Last month</option>
-            <option value="Last month">This quarter</option>
-            <option value="Last month">Last quarter</option>
-            <option value="Last month">This year</option>
-            <option value="Last month">Last year</option>
+            <option value="year">Year</option>
           </Form.Select>
         </div>
       </div>
@@ -150,11 +184,13 @@ const DashboardComponent = () => {
                   title={data.title}
                   counts={data.counts}
                   attend={data.attend}
+                  loading={loading}
+                  error={error}
                 />
               </div>
             ))}
           </div>
-          <GraphComponent />
+          <GraphComponent timeFrame={timePeriod} />
           <div className="row py-3">
             <div className="col-12 col-md-7 col-lg-8 py-1">
               <div
@@ -281,7 +317,43 @@ const DashboardComponent = () => {
               className="text-center"
               style={{ fontWeight: "bold", fontSize: 13, marginTop: 10 }}
             >
-              You don&apos;t have any notifications yet.
+              {userError && (
+                <div className="py-5 text-center">
+                  An Error occurred, {userError.message}
+                </div>
+              )}
+              {userData.activities.length < 1 && (
+                <div>You don&apos;t have any notifications yet.</div>
+              )}
+              {userLoading ? (
+                <div>Loading...</div>
+              ) : (
+                <div style={{ marginTop: 20 }}>
+                  {user_activities.map((data) => (
+                    <div key={Math.random()}>
+                      <hr />
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          flexWrap: "wrap",
+                          marginBottom: 5,
+                        }}
+                      >
+                        <div className="py-2">
+                          <div style={{ fontWeight: "bold" }}>
+                            {data.description}
+                          </div>
+                          <div style={{ fontSize: 10 }}>
+                            {data.when.toDate().toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="py-2">{shortenText(data.title, 3)}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -25,17 +25,17 @@ const NewsAdmin = () => {
   const dataList = [
     {
       title: "Likes",
-      value: "totalLike",
+      value: "Not Supported",
       percentage: "8%",
     },
     {
       title: "Comments",
-      value: "totalComment",
+      value: "Not Supported",
       percentage: "8%",
     },
     {
       title: "Saves",
-      value: "totalSave",
+      value: "Not Supported",
       percentage: "8%",
     },
     {

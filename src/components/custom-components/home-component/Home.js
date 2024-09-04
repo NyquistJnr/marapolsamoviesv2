@@ -19,6 +19,7 @@ import MovieListSkeleton from "@/components/custom-components/movies-component/M
 import TrendingSkeleton from "@/components/custom-components/news-component/TrendingSkeleton";
 import useTopDocuments from "@/hooks/useMostPopularPosts";
 import PopularSkeleton from "@/components/custom-components/home-component/PopularSkeleton";
+import useAggregatedData from "@/hooks/dashboard/useTotalLikesSavesCommentUsers";
 
 // import styles from "./page.module.css";
 
@@ -90,7 +91,13 @@ export default function Home() {
               {popularLoading ? (
                 <PopularSkeleton />
               ) : (
-                <PopularList data={topDocuments} name="Most Popular" />
+                <>
+                  {topDocuments.length > 0 ? (
+                    <PopularList data={topDocuments} name="Most Popular" />
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -101,13 +108,25 @@ export default function Home() {
             <TrendingSkeleton />
           </div>
         ) : (
-          <NewsList data={mainNews} name="News" />
+          <>
+            {mainNews.length > 0 ? (
+              <NewsList data={mainNews} name="News" />
+            ) : (
+              <></>
+            )}
+          </>
         )}
         {/* Start of New Section */}
         {moviesLoading ? (
           <MovieListSkeleton top={true} />
         ) : (
-          <MovieTvShowList data={recentNews} name="Movies & TV Shows" />
+          <>
+            {recentNews.length > 0 ? (
+              <MovieTvShowList data={recentNews} name="Movies & TV Shows" />
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </Container>
       {/* Start of New Section */}

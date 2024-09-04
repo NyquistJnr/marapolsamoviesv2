@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./AnalyticsBox.module.css";
+import { Badge } from "react-bootstrap";
 
 const AnalyticsBox = (props) => {
   if (props.error) {
@@ -29,8 +30,9 @@ const AnalyticsBox = (props) => {
           )}
         </div>
         <div>
-          {props.percentage}
-          <span>. This week</span>
+          <Badge pill bg="warning">
+            Coming Soon {/* {props.percentage} */} {/* This week */}
+          </Badge>
         </div>
       </div>
     </div>

@@ -82,4 +82,9 @@
   .description {
     font-size: 18px;
   }
+  .img {
+    width: 100%;
+    height: 250px !important;
+    object-position: 50% 10% !important;
+  }
 }

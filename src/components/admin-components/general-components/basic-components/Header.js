@@ -10,9 +10,18 @@ import classes from "./Header.module.css";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
+import useUserData from "@/hooks/dashboard/useUserStatusActivities";
+import { capitalize } from "@/utils/number-commas";
 
 const AdminHeader = () => {
   const [user] = useAuthState(auth);
+
+  const { data, loading, error } = useUserData(user?.uid);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div style={{ margin: "20px 0" }}>
       <div
@@ -22,7 +31,11 @@ const AdminHeader = () => {
           flexWrap: "wrap",
         }}
       >
-        <Form className="d-flex" style={{ width: "70%", margin: "10px 0" }}>
+        <Form
+          onSubmit={handleSubmit}
+          className="d-flex"
+          style={{ width: "70%", margin: "10px 0" }}
+        >
           <div
             style={{
               display: "flex",
@@ -82,7 +95,10 @@ const AdminHeader = () => {
               <div style={{ fontSize: 12, fontWeight: "bold" }}>
                 {user ? user.displayName : "Anon"}
               </div>
-              <div style={{ fontSize: 10 }}>Staff</div>
+              <div style={{ fontSize: 10 }}>
+                {loading ? "Loading..." : capitalize(data.statusRole)}
+                {error && <div>An Error occurred, {error.message}</div>}
+              </div>
             </div>
           </div>
         </div>

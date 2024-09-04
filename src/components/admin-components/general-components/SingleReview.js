@@ -154,7 +154,7 @@ const SingleReview = (props) => {
             flexWrap: "wrap",
           }}
         >
-          <div
+          {/*  <div
             className="py-1"
             style={{ marginRight: 20, textAlign: "center" }}
           >
@@ -174,7 +174,7 @@ const SingleReview = (props) => {
           >
             <div style={{ fontWeight: "bold" }}>4</div>
             <div style={{ fontSize: 10, color: "#5F5D5A" }}>New Users</div>
-          </div>
+          </div> */}
           <div className="py-1">
             <Dropdown>
               <Dropdown.Toggle
@@ -198,9 +198,13 @@ const SingleReview = (props) => {
                 <Dropdown.Item
                   onClick={() => {
                     if (props.type) {
-                      handleCopyClick(`/admin/${props.type}/${props.id}`);
+                      handleCopyClick(
+                        `https://www.marapolsamovies.com/admin/${props.type}/${props.id}`
+                      );
                     } else {
-                      handleCopyClick(`/admin/reviews/${props.id}`);
+                      handleCopyClick(
+                        `https://www.marapolsamovies.com/admin/reviews/${props.id}`
+                      );
                     }
                   }}
                 >
