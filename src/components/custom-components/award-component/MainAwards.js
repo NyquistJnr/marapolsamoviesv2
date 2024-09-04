@@ -30,6 +30,13 @@ const AwardsComponents = (props) => {
         </div>
       </Container>
     );
+
+  if (error) {
+    return (
+      <div className="text-center py-5">An Error Occured, {error.message}</div>
+    );
+  }
+
   return (
     <>
       <MainSearchFilterBar placeholder="awards" />
