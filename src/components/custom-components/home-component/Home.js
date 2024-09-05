@@ -71,7 +71,7 @@ export default function Home() {
     <>
       <Container>
         <HorRecommendation
-          title="Trending"
+          title="Trending Reviews"
           data={trendingPost}
           isLoading={isLoading}
           seeMore={true}

@@ -162,7 +162,10 @@ const Footer = () => {
                     alt="X"
                   />
                 </Link>
-                <Link href="http://instagram.com/marapolsa" target="_blank">
+                <Link
+                  href="https://www.instagram.com/p/C9Im8aMs9bl/?igsh=NTdjeHBmZTRkMmZs"
+                  target="_blank"
+                >
                   <Image
                     src={icon2}
                     priority

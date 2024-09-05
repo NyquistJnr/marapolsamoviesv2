@@ -45,7 +45,7 @@ const MovieResult = () => {
       />
       <section style={{ marginBottom: 50 }}>
         <div className="text-center">
-          <ReactPlayer url={data.movieTrailer} width={"100%"} />
+          <ReactPlayer url={data.movieTrailer} width={"100%"} controls />
         </div>
         <div className="d-block d-md-flex" style={{ marginTop: 30 }}>
           <div className={classes.imgWrapper}>
