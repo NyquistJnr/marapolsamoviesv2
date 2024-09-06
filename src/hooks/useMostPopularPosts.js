@@ -6,7 +6,7 @@ const useTopDocuments = () => {
   const [topDocuments, setTopDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const collections = ["news", "reviews", "movies"];
+  const collections = ["news", "reviews", "awards"];
 
   useEffect(() => {
     const fetchTopDocuments = async () => {
