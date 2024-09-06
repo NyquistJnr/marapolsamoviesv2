@@ -9,7 +9,7 @@ const Popular = (props) => {
         <div style={{ marginTop: 30 }}>
           <div className={classes.imgWrapper}>
             <Image
-              src={props.image}
+              src={props.image?props.image:"/awards.png"}
               alt={props.title}
               style={{
                 width: "100%",
