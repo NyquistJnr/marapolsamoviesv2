@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import classes from "./SingleLastestNews.module.css";
 import { shortenText, truncateText } from "@/utils/text-shortener";
+import { capitalize } from "@/utils/number-commas";
 
 const NewsItem = (props) => {
   const truncatedDescription = truncateText(props.description, 100); // Adjust the length as needed
@@ -36,9 +37,11 @@ const NewsItem = (props) => {
           <div className={classes.subHeading}>
             by
             <span style={{ fontWeight: "bold", marginLeft: 4 }}>
-              {props.author}
+              {capitalize(props.author)}
             </span>
-            <span style={{ marginLeft: 20 }}>{props.time} ago</span>
+            <span style={{ marginLeft: 20 }}>
+              {props.time} {/* ago */}
+            </span>
           </div>
         </div>
         <div

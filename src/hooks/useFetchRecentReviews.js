@@ -1,38 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   collection,
   query,
   orderBy,
   getDocs,
   limit as firebaseLimit,
+  startAfter as firebaseStartAfter,
 } from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useFetchRecentReviews = (
-  id,
-  limit = null,
-  collectionName = "reviews"
-) => {
+const useFetchRecentReviews = (id, limit = 10, collectionName = "reviews") => {
   const [recentData, setRecentData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [lastVisible, setLastVisible] = useState(null); // For pagination
+  const [hasMore, setHasMore] = useState(true); // To track if more data is available
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      setIsLoading(true); // Set loading to true before fetching data
-      setError(null); // Reset error state before fetching
+  const fetchReviews = useCallback(
+    async (startAfterDoc = null) => {
+      setIsLoading(true);
+      setError(null);
 
       try {
-        // Construct the query with optional limit and collection name
-        const reviewsQuery = limit
-          ? query(
-              collection(db, collectionName), // Use the provided or default collection name
-              orderBy("timestamp", "desc"),
-              firebaseLimit(limit)
-            )
-          : query(collection(db, collectionName), orderBy("timestamp", "desc"));
+        let reviewsQuery = query(
+          collection(db, collectionName),
+          orderBy("timestamp", "desc"),
+          firebaseLimit(limit)
+        );
+
+        if (startAfterDoc) {
+          reviewsQuery = query(reviewsQuery, firebaseStartAfter(startAfterDoc));
+        }
 
         const querySnapshot = await getDocs(reviewsQuery);
         const reviews = querySnapshot.docs.map((doc) => ({
@@ -40,19 +40,37 @@ const useFetchRecentReviews = (
           ...doc.data(),
         }));
 
-        setRecentData(reviews);
+        setRecentData((prev) => {
+          // Use a Set to avoid duplicates
+          const existingIds = new Set(prev.map((item) => item.id));
+          const newReviews = reviews.filter(
+            (review) => !existingIds.has(review.id)
+          );
+          return [...prev, ...newReviews];
+        });
+        setHasMore(reviews.length === limit); // Check if there's more data
+        setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]); // Set last visible document
       } catch (error) {
         console.error("Error fetching reviews: ", error);
         setError(error);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching (success or error)
+        setIsLoading(false);
       }
-    };
+    },
+    [limit, collectionName]
+  );
 
+  useEffect(() => {
     fetchReviews();
-  }, [id, limit, collectionName]);
+  }, [id, fetchReviews]);
 
-  return { recentData, isLoading, error };
+  return {
+    recentData,
+    isLoading,
+    error,
+    fetchMore: () => fetchReviews(lastVisible),
+    hasMore,
+  };
 };
 
 export default useFetchRecentReviews;

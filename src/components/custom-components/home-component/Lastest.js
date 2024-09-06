@@ -2,6 +2,7 @@ import Image from "next/image";
 import classes from "./Lastest.module.css";
 import { shortenText } from "@/utils/text-shortener";
 import Link from "next/link";
+import { capitalize } from "@/utils/number-commas";
 
 const Lastest = (props) => {
   const shortenedText = shortenText(props.plot, 20);
@@ -48,7 +49,7 @@ const Lastest = (props) => {
           <div>
             <p className={classes.p}>
               <span style={{ marginRight: 20 }}>
-                <b>by {props.author}</b>
+                <b>by {capitalize(props.author)}</b>
               </span>
               <span>
                 <b>{props.timestamp.toDate().toLocaleString()}</b>

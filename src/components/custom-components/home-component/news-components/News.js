@@ -2,6 +2,7 @@ import Image from "next/image";
 import classes from "./News.module.css";
 import { shortenText, truncateText } from "@/utils/text-shortener";
 import Link from "next/link";
+import { capitalize } from "@/utils/number-commas";
 
 const News = (props) => {
   const truncatedDescription = truncateText(props.description, 100);
@@ -37,7 +38,7 @@ const News = (props) => {
         </div>
         <div style={{ marginTop: 20 }}>
           <p className={classes.p}>
-            <b>By {props.author}</b>
+            <b>By {capitalize(props.author)}</b>
           </p>
           <div className={classes.h2}>
             <div

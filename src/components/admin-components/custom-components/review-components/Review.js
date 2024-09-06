@@ -11,7 +11,7 @@ import useFetchRecentReviews from "@/hooks/useFetchRecentReviews";
 import useCollectionStats from "@/hooks/useCollectionStat";
 
 const ReviewComponent = () => {
-  const { recentData, isLoading: mainLoading } = useFetchRecentReviews();
+  const { recentData, isLoading: mainLoading } = useFetchRecentReviews(1, 4);
   const { totalLike, totalSave, totalComment, isLoading, error } =
     useCollectionStats();
 

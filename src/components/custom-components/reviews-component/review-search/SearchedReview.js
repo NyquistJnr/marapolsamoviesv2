@@ -14,6 +14,7 @@ import usePostDetails from "@/hooks/usePostDetail";
 import SearchedViewSkeleton from "./SearchedViewSkeleton";
 import HorRecommendation from "@/components/general-components/HorRecommendation";
 import useSimilarPost from "@/hooks/useSimilarPost";
+import { capitalize } from "@/utils/number-commas";
 
 const SearchedReviewComponent = (props) => {
   const router = useRouter();
@@ -129,37 +130,47 @@ const SearchedReviewComponent = (props) => {
         </div>
         <div style={{ marginTop: 20, marginBottom: 20 }}>
           <div>
-            <b>By:</b> {data.author}
+            <b>By:</b> {capitalize(data.author)}
           </div>
           <div style={{ marginTop: 10 }}>
             <b>Published:</b> {formattedDate}
           </div>
         </div>
-        {data.plot && <div>
-          <h4>Plot</h4>
-          <hr />
-          <p>{data.plot}</p>
-        </div>}
-        {data.acting && <div>
-          <h4>Acting</h4>
-          <hr />
-          <p>{data.acting}</p>
-        </div>}
-        {data.characters && <div>
-          <h4>Characters</h4>
-          <hr />
-          <p>{data.characters}</p>
-        </div>}
-        {data.storytelling && <div>
-          <h4>Storytelling</h4>
-          <hr />
-          <p>{data.storytelling}</p>
-        </div>}
-        {data.verdict && <div>
-          <h4>The Verdict</h4>
-          <hr />
-          <p>{data.verdict}</p>
-        </div>}
+        {data.plot && (
+          <div>
+            <h4>Plot</h4>
+            <hr />
+            <p>{data.plot}</p>
+          </div>
+        )}
+        {data.acting && (
+          <div>
+            <h4>Acting</h4>
+            <hr />
+            <p>{data.acting}</p>
+          </div>
+        )}
+        {data.characters && (
+          <div>
+            <h4>Characters</h4>
+            <hr />
+            <p>{data.characters}</p>
+          </div>
+        )}
+        {data.storytelling && (
+          <div>
+            <h4>Storytelling</h4>
+            <hr />
+            <p>{data.storytelling}</p>
+          </div>
+        )}
+        {data.verdict && (
+          <div>
+            <h4>The Verdict</h4>
+            <hr />
+            <p>{data.verdict}</p>
+          </div>
+        )}
         <RatingComponent value={data.rating} />
         <CommentShare
           value={data?.comments}

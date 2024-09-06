@@ -12,7 +12,7 @@ const HorizontalScroll = (props) => {
       <div className={classes.bodyContainer}>
         {props.data?.length > 0 ? (
           props.data.map((item) => (
-            <div key={item.title} className={classes.cardContainer}>
+            <div key={item.id} className={classes.cardContainer}>
               <div className={classes.cardContent}>
                 <Image
                   src={item.image}

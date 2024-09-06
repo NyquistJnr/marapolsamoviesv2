@@ -93,7 +93,7 @@ const AdminHeader = () => {
             </div>
             <div>
               <div style={{ fontSize: 12, fontWeight: "bold" }}>
-                {user ? user.displayName : "Anon"}
+                {user ? capitalize(user.displayName) : "Anon"}
               </div>
               <div style={{ fontSize: 10 }}>
                 {loading ? "Loading..." : capitalize(data.statusRole)}

@@ -1,54 +1,101 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
 import { db } from "@/app/firebase/config";
 
-const useMovieCategorySearch = (searchValue) => {
-  const [loading, setLoading] = useState(true);
+const useMovieCategorySearch = (searchValue, itemsPerPage = 10) => {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [lastVisible, setLastVisible] = useState(null);
+  const [hasMore, setHasMore] = useState(false);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      setError(null);
+  const fetchMovies = async (startAfterDoc = null) => {
+    setLoading(true);
+    setError(null);
 
-      try {
-        // Step 1: Fetch all documents from the "movies" collection
-        const moviesCollectionRef = collection(db, "movies");
-        const querySnapshot = await getDocs(moviesCollectionRef);
+    try {
+      const moviesCollectionRef = collection(db, "movies");
 
-        // Step 2: Filter documents based on the searchValue
-        const matchedMovies = [];
+      // Step 1: Build query with pagination support
+      let moviesQuery = query(
+        moviesCollectionRef,
+        orderBy("timestamp"),
+        limit(itemsPerPage)
+      );
 
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          const movieArray = data.categories || [];
+      // Add pagination support if there's a starting point
+      if (startAfterDoc) {
+        moviesQuery = query(
+          moviesCollectionRef,
+          orderBy("timestamp"),
+          startAfter(startAfterDoc),
+          limit(itemsPerPage)
+        );
+      }
 
-          // Check if any object in the array contains the searchValue in the "name" field
-          const hasMatchingName = movieArray.some(
-            (item) => item.name === searchValue
+      // Step 2: Execute query
+      const querySnapshot = await getDocs(moviesQuery);
+
+      // Step 3: Filter documents based on the searchValue
+      const matchedMovies = querySnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((movie) => {
+          const movieCategories = movie.categories || [];
+          return movieCategories.some(
+            (category) => category.name === searchValue
           );
-
-          if (hasMatchingName) {
-            matchedMovies.push({ id: doc.id, ...data });
-          }
         });
 
-        setFilteredMovies(matchedMovies);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      // Step 4: Update filteredMovies and ensure no duplicates
+      setFilteredMovies((prevMovies) => [
+        ...prevMovies,
+        ...matchedMovies.filter(
+          (movie) => !prevMovies.some((prevMovie) => prevMovie.id === movie.id)
+        ),
+      ]);
 
+      // Step 5: Handle pagination by capturing the last visible document
+      const lastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+      setLastVisible(lastVisibleDoc || null);
+
+      // Step 6: Check if there are more movies to load
+      // Ensure both snapshot and matchedMovies are considered
+      setHasMore(
+        querySnapshot.docs.length === itemsPerPage && matchedMovies.length > 0
+      );
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      setError(error.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     if (searchValue) {
+      // Reset the state when searchValue changes
+      setFilteredMovies([]);
+      setLastVisible(null);
+      setHasMore(false);
       fetchMovies();
     }
   }, [searchValue]);
 
-  return { loading, error, filteredMovies };
+  // Function to load more movies when needed
+  const loadMoreMovies = () => {
+    if (hasMore && !loading) {
+      fetchMovies(lastVisible);
+    }
+  };
+
+  return { loading, error, filteredMovies, hasMore, loadMoreMovies };
 };
 
 export default useMovieCategorySearch;

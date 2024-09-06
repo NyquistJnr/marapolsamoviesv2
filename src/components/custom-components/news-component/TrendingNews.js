@@ -7,6 +7,7 @@ import useTrendingPost from "@/hooks/useTrendingPost";
 import classes from "./TrendingNews.module.css";
 import TrendingSkeleton from "./TrendingSkeleton";
 import { shortenText, truncateText } from "@/utils/text-shortener";
+import { capitalize } from "@/utils/number-commas";
 
 const TrendingNews = (props) => {
   const {
@@ -54,7 +55,7 @@ const TrendingNews = (props) => {
                     </div>
                   </Link>
                   <div className={classes.authorSection}>
-                    By <b>{trendingNews.author}</b>
+                    By <b>{capitalize(trendingNews.author)}</b>
                   </div>
                   <div className={classes.description}>
                     <div

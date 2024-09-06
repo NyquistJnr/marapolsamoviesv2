@@ -13,7 +13,7 @@ const MovieTvShow = (props) => {
         minHeight: 250,
       }}
     >
-      <section style={{ display: "flex" }}>
+      <section style={{ display: "flex", minHeight: 250 }}>
         <div style={{ display: "flex", alignItems: "center", marginRight: 10 }}>
           <div className={classes.imgWrapper}>
             <Image

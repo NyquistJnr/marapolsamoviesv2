@@ -16,7 +16,7 @@ const CompleteSearchFilterBar = (props) => {
 
   const handleSearchedSection = (item) => {
     props.searchedSection(item);
-    console.log(item);
+    // console.log(item);
   };
 
   const handleSubmit = (e) => {

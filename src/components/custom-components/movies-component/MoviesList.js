@@ -20,7 +20,8 @@ const MoviesList = (props) => {
   const pathname = usePathname();
   const category = convertKebabCaseToNormal(pathname.split("/").pop());
 
-  const { loading, error, filteredMovies } = useMovieCategorySearch(category);
+  const { loading, error, filteredMovies, hasMore, loadMoreMovies } =
+    useMovieCategorySearch(category);
 
   if (loading)
     return (
@@ -43,6 +44,12 @@ const MoviesList = (props) => {
         item.toLowerCase().includes(data.title.toLowerCase())
     );
     setSearchedFilter(a);
+  };
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      loadMoreMovies();
+    }
   };
 
   return (
@@ -111,6 +118,14 @@ const MoviesList = (props) => {
                 <MovieTvShow {...data} />
               </div>
             ))}
+            <div className="text-center" style={{ marginTop: 40 }}>
+              {hasMore && !loading && (
+                <Button className={classes.seeMoreBtn} onClick={handleLoadMore}>
+                  See more
+                </Button>
+              )}
+              {!hasMore && <div>No more movies to load.</div>}
+            </div>
           </section>
         </div>
       )}

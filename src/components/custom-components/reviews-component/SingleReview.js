@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import classes from "./SingleReview.module.css";
 import { shortenText } from "@/utils/text-shortener";
+import { capitalize } from "@/utils/number-commas";
 
 const SingleReviewComponent = (props) => {
   const shortenVerdict = shortenText(props.verdict, 20);
@@ -25,7 +26,7 @@ const SingleReviewComponent = (props) => {
         </Link>
         <p className={classes.description}>{shortenVerdict}</p>
         <div className={classes.subHeading}>
-          by <strong>{props.author}</strong> &middot;{" "}
+          by <strong>{capitalize(props.author)}</strong> &middot;{" "}
           {props.timestamp.toDate().toLocaleString()}
         </div>
         <div className={classes.details}>

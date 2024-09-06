@@ -19,12 +19,12 @@ const MainMovies = () => {
     loading: loadingTopRated,
     error: errorTopRated,
     filteredMovies: filteredTopRatedMovies,
-  } = useMovieCategorySearch("Top Rated Movies");
+  } = useMovieCategorySearch("Top Rated Movies", 20);
   const {
     loading: loadingNigeria,
     error: errorNigeria,
     filteredMovies: filteredNigeriaMovies,
-  } = useMovieCategorySearch("Most Popular Movies In Nigeria 2024");
+  } = useMovieCategorySearch("Most Popular Movies In Nigeria 2024", 20);
   const {
     loading: loadingBest2024,
     error: errorBest2024,
@@ -34,12 +34,18 @@ const MainMovies = () => {
     loading: loadingHollywood,
     error: errorHollywood,
     filteredMovies: filteredHollywoodMovies,
-  } = useMovieCategorySearch("Most Popular Hollywood Movies 2024");
+  } = useMovieCategorySearch("Most Popular Hollywood Movies 2024", 20);
   const {
     loading: loadingTrueStory,
     error: errorTrueStory,
     filteredMovies: filteredTrueStoryMovies,
-  } = useMovieCategorySearch("Movies Based On A True Story");
+  } = useMovieCategorySearch("Movies Based On A True Story", 20);
+
+  const {
+    loading: loadingPrime,
+    error: errorPrime,
+    filteredMovies: filteredPrime,
+  } = useMovieCategorySearch("Top Movies On Prime", 20);
 
   const { searchResults, isLoading, error, searchReviews } =
     useSearchTextPost();
@@ -49,7 +55,8 @@ const MainMovies = () => {
     errorHollywood ||
     errorNigeria ||
     errorTopRated ||
-    errorTrueStory
+    errorTrueStory ||
+    errorPrime
   ) {
     return <div className="text-center py-4">An Error Occured!</div>;
   }
@@ -150,9 +157,17 @@ const MainMovies = () => {
               title="Movies Based on a True Story"
             />
           )}
-          <div className="text-center" style={{ marginTop: 40 }}>
+          {loadingPrime ? (
+            <ImageScrollSkeleton />
+          ) : (
+            <ImageScroller
+              filteredMovies={filteredPrime}
+              title="Top Movies On Prime"
+            />
+          )}
+          {/* <div className="text-center" style={{ marginTop: 40 }}>
             <Button className={classes.seeMoreBtn}>See more</Button>
-          </div>
+          </div> */}
         </section>
       )}
     </Container>

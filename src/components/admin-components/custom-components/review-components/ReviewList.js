@@ -19,17 +19,46 @@ const ReviewListAdmin = () => {
     recentData,
     isLoading: mainLoading,
     error: mainError,
-  } = useFetchRecentReviews();
-  const { data: moviesData, isLoading, error } = useFetchCategoryData("Movies");
+    fetchMore,
+    hasMore,
+  } = useFetchRecentReviews(1, 4);
+  const {
+    data: moviesData,
+    isLoading,
+    error,
+    fetchMore: fetchMovieMore,
+    hasMore: moviesHasMore,
+  } = useFetchCategoryData("Movies", 4);
   const {
     data: tvShowsData,
     isLoading: tvshowLoading,
     error: tvshowError,
-  } = useFetchCategoryData("TV Shows");
+    fetchMore: fetchTvShowMore,
+    hasMore: tvShowHasMore,
+  } = useFetchCategoryData("TV Shows", 4);
 
   // console.log(moviesData);
   // console.log(recentData);
   // console.log(tvShowsData);
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      fetchMore(); // Call to fetch more reviews
+    }
+  };
+
+  const handleLoadMoreMovies = () => {
+    if (moviesHasMore) {
+      fetchMovieMore(); // Call to fetch more reviews
+    }
+  };
+
+  const handleLoadMoreTvShow = () => {
+    if (tvShowHasMore) {
+      fetchTvShowMore(); // Call to fetch more reviews
+    }
+  };
+
   return (
     <div>
       <section
@@ -115,6 +144,27 @@ const ReviewListAdmin = () => {
                           <SingleReview {...data} />
                         </div>
                       ))}
+                      {hasMore && (
+                        <div
+                          className="text-center"
+                          style={{ marginBottom: 40 }}
+                        >
+                          <Button
+                            className={classes.seeMoreBtn}
+                            onClick={handleLoadMore}
+                            disabled={mainLoading}
+                          >
+                            {mainLoading ? "Loading more..." : "See more"}
+                          </Button>
+                        </div>
+                      )}
+                      <>
+                        {!hasMore && (
+                          <div className="py-5 text-center">
+                            No more reviews
+                          </div>
+                        )}
+                      </>
                     </section>
                   ) : (
                     <div className="text-center">No Review yet</div>
@@ -141,6 +191,27 @@ const ReviewListAdmin = () => {
                           <SingleReview {...data} />
                         </div>
                       ))}
+                      {moviesHasMore && (
+                        <div
+                          className="text-center"
+                          style={{ marginBottom: 40 }}
+                        >
+                          <Button
+                            className={classes.seeMoreBtn}
+                            onClick={handleLoadMoreMovies}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? "Loading more..." : "See more"}
+                          </Button>
+                        </div>
+                      )}
+                      <>
+                        {!moviesHasMore && (
+                          <div className="py-5 text-center">
+                            No more reviews
+                          </div>
+                        )}
+                      </>
                     </section>
                   ) : (
                     <div className="text-center">No Movie Reviews yet!</div>
@@ -167,6 +238,27 @@ const ReviewListAdmin = () => {
                           <SingleReview {...data} />
                         </div>
                       ))}
+                      {tvShowHasMore && (
+                        <div
+                          className="text-center"
+                          style={{ marginBottom: 40 }}
+                        >
+                          <Button
+                            className={classes.seeMoreBtn}
+                            onClick={handleLoadMoreTvShow}
+                            disabled={tvshowLoading}
+                          >
+                            {tvshowLoading ? "Loading more..." : "See more"}
+                          </Button>
+                        </div>
+                      )}
+                      <>
+                        {!tvShowHasMore && (
+                          <div className="py-5 text-center">
+                            No more reviews
+                          </div>
+                        )}
+                      </>
                     </section>
                   ) : (
                     <div className="text-center">No TV Shows Reviews yet!</div>

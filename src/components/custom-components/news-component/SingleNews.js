@@ -13,6 +13,7 @@ import useSearchTextPost from "@/hooks/useSearchedText";
 import NewsItem from "./SingleLastestNews";
 import NewsSkeletonList from "./NewsSkeletonList";
 import SingleNewsSkeleton from "./SingleNewsSkeleton";
+import { capitalize } from "@/utils/number-commas";
 
 const SingleNews = (props) => {
   const router = useRouter();
@@ -143,13 +144,19 @@ const SingleNews = (props) => {
             />
           </div>
           <div
-            style={{ display: "flex", justifyContent: "space-between", flexWrap:"wrap" }}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+            }}
             className="py-3"
           >
             <div className="py-2">
-              By: <b>{data.author}</b>
+              By: <b>{capitalize(data.author)}</b>
             </div>
-            <div className="py-2">Published: {formattedDate} ago</div>
+            <div className="py-2">
+              Published: {formattedDate} {/* ago */}
+            </div>
           </div>
           <div>
             <div dangerouslySetInnerHTML={{ __html: data.description }} />

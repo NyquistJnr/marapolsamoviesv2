@@ -14,7 +14,15 @@ import NewsSkeletonList from "./NewsSkeletonList";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const NewsComponent = () => {
-  const { recentNews, isLoading, error } = useRecentNews();
+  const { recentNews, isLoading, error, fetchMore, hasMore } = useRecentNews(
+    "news",
+    4
+  );
+
+  const handleLoadMore = () => {
+    fetchMore(); // Load more news items
+    // console.log("Clicked");
+  };
 
   const [searchedNews, setSearchedNews] = useState("");
 
@@ -103,8 +111,18 @@ const NewsComponent = () => {
                   />
                 ))}
                 <div className="text-center" style={{ marginBottom: 40 }}>
-                  <Button className={styles.seeMoreBtn}>See more</Button>
+                  {hasMore && !isLoading && (
+                    <Button
+                      className={styles.seeMoreBtn}
+                      onClick={handleLoadMore}
+                    >
+                      See more
+                    </Button>
+                  )}
                 </div>
+                {!hasMore && (
+                  <div className="text-center py-5">No more news.</div>
+                )}
               </>
             )}
           </>

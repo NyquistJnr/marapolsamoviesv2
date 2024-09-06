@@ -6,6 +6,7 @@ import TrendingNews from "../news-component/TrendingNews";
 import usePostDetails from "@/hooks/usePostDetail";
 import { Skeleton } from "@chakra-ui/react";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { capitalize } from "@/utils/number-commas";
 
 const AwardsComponents = (props) => {
   const router = useRouter();
@@ -60,7 +61,10 @@ const AwardsComponents = (props) => {
           <h2 style={{ fontWeight: "bold", fontSize: 35 }} className="col-md-6">
             {data.title}
           </h2>
-          <div style={{ marginTop: 30 }}>
+          <div className="py-3" style={{ marginTop: 30 }}>
+            By <b>{capitalize(data.author)}</b>
+          </div>
+          <div>
             <b>Published:</b> {formattedDate}
           </div>
           <div style={{ marginBottom: 100 }}>

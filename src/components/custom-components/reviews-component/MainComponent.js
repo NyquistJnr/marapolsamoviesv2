@@ -18,7 +18,7 @@ import useSearchTextPost from "@/hooks/useSearchedText";
 const ReviewComponent = () => {
   const [sumbitSearch, setSumbitSearch] = useState("");
 
-  const { recentData, isLoading, error } = useFetchRecentReviews();
+  const { recentData, isLoading, error } = useFetchRecentReviews(1, 6);
   const {
     sortedReviews: trendingData,
     isLoading: isLoadingTrending,
@@ -102,9 +102,9 @@ const ReviewComponent = () => {
               error={tvShowsError}
             />
           </div>
-          <div className="text-center" style={{ marginBottom: 40 }}>
+          {/*  <div className="text-center" style={{ marginBottom: 40 }}>
             <Button className={classes.seeMoreBtn}>See more</Button>
-          </div>
+          </div> */}
         </>
       ) : (
         <>

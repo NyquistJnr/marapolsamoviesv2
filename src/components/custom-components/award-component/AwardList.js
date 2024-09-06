@@ -2,15 +2,32 @@
 
 import React from "react";
 import useRecentNews from "@/hooks/useRecentNews";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import TrendingSkeleton from "../news-component/TrendingSkeleton";
 import CompleteSearchFilterBar from "@/components/general-components/CompleteSearchFilter";
 import { shortenText } from "@/utils/text-shortener";
 import Image from "next/image";
 import Link from "next/link";
 
+import styles from "./AwardList.module.css";
+
 const AwardList = () => {
-  const { recentNews, isLoading, error } = useRecentNews("awards");
+  const { recentNews, isLoading, error, fetchMore, hasMore } = useRecentNews(
+    "awards",
+    6
+  );
+
+  if (error) {
+    return (
+      <div className="text-center py-5">An Error Occured, {error.message}</div>
+    );
+  }
+
+  const handleFetchMore = () => {
+    if (hasMore) {
+      fetchMore();
+    }
+  };
 
   return (
     <Container>
@@ -61,6 +78,14 @@ const AwardList = () => {
               </div>
             ))}
           </section>
+          <div className="text-center" style={{ marginBottom: 40 }}>
+            {hasMore && !isLoading && (
+              <Button className={styles.seeMoreBtn} onClick={handleFetchMore}>
+                See more
+              </Button>
+            )}
+          </div>
+          {!hasMore && <div className="text-center py-5">No more Awards.</div>}
         </>
       )}
     </Container>

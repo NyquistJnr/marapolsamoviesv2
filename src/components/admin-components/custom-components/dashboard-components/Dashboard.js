@@ -315,7 +315,7 @@ const DashboardComponent = () => {
             <div style={{ fontWeight: "bold" }}>Activites</div>
             <div
               className="text-center"
-              style={{ fontWeight: "bold", fontSize: 13, marginTop: 10 }}
+              style={{ fontSize: 13, marginTop: 10 }}
             >
               {userError && (
                 <div className="py-5 text-center">
