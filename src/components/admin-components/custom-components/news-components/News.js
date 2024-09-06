@@ -39,11 +39,6 @@ const NewsAdmin = () => {
       value: totalSave,
       percentage: "8%",
     },
-    {
-      title: "Views",
-      value: "Coming Soon...",
-      percentage: "0%",
-    },
   ];
 
   return (
@@ -80,7 +75,7 @@ const NewsAdmin = () => {
       <section>
         <div className="row">
           {dataList.map((data) => (
-            <div className="col-12 col-md-6 col-lg-6 py-2" key={data.title}>
+            <div className="col-12 col-md-4 col-lg-4 py-2" key={data.title}>
               <AnalyticsBox
                 title={data.title}
                 value={data.value}

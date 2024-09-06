@@ -44,11 +44,9 @@ const DashboardComponent = () => {
   const { data, loading, error } = useAggregatedData();
 
   const feedList = [
-    { title: "Visits", counts: "Coming soon", attend: "coming soon" },
     { title: "Likes", counts: data.totalLikes, attend: "coming soon" },
     { title: "Comments", counts: data.totalComments, attend: "coming soon" },
     { title: "Saves", counts: data.totalSaves, attend: "coming soon" },
-    { title: "Shares", counts: "Coming soon", attend: "coming soon" },
     { title: "Users", counts: data.totalUsers, attend: "coming soon" },
   ];
 

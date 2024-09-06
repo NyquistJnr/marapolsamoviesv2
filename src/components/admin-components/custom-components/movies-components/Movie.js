@@ -40,7 +40,7 @@ const NewsAdmin = () => {
     },
     {
       title: "Views",
-      value: "Coming Soon...",
+      value: "Not Supported",
       percentage: "0%",
     },
   ];

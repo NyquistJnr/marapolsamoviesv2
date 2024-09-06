@@ -105,7 +105,7 @@ const ReviewNew = ({ reviewId }) => {
 
     let imageUrl = "";
     if (selectedImage) {
-      const imageRef = ref(storage, `images/${selectedImage.name}`);
+      const imageRef = ref(storage, `reviews/${selectedImage.name}`);
       await uploadBytes(imageRef, selectedImage);
       imageUrl = await getDownloadURL(imageRef);
     }

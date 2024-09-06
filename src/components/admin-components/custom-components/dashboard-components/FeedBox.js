@@ -20,11 +20,6 @@ const FeedBox = (props) => {
       <div style={{ margin: "10px 0", fontWeight: "bold", fontSize: 13 }}>
         {props.loading ? "Loading..." : formatNumberWithCommas(props.counts)}
       </div>
-      <div style={{ color: "#575655", fontSize: 10 }}>
-        <Badge pill bg="warning">
-          {props.attend} {/* This week */}
-        </Badge>
-      </div>
     </div>
   );
 };

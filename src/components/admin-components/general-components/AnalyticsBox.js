@@ -29,11 +29,6 @@ const AnalyticsBox = (props) => {
             <>{props.value ? props.value : "0"}</>
           )}
         </div>
-        <div>
-          <Badge pill bg="warning">
-            Coming Soon {/* {props.percentage} */} {/* This week */}
-          </Badge>
-        </div>
       </div>
     </div>
   );
