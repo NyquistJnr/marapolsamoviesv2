@@ -91,7 +91,7 @@ const Header = () => {
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                 <Image
                   src={logo}
-                  alt="Marapolsa Logo"
+                  alt="Marapolsa"
                   width={140}
                   height="auto"
                   priority
