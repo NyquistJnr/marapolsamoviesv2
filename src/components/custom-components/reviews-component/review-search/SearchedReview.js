@@ -111,13 +111,20 @@ const SearchedReviewComponent = (props) => {
             <h3 style={{ fontWeight: "bold" }}>{data.title}</h3>
             <div>
               <div className={classes.text}>
-                <b>Genre:</b> {data.genre}
+                <b>Genre:</b>{" "}
+                {data.genre == " " || data.genre == "" ? "Other" : data.genre}
               </div>
               <div className={classes.text}>
-                <b>Industry:</b> {data.industry}
+                <b>Industry:</b>{" "}
+                {data.industry == " " || data.industry == ""
+                  ? "Other"
+                  : data.industry}
               </div>
               <div className={classes.text}>
-                <b>Streaming Platform:</b> {data.streamingPlatform}
+                <b>Streaming Platform:</b>{" "}
+                {data.streamingPlatform == " " || data.streamingPlatform == ""
+                  ? "Other"
+                  : data.streamingPlatform}
               </div>
               <div className={classes.text}>
                 <b>Movie Director:</b> {data.movieDirector}

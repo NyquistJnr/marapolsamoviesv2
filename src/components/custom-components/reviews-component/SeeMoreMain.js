@@ -46,7 +46,7 @@ const SeeMoreMain = () => {
     moviesError,
     fetchMore: movieFetchMore,
     hasMore: movieHasMore,
-  } = useFetchCategoryData("Movies", 1);
+  } = useFetchCategoryData("Movies", 3);
 
   const {
     data: tvShowsData,
@@ -54,7 +54,7 @@ const SeeMoreMain = () => {
     tvShowsError,
     fetchMore: tvShowsFetchMore,
     hasMore: tvShowsHasMore,
-  } = useFetchCategoryData("TV Shows", 1);
+  } = useFetchCategoryData("TV Shows", 3);
 
   useEffect(() => {
     if (myPath === "Trending Reviews") {

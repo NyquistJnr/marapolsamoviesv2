@@ -34,11 +34,16 @@ const HorizontalScroll = (props) => {
                   </Link>
                   <p>
                     <strong>Genre: </strong>
-                    {item.genre}
+                    {item.genre == " " || item.genre == ""
+                      ? "Other"
+                      : item.genre}
                   </p>
                   <p>
                     <strong>Streaming Platform: </strong>
-                    {item.streamingPlatform}
+                    {item.streamingPlatform == " " ||
+                    item.streamingPlatform == ""
+                      ? "Other"
+                      : item.streamingPlatform}
                   </p>
                 </div>
               </div>

@@ -63,7 +63,7 @@ export default function Home() {
     recentNews: mainNews,
     isLoading: newsLoading,
     error: newsError,
-  } = useRecentNews("news", 4);
+  } = useRecentNews("news", 3);
 
   // useAutoLogout();
 
