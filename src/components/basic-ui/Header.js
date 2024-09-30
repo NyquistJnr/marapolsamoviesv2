@@ -66,7 +66,7 @@ const Header = () => {
           <Navbar.Brand as={Link} href="/">
             <Image
               src={logo}
-              alt="Marapolsa Logo"
+              alt="Marapolsa Movies"
               width={140}
               height="auto"
               priority
@@ -91,7 +91,7 @@ const Header = () => {
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                 <Image
                   src={logo}
-                  alt="Marapolsa Logo"
+                  alt="Marapolsa Movies"
                   width={140}
                   height="auto"
                   priority
