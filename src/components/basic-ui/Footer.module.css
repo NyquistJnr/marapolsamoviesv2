@@ -28,10 +28,18 @@
   background-color: #e86c44; /* Maintain body background color on focus */
   border-color: white; /* Maintain white border on focus */
   color: white; /* Maintain white text color on focus */
-box-shadow:none;
+  box-shadow: none;
 }
 
 .subscribeBtn {
+  background-color: #fff;
+  color: #e86c44;
+  border: 1px solid #fff;
+  padding: 2% 8%;
+  border-radius: 10px;
+}
+
+.subscribeBtn:disabled {
   background-color: #fff;
   color: #e86c44;
   border: 1px solid #fff;

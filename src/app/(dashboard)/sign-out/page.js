@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import withAuthorization from "@/hoc/withAuthorization";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "react-bootstrap";
 
@@ -19,30 +20,39 @@ const Logout = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "55vh",
-      }}
-    >
-      <div style={{ textAlign: "center" }}>
-        <h1>Are you sure you want to log out?</h1>
-        <div style={{ marginTop: "20px" }}>
-          <Button
-            variant="danger"
-            style={{ marginRight: "10px" }}
-            onClick={handleLogout}
-          >
-            Yes
-          </Button>
-          <Button variant="secondary" onClick={handleCancel}>
-            No
-          </Button>
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "55vh",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <h1>Are you sure you want to log out?</h1>
+          <div style={{ marginTop: "20px" }}>
+            <Button
+              variant="danger"
+              style={{ marginRight: "10px" }}
+              onClick={handleLogout}
+            >
+              Yes
+            </Button>
+            <Button variant="secondary" onClick={handleCancel}>
+              No
+            </Button>
+          </div>
         </div>
+        <br />
       </div>
-    </div>
+      <div className="text-center">
+        Leave Admin without Logging out{" "}
+        <Link className="btn btn-success" href="/">
+          Home Page
+        </Link>
+      </div>
+    </>
   );
 };
 

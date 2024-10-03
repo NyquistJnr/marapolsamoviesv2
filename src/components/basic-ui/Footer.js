@@ -9,8 +9,8 @@ import classes from "./Footer.module.css";
 // Logo here
 import whiteLogo from "../../../public/images/logos/logo-all-white.png";
 
-import emailImage from "../../../public/images/icons/sms.svg";
-import profileImage from "../../../public/images/icons/profile.svg";
+// import emailImage from "../../../public/images/icons/sms.svg";
+// import profileImage from "../../../public/images/icons/profile.svg";
 
 import icon1 from "../../../public/images/icons/x.svg";
 import icon2 from "../../../public/images/icons/instagram.svg";
@@ -29,7 +29,7 @@ const Footer = () => {
     }, 1000);
     return () => clearInterval(c);
   }, [year]);
-
+  /* 
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
 
@@ -47,7 +47,7 @@ const Footer = () => {
 
   const handleFocus = (field) => {
     // Add any additional onFocus logic here if needed
-  };
+  }; */
 
   return (
     <footer
@@ -66,7 +66,7 @@ const Footer = () => {
                 Sign up for our newsletter for exclusive movie reviews and
                 updates. Join now!
               </p>
-              <Form>
+              {/*   <Form>
                 <Form.Group controlId="email">
                   <div className={`${classes["email-parent"]} mb-3`}>
                     <Image
@@ -116,7 +116,16 @@ const Footer = () => {
                   </div>
                 </Form.Group>
                 <Button className={classes.subscribeBtn}>Subscribe</Button>
-              </Form>
+              </Form> */}
+              <div style={{ margin: "30px 0 20px 0" }}>
+                <Link
+                  href="https://zc.vg/CMLTy"
+                  target="_blank"
+                  className={classes.subscribeBtn}
+                >
+                  Subscribe
+                </Link>
+              </div>
             </div>
           </div>
           <div

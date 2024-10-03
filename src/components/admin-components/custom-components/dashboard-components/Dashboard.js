@@ -215,24 +215,52 @@ const DashboardComponent = () => {
                     <TabPanel>
                       <div style={{ padding: "50px 0" }}>
                         <span style={{ fontWeight: "bold", fontSize: 12 }}>
-                          You don&apos;t have any users yet.
+                          Check The Complete Analytics for Marapolsa Movies{" "}
+                          <Link
+                            style={{ color: "orange" }}
+                            href="https://analytics.google.com/analytics/web/?utm_source=OGB&utm_medium=app&authuser=0#/p456826374/reports/reportinghub?params=_u..nav%3Dmaui"
+                            target="_blank"
+                          >
+                            Here
+                          </Link>
                         </span>
                         <br />
-                        <span style={{ fontSize: 12 }}>
-                          When you do, you can learn about their location will
-                          show here.
+                        <span style={{ fontWeight: "bold", fontSize: 12 }}>
+                          If you don't see the desired Analytics contact your
+                          admin to give you access to the Google Analytics
+                          Account{" "}
+                          <Link
+                            style={{ color: "orange" }}
+                            href="mailto:marapolsamovies@gmail.com"
+                          >
+                            marapolsamovies@gmail.com
+                          </Link>
                         </span>
                       </div>
                     </TabPanel>
                     <TabPanel>
                       <div style={{ padding: "50px 0" }}>
                         <span style={{ fontWeight: "bold", fontSize: 12 }}>
-                          You don&apos;t have any users yet.
+                          Check The Complete Analytics for Marapolsa Movies{" "}
+                          <Link
+                            style={{ color: "orange" }}
+                            href="https://analytics.google.com/analytics/web/?utm_source=OGB&utm_medium=app&authuser=0#/p456826374/reports/reportinghub?params=_u..nav%3Dmaui"
+                            target="_blank"
+                          >
+                            Here
+                          </Link>
                         </span>
                         <br />
-                        <span style={{ fontSize: 12 }}>
-                          When you do, you can learn about their location will
-                          show here.
+                        <span style={{ fontWeight: "bold", fontSize: 12 }}>
+                          If you don't see the desired Analytics contact your
+                          admin to give you access to the Google Analytics
+                          Account{" "}
+                          <Link
+                            style={{ color: "orange" }}
+                            href="mailto:marapolsamovies@gmail.com"
+                          >
+                            marapolsamovies@gmail.com
+                          </Link>
                         </span>
                       </div>
                     </TabPanel>
@@ -253,31 +281,31 @@ const DashboardComponent = () => {
                   <div className="py-2">
                     <div>Instagram</div>
                     <div>
-                      <Progress colorScheme="orange" value={5} />
+                      <Progress colorScheme="orange" value={100} />
                     </div>
                   </div>
                   <div className="py-2">
                     <div>Google</div>
                     <div>
-                      <Progress colorScheme="orange" value={90} />
+                      <Progress colorScheme="orange" value={100} />
                     </div>
                   </div>
                   <div className="py-2">
                     <div>Twitter</div>
                     <div>
-                      <Progress colorScheme="orange" value={10} />
+                      <Progress colorScheme="orange" value={100} />
                     </div>
                   </div>
                   <div className="py-2">
                     <div>YouTube</div>
                     <div>
-                      <Progress colorScheme="orange" value={40} />
+                      <Progress colorScheme="orange" value={100} />
                     </div>
                   </div>
                   <div className="py-2">
                     <div>Facebook</div>
                     <div>
-                      <Progress colorScheme="orange" value={20} />
+                      <Progress colorScheme="orange" value={100} />
                     </div>
                   </div>
                 </div>
