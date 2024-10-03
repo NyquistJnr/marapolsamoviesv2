@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./global-admin.css";
@@ -30,6 +31,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-BZSC0W482M`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-BZSC0W482M');
+          `}
+        </Script>
+      </head>
       <body className={plus_jakarta_sans.className}>
         <CProviders>
           <AuthContextProvider>
