@@ -24,7 +24,7 @@ const MovieResult = () => {
     error: movieError,
   } = useReviewYouMightLike(8, "movies");
 
-  const { data, loading, error, formattedDate } = usePostDetails("movies", id);
+  const { data, loading, error } = usePostDetails("movies", id);
   if (loading) {
     return (
       <div>
@@ -80,7 +80,7 @@ const MovieResult = () => {
                   <b>Produced by</b> {data.movieProducer}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
-                  <b>Release Date:</b> {formattedDate}
+                  <b>Release Date:</b> {data.releaseDate}
                 </div>
                 <div style={{ marginRight: 10 }} className="py-2">
                   <b>Genres:</b> {data.genre}
