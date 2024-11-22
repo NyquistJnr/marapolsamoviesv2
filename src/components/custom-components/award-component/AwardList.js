@@ -45,18 +45,23 @@ const AwardList = () => {
             {recentNews.map((data) => (
               <div className="col-12 col-md-6 col-lg-4 py-2" key={data.id}>
                 <div style={{ margin: "10px 0" }}>
-                  <Image
-                    alt="awards"
-                    src="/awards.png"
-                    width={100}
-                    height={100}
-                    layout="responsive"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                    }}
-                    priority
-                  />
+                  <div className={styles.imgWrapper}>
+                    <Image
+                      src={data?.imageUrl ? data.imageUrl : "/awards.png"}
+                      alt="awards"
+                      style={{
+                        width: "100%",
+                        height: 200,
+                        borderRadius: 10,
+                        objectFit: "cover",
+                      }}
+                      layout="responsive"
+                      priority
+                      width={100}
+                      height={100}
+                      className={styles.imgStyle}
+                    />
+                  </div>
                   <div
                     style={{
                       fontSize: 25,

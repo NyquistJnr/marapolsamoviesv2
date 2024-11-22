@@ -19,14 +19,8 @@ const HorizontalScroll = (props) => {
                   alt={item.title}
                   width={300}
                   height={180}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                  }}
-                  priority
                   className={classes.imgStyle}
+                  priority
                 />
                 <div className={classes.textContent}>
                   <Link href={`/reviews/${item.id}`}>
@@ -34,23 +28,18 @@ const HorizontalScroll = (props) => {
                   </Link>
                   <p>
                     <strong>Genre: </strong>
-                    {item.genre == " " || item.genre == ""
-                      ? "Other"
-                      : item.genre}
+                    {item.genre?.trim() || "Other"}
                   </p>
                   <p>
                     <strong>Streaming Platform: </strong>
-                    {item.streamingPlatform == " " ||
-                    item.streamingPlatform == ""
-                      ? "Other"
-                      : item.streamingPlatform}
+                    {item.streamingPlatform?.trim() || "Other"}
                   </p>
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <div>No data</div>
+          <div className={classes.noData}>No data available</div>
         )}
       </div>
     </Container>

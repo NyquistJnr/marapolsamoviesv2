@@ -51,7 +51,7 @@ const MovieTvShow = (props) => {
           <div>
             <p className={classes.p}>
               <b>Release Date: </b>
-              {props.timestamp.toDate().toLocaleString()}
+              {props.releaseDate}
             </p>
             <p style={{ marginTop: -15 }} className={classes.p}>
               {props.genre}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button, Form } from "react-bootstrap";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { addDoc, doc, updateDoc, getDoc, collection } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, db } from "@/app/firebase/config";
 
 import RichTextEditor from "../../general-components/text-editor/TextEditor";
@@ -18,21 +19,20 @@ const AwardsNewAdmin = (props) => {
   const router = useRouter();
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [image, setImage] = useState(null); // New state for storing selected image
+  const [imageUrl, setImageUrl] = useState(""); // State to store the uploaded image URL
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [user] = useAuthState(auth);
 
-  /* Start User Notification */
   const {
     addActivity,
     loading: activityLoading,
     error: activityError,
   } = useAddActivity(user?.uid);
-  /* End User Notification */
 
   useEffect(() => {
-    // Load existing document data if `id` is present
     const loadDocumentData = async () => {
       if (props.id) {
         setLoading(true);
@@ -44,6 +44,7 @@ const AwardsNewAdmin = (props) => {
             const data = docSnap.data();
             setTitle(data.title || "");
             setContent(data.content || "");
+            setImageUrl(data.imageUrl || ""); // Load existing image URL if available
           } else {
             console.error("No such document!");
           }
@@ -55,7 +56,7 @@ const AwardsNewAdmin = (props) => {
           setIsDataLoaded(true);
         }
       } else {
-        setIsDataLoaded(true); // If no ID, mark data as loaded immediately
+        setIsDataLoaded(true);
       }
     };
 
@@ -70,20 +71,41 @@ const AwardsNewAdmin = (props) => {
     setTitle(e.target.value);
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]); // Store the selected file
+  };
+
+  const uploadImage = async () => {
+    if (!image) return "";
+
+    try {
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${Date.now()}-${image.name}`);
+      const snapshot = await uploadBytes(storageRef, image);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      return downloadURL;
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      toast.error("Failed to upload image. Please try again.");
+      return "";
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      const uploadedImageUrl = await uploadImage();
       const formData = {
         title,
         content,
+        imageUrl: uploadedImageUrl || imageUrl, // Use new image URL or keep the existing one
         timestamp: new Date(),
         author: user?.displayName,
       };
 
       if (props.id) {
-        // Update the existing document
         const docRef = doc(db, "awards", props.id);
         await updateDoc(docRef, formData);
         await addActivity({
@@ -92,9 +114,7 @@ const AwardsNewAdmin = (props) => {
           title: formData.title,
         });
         toast.success("Awards Updated Successfully!");
-        // console.log("Document updated:", formData);
       } else {
-        // Add a new document
         await addDoc(collection(db, "awards"), formData);
         await addActivity({
           description: "New Post on awards",
@@ -102,12 +122,10 @@ const AwardsNewAdmin = (props) => {
           title: formData.title,
         });
         toast.success("Awards Posted Successfully!");
-        // console.log("New document submitted:", formData);
       }
     } catch (err) {
-      // console.error("Error submitting form:", err);
       toast.error(
-        "An Error Occured while trying to Posted, contact your IT Depart Immediately."
+        "An Error Occured while trying to Post, contact your IT Department Immediately."
       );
       setError("Failed to submit the form. Please try again.");
     } finally {
@@ -167,10 +185,22 @@ const AwardsNewAdmin = (props) => {
             />
           </Form.Group>
 
+          <Form.Group className="mb-3" controlId="imageControl">
+            <Form.Label>Upload Image</Form.Label>
+            <Form.Control type="file" onChange={handleImageChange} />
+          </Form.Group>
+
           {isDataLoaded ? (
             <RichTextEditor value={content} onChange={handleContentChange} />
           ) : (
-            <p>Loading content editor...</p> // Fallback while data is being loaded
+            <p>Loading content editor...</p>
+          )}
+
+          {imageUrl && (
+            <div style={{ marginTop: 20 }}>
+              <h5>Current Image:</h5>
+              <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "100%" }} />
+            </div>
           )}
 
           <div>{error && <div style={{ color: "red" }}>{error}</div>}</div>
