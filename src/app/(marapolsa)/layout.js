@@ -47,6 +47,27 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-BZSC0W482M');
           `}
         </Script>
+
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5932063699531838"
+          crossOrigin="anonymous"
+          strategy="afterInteractive" // Ensures the script loads after the page is interactive
+        />
+        {/* You can also define ad slots here */}
+        <ins
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client="ca-pub-5932063699531838"
+          data-ad-slot="2647294381" // Replace with your ad slot ID
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <Script>
+          {`
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        `}
+        </Script>
       </head>
       <body className={plus_jakarta_sans.className}>
         <CProviders>
